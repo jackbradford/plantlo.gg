@@ -1,0 +1,23 @@
+{
+  "name": "plantlo.gg",
+  "version": "1.0.0",
+  "description": "Keep your plants alive. Track their progress. Remember the small details.",
+  "main": "htdocs/js/index.js",
+  "dependencies": {
+    "react": "^16.12.0",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack-merge": "^4.2.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
+  },
+  "author": "Jack Brown",
+  "license": "ISC"
+}
