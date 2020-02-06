@@ -3,4 +3,7 @@ node_modules
 error.log
 vendor/
 disphatch.conf.json
+htdocs/js/index.js
+htdocs/js/plantlogg.js
+htdocs/js/test.js
 
