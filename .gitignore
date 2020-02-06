@@ -5,5 +5,7 @@ vendor/
 disphatch.conf.json
 htdocs/js/index.js
 htdocs/js/plantlogg.js
+htdocs/js/plantlogg.bundle.js
+htdocs/js/plantlogg.bundle.js.map
 htdocs/js/test.js
 

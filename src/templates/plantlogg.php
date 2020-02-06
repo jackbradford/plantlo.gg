@@ -17,7 +17,7 @@
         <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
         <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
        <!-- <script src="js/test.js"></script>-->
-        <script src="js/index.js"></script>
+        <script src="js/plantlogg.bundle.js"></script>
      </body>
 </html>
 
