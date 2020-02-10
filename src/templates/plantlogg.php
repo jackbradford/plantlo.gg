@@ -9,14 +9,15 @@
         <meta name="author" content="Jack Brown">
     </head>
     <body>
+        <div id="plantlogg"></div>
+        <!--
         <header>
             <h1>PlantLogg</h1>
         </header>
+        <section id="plantlogg"></section>
         <footer id="like_button_container">
         </footer>
-        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-       <!-- <script src="js/test.js"></script>-->
+        -->
         <script src="js/plantlogg.bundle.js"></script>
      </body>
 </html>
