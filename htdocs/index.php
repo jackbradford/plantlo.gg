@@ -11,5 +11,5 @@ use JackBradford\Disphatch\Router\Router;
 $config = '/var/www/vhosts/plantlo.gg.dev/disphatch.conf.json';
 $router = Router::init($config);
 $router->routeAndExecuteRequest();
-echo "Done.\n";
+error_log('Done.');
 

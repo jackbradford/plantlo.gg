@@ -1,0 +1,84 @@
+/**
+ * This file provides stylesheet configurations via SASS/SCSS.
+ *
+ * The variables/mixins provided here can be used to configure various
+ * common styles in the partial SCSS stylesheets where those entities are
+ * referenced. This reduces the effort required to maintain consistency
+ * throughout the app by providing a common place to adjust recurrent
+ * parameters.
+ *
+ * For example, the breakpoints for all media queries can be affected
+ * via the device-breakpoint mixins, and the app's font types can be changed
+ * all in one place via the font-stack variables.
+ *
+ */
+
+$header-font-stack:		'Hind', calibri, helvetica, 'Trebuchet MS', sans-serif;
+$font-stack:			'Open Sans', calibri, helvetica, sans-serif;
+$platform-font-stack:	'Segoe UI', 'Lucida Grande', 'Ubuntu', sans-serif;
+
+$menu-text-shadow:		1px 1px 1px rgba(0,0,0,0.10);
+
+@mixin for-phone-only {
+
+	@media (max-width: 599px) { @content; }
+}
+
+@mixin for-tablet-portrait-up {
+
+	@media (min-width: 600px) { @content; }
+}
+
+@mixin for-tablet-landscape-up {
+
+	@media (min-width: 900px) { @content; }
+}
+
+@mixin for-desktop-up {
+
+	@media (min-width: 1200px) { @content; }
+}
+
+@mixin for-big-desktop-up {
+
+	@media (min-width: 1800px) { @content; }
+}
+
+
+
+@mixin box-shadow($shadows...) {
+	-moz-box-shadow: 	$shadows;
+	-webkit-box-shadow:	$shadows;
+	box-shadow: 		$shadows;
+}
+
+@mixin pagination-button-background($top-color, $bottom-color) {
+	background: -webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		color-stop(0, $top-color),
+		color-stop(100%, $bottom-color)
+	);
+	background: gradient(
+		linear,
+		left top,
+		left bottom,
+		color-stop(0, $top-color)
+		color-stop(100%, $bottom-color)
+	);
+}
+
+@mixin linear-gradient-background($top-color, $bottom-color) {
+	background: -webkit-linear-gradient(
+		top,
+		$top-color 0%,
+		$bottom-color 100%
+	);
+	background: linear-gradient(
+		to bottom, 
+		$top-color 0%, 
+		$bottom-color 100%
+	);
+}
+
