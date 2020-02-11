@@ -3,8 +3,11 @@
  *
  */
 import React, { Component } from 'react';
+import { mediator }  from '../../mediator';
+import { auth } from '../../auth';
 
 export default class Home extends Component {
+
 
     render() {
 
@@ -13,9 +16,9 @@ export default class Home extends Component {
             <header>
                 <nav></nav>
                 <div className="login">
-                    <input type="text" placeholder="your email" />
-                    <input type="password" placeholder="password" />
-                    <input type="submit" value="Login" />
+                    <input type="text" id="login-email" placeholder="your email" />
+                    <input type="password" id="login-password" placeholder="password" />
+                    <input type="submit" value="Login" onClick={auth.login}/>
                 </div>
             </header>
             <main>

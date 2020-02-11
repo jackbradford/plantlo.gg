@@ -1,3 +1,4 @@
+import { sayhi, attemptLogin, completeLogin } from './functions';
 import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -8,6 +9,8 @@ import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { createBrowserHistory } from 'history';
 import rootReducer from './reducers';
+import { mediator }  from './mediator';
+import { asyncHandler } from './async';
 import Home from './component/pages/home';
 
 console.log('Running plantlogg.js');
