@@ -9,20 +9,46 @@ import { mediator } from './mediator';
 var asyncHandler = (function() {
 
     /**
+     * handleRequest()
+     * This function handles async-request events.
+     *
      * When publishing an `async-request` event, the args object should
      * include:
-     * args = { url: '', data: {}, arg: ? }
+     * args = { url: 'string', data: {}, info: {} }
+     *
+     * args.info is optional.
      *
      */
     var handleRequest = function(args, callback) {
 
-        send(args.url, args.data, callback, args.arg);
+        send(args.url, args.data, callback, args.info);
     };
 
-    var send = function(url, data, callback, arg) {
+    /**
+     * send()
+     * Send an asynchronous request.
+     *
+     * string url
+     * The URL of the script to access. The URL may include a query string.
+     *
+     * object data
+     * An object to be JSON and URI encoded and passed via POST to the server
+     * at the given URL.
+     *
+     * function callback
+     * A function which will be passed "response text" and the response from
+     * the server.
+     *
+     * object info
+     * This used to be called, cryptically, "arg." It can be used to pass
+     * information to the response-handling callback from the response-
+     * initiator.
+     *
+     */
+    var send = function(url, data, callback, info) {
 
         var req = new XMLHttpRequest();
-        arg = arg || null;
+        info = info || null;
         data = encodeURIComponent(JSON.stringify(data));
         console.log(data);
         if (!req) {
@@ -43,7 +69,7 @@ var asyncHandler = (function() {
                 if (req.status === 200) {
                     console.log('Async request complete; Status 200.');
                     var rt = req.responseText;
-                    if (arg !== null) callback(rt, arg);
+                    if (info !== null) callback(rt, info);
                     else callback(rt);
                 }
                 else alert('There was a problem with the request.'); // TODO replace

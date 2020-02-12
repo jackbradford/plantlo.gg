@@ -1,4 +1,3 @@
-import { sayhi, attemptLogin, completeLogin } from './functions';
 import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
