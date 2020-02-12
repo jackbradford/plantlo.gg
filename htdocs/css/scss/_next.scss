@@ -1,0 +1,34 @@
+/*
+ * _next.scss
+ * This is where SCSS rules can be written before worrying about
+ * organizing them. Ideally only a handful of new rules will live
+ * here at a time.
+ *
+ */
+
+$top-color: rgba(255,255,255,0.5);
+$bottom-color: rgba(225,225,225,0.5);
+$accent-color: rgba(200,200,200,0.5);
+
+header {
+
+    color: #000;
+
+    /*
+     * Applies to the logo bar, which is the first div under the header
+     * element.
+     */
+    & > div:first-child {
+
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+        // TODO: move this to a more general UI window rule?
+        @include gradient-bottom-edge($top-color, $bottom-color, $accent-color, 35px);
+
+        img {
+
+            width: 50%;
+        }
+    }
+}
+

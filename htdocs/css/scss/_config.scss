@@ -13,8 +13,8 @@
  *
  */
 
-$header-font-stack:		'Hind', calibri, helvetica, 'Trebuchet MS', sans-serif;
-$font-stack:			'Open Sans', calibri, helvetica, sans-serif;
+$header-font-stack:		'Playfair Display SC', serif;
+$font-stack:			'Open Sans', sans-serif;
 $platform-font-stack:	'Segoe UI', 'Lucida Grande', 'Ubuntu', sans-serif;
 
 $menu-text-shadow:		1px 1px 1px rgba(0,0,0,0.10);
@@ -80,5 +80,19 @@ $menu-text-shadow:		1px 1px 1px rgba(0,0,0,0.10);
 		$top-color 0%, 
 		$bottom-color 100%
 	);
+}
+
+@mixin gradient-bottom-edge($top-color, $bottom-color, $accent-color, $stop) {
+
+    background: linear-gradient(
+        0deg,
+        $bottom-color 0%,
+        $top-color $stop
+    ),
+    linear-gradient(
+        0deg,
+        $accent-color 0%,
+        $top-color 2px
+    );
 }
 
