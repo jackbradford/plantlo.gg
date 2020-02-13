@@ -1,0 +1,13 @@
+# These rules should be applied to the virtual host config at:
+# /etc/apache2/sites-available/plantlo.gg.conf
+#
+RewriteEngine on
+#RewriteCond %{SERVER_NAME} =www.jackbrown.io [OR]
+#RewriteCond %{SERVER_NAME} =jackbrown.io
+#RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+#RewriteCond %{HTTPS} off
+#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+RewriteRule (/test) /index.php
+RewriteRule ^(\/auth)$ /index.php?ctrl=auth&actn=auth [END]
+RewriteRule ^(\/register)$ /index.php [END]
+
