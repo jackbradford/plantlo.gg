@@ -10,4 +10,6 @@ RewriteEngine on
 RewriteRule (/test) /index.php
 RewriteRule ^(\/auth)$ /index.php?ctrl=auth&actn=auth [END]
 RewriteRule ^(\/register)$ /index.php [END]
+# Below rule matches /activate/0123456789/azAZ0123456789
+RewriteRule ^(\/activate\/)(\d+\/)([\da-zA-Z]+)$ /index.php?ctrl=admin&actn=activateUser&userId=$1&code=$2 [END]
 
