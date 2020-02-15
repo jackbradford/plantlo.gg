@@ -3,7 +3,7 @@
  *
  */
 import React, { Component } from 'react';
-import Header from '../header';
+import HeaderContainer from '../../container/header-container';
 
 
 export default class Home extends Component {
@@ -12,7 +12,7 @@ export default class Home extends Component {
 
         return (
             <React.Fragment>
-            <Header />
+            <HeaderContainer />
             <main className="home">
                 <p>Homepage</p>
             </main>

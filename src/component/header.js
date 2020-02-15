@@ -4,6 +4,7 @@
  */
 import React, { Component } from 'react';
 import ReactDOM from "react-dom";
+import LoginError from '../login-error';
 import { mediator }  from '../mediator';
 import { auth } from '../auth';
 import {
@@ -14,6 +15,19 @@ import {
 } from "react-router-dom";
 
 export default class Header extends Component {
+
+    attemptLogin() {
+
+        var response = auth.login;
+        if (response.success === true) {
+
+            // Login Succeeded
+        }
+        else {
+
+
+        }
+    }
 
     toggleMenu() {
 
@@ -36,6 +50,16 @@ export default class Header extends Component {
     }
 
     render() {
+
+        var loginError = 'No error';
+//        var loginError = 'Invalid Username';
+
+//        if (typeof this.props.serverResponse != "undefined") {
+
+//              loginError = this.props.serverResponse.data.serverMessage;
+//        }
+//      else console.log('no error');
+        console.log('rendering...');
 
         return (
 
@@ -70,8 +94,9 @@ export default class Header extends Component {
                         className="primary-button"
                         type="submit"
                         value="Login"
-                        onClick={auth.login}/>
+                        onClick={this.props.onLoginClick}/>
                 </div>
+                <LoginError errorMessage={this.props.loginMessage} />
                 <div className="register">
                     <h2>Not a member?</h2>
                     <Link to="/register" 

@@ -77,8 +77,8 @@ var asyncHandler = (function() {
         }
     };
 
-    mediator.subscribe('async-request', handleRequest);
-    return {}; //{ send: send };
+//    mediator.subscribe('async-request', handleRequest);
+    return { send: send };
 }());
 
 export { asyncHandler };

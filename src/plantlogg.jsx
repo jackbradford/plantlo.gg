@@ -1,4 +1,5 @@
 import thunkMiddleware from 'redux-thunk';
+import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import React, { Component } from 'react';
@@ -22,7 +23,7 @@ if (process.env.NODE_ENV !== 'production') {
 const store = createStore(
     rootReducer,
     applyMiddleware(
-        thunkMiddleware
+        thunk
     )
 );
 const history = syncHistoryWithStore(createBrowserHistory(), store);
@@ -37,9 +38,11 @@ class App extends Component {
     render() {
 
         return (
-            <Router history={history}>
-                <Root />
-            </Router>
+            <Provider store={store}>
+                <Router history={history}>
+                    <Root />
+                </Router>
+            </Provider>
         );
     }
 }
