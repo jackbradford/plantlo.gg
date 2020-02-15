@@ -3,170 +3,68 @@
  *
  */
 import { auth } from './auth';
-export const ATTEMPT_LOGIN = 'ATTEMPT_LOGIN';
-export const COMPLETE_LOGIN = 'COMPLETE_LOGIN';
-export const LOGIN_BEGIN = 'LOGIN_BEGIN';
-export const LOGIN_END = 'LOGIN_END';
-export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const LOGIN_REQUEST_BEGIN = 'LOGIN_REQUEST_BEGIN';
+export const LOGIN_REQUEST_END = 'LOGIN_REQUEST_END';
+export const LOGIN_REQUEST_ERROR = 'LOGIN_REQUEST_ERROR';
+export const RESET_LOGIN_MESSAGE = 'RESET_LOGIN_MESSAGE';
 
-export const tryLogin = () => {
-
-    return (dispatch) => {
-
-        dispatch(loginBegin());
-        return auth.login()
-            .then( (response) => {  
-                console.log(response);
-                dispatch(loginEnd(response));
-                return response;
-            })
-            .catch(error =>
-                dispatch(loginError(error))
-            );
-    };
-}
-/*
-export const tryLogin = () => {
+export const attemptLoginRequest = () => {
 
     return (dispatch) => {
 
-        dispatch(loginBegin());
+        dispatch(loginRequestBegin());
         return auth.login()
             .then(
-                (fetchResponse) => {
-                    handleLogin(fetchResponse)
-                        .then(
-                            (response) => {
-                                dispatch(loginEnd(response));
-                            }
-                        );
-                }
+                (response) => { dispatch(loginRequestEnd(JSON.parse(response))); }
+            )
+            .catch(
+                (error) => { dispatch(loginRequestError(error)); }
             );
     };
 }
-*/
-export const loginBegin = () => {
+
+export const loginRequestBegin = () => {
 
     return {
 
-        type: LOGIN_BEGIN
+        type: LOGIN_REQUEST_BEGIN
     };
 };
 
-export const loginEnd = (serverResponse) => {
+/**
+ * Even though the login REQUEST has ended successfully, the user may still not
+ * be logged in.
+ */
+export const loginRequestEnd = (serverResponse) => {
 
-    console.log("Login end.");
-    console.log(serverResponse);
     return {
 
-        type: LOGIN_END,
-        payload: { serverResponse: JSON.parse(serverResponse) }
+        type: LOGIN_REQUEST_END,
+        payload: { 
+            serverResponse: serverResponse
+        }
     };
 };
 
-export const loginError = (error) => {
+/**
+ * This error occurs when the server returns (e.g.) a 500 error. This error
+ * does NOT occur when the server denies the login due to invalid credentials,
+ * for example.
+ */
+export const loginRequestError = (error) => {
 
     return {
 
-        type: LOGIN_ERROR,
+        type: LOGIN_REQUEST_ERROR,
         payload: { error: error }
     };
 };
 
-export const attemptLogin = () => {
+export const resetLoginMessage = () => {
 
-/*
     return {
 
-        type: ATTEMPT_LOGIN,
-        payload: {
-
-            url: '/index.php?ctrl=auth&actn=auth',
-            data: {
-                un: document.getElementById('login-email').value,
-                pw: document.getElementById('login-password').value,
-            },
-            info: {}
-        }
+        type: RESET_LOGIN_MESSAGE
     };
-*/
-
-    return function(dispatch, getState) {
-
-        return auth.login().then(
-            (fetchResponse) => handleLogin(fetchResponse)
-        )
-        .then(
-            (response) => dispatch(completeLogin(response))
-        );
-    };
-
-
-//    auth.login(dispatch);
-//    return {
-
-//        type: ATTEMPT_LOGIN
-//    }
 };
-
-export const completeLogin = (serverResponse) => {
-
-    var res = JSON.parse(serverResponse);
-    console.log("Res:");
-    console.log(res);
-    return {
-
-        type: COMPLETE_LOGIN,
-        payload: {
-
-            serverResponse: res
-        }
-    }
-}
-
-export const handleLogin = (fetchResponse) => {
-
-//    var serverResponse;
-//    var getText = function(text) {
-
-//        console.log(JSON.parse(text));
-//        serverResponse = text;
-//    }
-
-//    var sr = {};
-    console.log("handling the login.");
-
-    return fetchResponse.text();
-    /*
-    return function() {
-        
-        return fetchResponse.text().then(
-            (serverResponse) =>dispatch(completeLogin(serverResponse))
-        );
-    }
-    */
-//    fetchResponse.text().then(function(text) {
-//        console.log("JSON: ");
-//        console.log(JSON.parse(text));
-//        serverResponse = text;
-//    };);
-//    console.dir("Server response: " + serverResponse);
-
-//    return {
-
-//    }
-};
-
-/*
-export const attemptAPICall = () => {
-
-    return async.send(
-        call.url,
-        call.data,
-        call.info
-    ).then(
-        () => dispatch(completeAPICall())
-    );
-}
-*/
 

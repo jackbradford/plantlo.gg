@@ -16,6 +16,11 @@ import {
 
 export default class Header extends Component {
 
+    componentDidMount() {
+
+        this.props.resetLoginMessage();
+    }
+
     attemptLogin() {
 
         var response = auth.login;
@@ -50,16 +55,6 @@ export default class Header extends Component {
     }
 
     render() {
-
-        var loginError = 'No error';
-//        var loginError = 'Invalid Username';
-
-//        if (typeof this.props.serverResponse != "undefined") {
-
-//              loginError = this.props.serverResponse.data.serverMessage;
-//        }
-//      else console.log('no error');
-        console.log('rendering...');
 
         return (
 

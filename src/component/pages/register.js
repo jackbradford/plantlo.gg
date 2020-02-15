@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import { mediator }  from '../../mediator';
 import { auth } from '../../auth';
-import Header from '../header';
+import HeaderContainer from '../../container/header-container';
 import ReactDOM from "react-dom";
 import {
     BrowserRouter as Router,
@@ -21,7 +21,7 @@ export default class Register extends Component {
 
         return (
             <React.Fragment>
-            <Header />
+            <HeaderContainer />
             <main className="registration-form">
                 <h1>Create a New Account</h1>
                 <div className="registration-inputs">

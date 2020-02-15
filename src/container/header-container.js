@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Header from '../component/header';
 import {
-    tryLogin
+    attemptLoginRequest,
+    resetLoginMessage
 } from '../actions';
 
 const mapStateToProps = function(state) {
@@ -24,7 +25,11 @@ const mapDispatchToProps = function(dispatch) {
 
         onLoginClick: () => {
 
-            dispatch(tryLogin());
+            dispatch(attemptLoginRequest());
+        },
+        resetLoginMessage: () => {
+
+            dispatch(resetLoginMessage());
         }
     }
 };

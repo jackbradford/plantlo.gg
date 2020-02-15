@@ -18,7 +18,6 @@ var auth = (function() {
      */
     var attemptLogin = function(dispatch) {
 
-//        response = undefined;
         console.log('Attempting async login...');
         var url = '/index.php?ctrl=auth&actn=auth';
         var data = encodeURIComponent(JSON.stringify({
@@ -41,75 +40,19 @@ var auth = (function() {
                 console.log(response);
                 return response.text();
             });
-/*        mediator.publish('async-request', completeLogin, {
-//            url: '/auth',
-            url: '/index.php?ctrl=auth&actn=auth',
-            data: {
-                un: document.getElementById('login-email').value,
-                pw: document.getElementById('login-password').value,
-            },
-            info: {
-                test: 'sample-text',
-                dispatch: dispatch
-            }
-        });
-//        while (response == undefined) {}
-//        return response;
-*/
-    };
-
-    /**
-     * auth.completeLogin()
-     * Handle the response from plantlo.gg/auth.
-     * 
-     * string json_response
-     * The async request handler should pass the response from the server,
-     * which is to be a JSON-encoded string.
-     *
-     * object info
-     * This was the endpoint of the mysterious "arg". Now it's an object
-     * which originates from auth.login() for the purpose of passing
-     * information.
-     *
-     */
-    var completeLogin = function(json_response, info) {
-
-        console.log('From the server: ' + json_response);
-        console.log(info);
-        try {
-            var serverResponse = JSON.parse(json_response);
-//            info.dispatch(cl(response));
-            response = serverResponse;
-            return;
-
-            return response;
-
-            if (response.success === true) {
-                // Login success.
-
-            }
-            else {
-                // Login failed.
-                var errorDiv = document.getElementById('login-error');
-                var span = document.createElement('span');
-                this.clearErrors(errorDiv);
-                span.appendChild(document.createTextNode(response.data.serverMessage));
-//                errorDiv.appendChild(span);
-                document.body.insert
-            }
-        }
-        catch (e) {
-            
-            console.log("Error: " + e);
-            response = {};
-            return
-        }
     };
 
     var handleErrors = function(response) {
 
         console.log("Handling errors.");
-        if (!response.ok) throw Error(response.statusText);
+        if (!response.ok) {
+            var errorMsg;
+            if (response.status == 500) {
+                errorMsg = 'Sorry! The server is having some trouble at the moment.'
+            }
+            else errorMsg = response.statusText;
+            throw Error(errorMsg);
+        }
         return response;
     }
 
