@@ -63,8 +63,19 @@ nav {
     transition-duration: 0.5s;
 //    background-color: #f5fdf8;
     @include gradient-bottom-edge(#fcfcfc, $bottom-color, $accent-color, 35px);
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     z-index: 62;
+
+    .login {
+
+        display: flex;
+        margin: 1rem 0 0.5rem;
+    }
+
+    input {
+
+        flex: 0 1 auto;
+    }
 
     input[type="text"],
     input[type="password"] {
@@ -86,7 +97,7 @@ nav {
     input[type="submit"] {
 
         width: 20%;
-        display: inline;
+//        display: inline;
         color: white;
 //        @include gradient-bottom-edge(#3ea86a, #328655, #28372e, 50%);
         border-top-left-radius: 0;
