@@ -5,210 +5,7 @@
  * here at a time.
  *
  */
-
-$top-color: rgba(255,255,255,0.5);
-$bottom-color: rgba(225,225,225,0.5);
-$accent-color: rgba(200,200,200,0.5);
-
-header {
-
-    color: #000;
-    z-index: 63;
-    position: relative;
-
-    /*
-     * Applies to the logo bar, which is the first div under the header
-     * element.
-     */
-    & > div:first-child {
-
-        padding: 0.5rem;
-        // TODO: move this to a more general UI window rule?
-        @include gradient-bottom-edge($top-color, $bottom-color, $accent-color, 35px);
-
-        img {
-
-            width: 50%;
-        }
-
-        button.menu {
-
-            right: 1rem;
-            top: 0.5rem;
-            display: inline-block;
-            width: 12%;
-            position: absolute;
-
-            img {
-
-                width: 100%;
-                // todo: correct the color. It's black, it should match palette
-                background-image:
-                    radial-gradient(
-                        circle,
-                        rgba(0,0,0,0.1),
-                        rgba(255,255,255,0) 60%
-                    );
-            }
-        }
-    }
-}
-
-nav {
-
-    position: absolute;
-    width: 100%;
-    transform: translateY(-350px);
-    transition-property: transform;
-    transition-duration: 0.5s;
-//    background-color: #f5fdf8;
-    @include gradient-bottom-edge(#fcfcfc, $bottom-color, $accent-color, 35px);
-    padding: 0.5rem 1rem;
-    z-index: 62;
-
-    .login {
-
-        display: flex;
-        margin: 1rem 0 0.5rem;
-    }
-
-    input {
-
-        flex: 0 1 auto;
-    }
-
-    input[type="text"],
-    input[type="password"] {
-    
-        width: 40%;
-    }
-
-    input[type="text"] {
-
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
-    input[type="password"] {
-
-        border-radius: 0;
-    }
-
-    input[type="submit"] {
-
-        width: 20%;
-//        display: inline;
-        color: white;
-//        @include gradient-bottom-edge(#3ea86a, #328655, #28372e, 50%);
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-    }
-}
-
-input {
-
-    display: inline-block;
-}
-
-input[type="submit"],
-input[type="text"],
-input[type="password"] {
-
-    height: 2.5rem;
-    font-size: 12px;
-    font-family: $font-stack;
-    font-weight: bold;
-    border-radius: 5px;
-    line-height: 1rem;
-    padding: 0;
-}
-
-input[type="text"],
-input[type="password"] {
-
-    background-color: #f0f8f3;
-    color: #28372e;
-    padding: 0 0 0 0.5rem;
-//    border: 1px solid #b0cbbb;
-	border: 1px solid #328655; // #184b94
-}
-
-.primary-button {
-
-    text-align: center;
-	color: #fff;
-	letter-spacing: 0.05rem;
-	@include linear-gradient-background(#3ea86a, #328655);
-	border: 1px solid #328655; // #184b94
-	border-bottom-color: #40584a;
-	border-radius: 3px;
-    font-family: $font-stack;
-    font-weight: bold;
-
-	&:hover {
-
-		@include linear-gradient-background(#328655, #3ea86a);
-	}
-}
-
-.secondary-button {
-
-    text-align: center;
-	color: #fff;
-	letter-spacing: 0.05rem;
-	@include linear-gradient-background(#eac33c, #e8b503);
-	border: 1px solid #bc9408; // #184b94
-	border-bottom-color: #a68205;
-	border-radius: 3px;
-    font-family: $font-stack;
-    font-weight: bold;
-
-	&:hover {
-
-		@include linear-gradient-background(#e8b503, #eac33c);
-	}
-}
-
-.blue-button {
-
-    text-align: center;
-	color: #fff;
-	letter-spacing: 0.05rem;
-	@include linear-gradient-background(#4d86da, #2a6bca);
-	border: 1px solid #2867c2; // #184b94
-	border-bottom-color: #245bac;
-	border-radius: 3px;
-
-	&:hover {
-
-		@include linear-gradient-background(#2a6bca, #4d86da);
-	}
-}
-
-.register {
-    
-    height: 3rem;
-
-    h2 {
-
-        display: inline-block;
-//        margin: 0 0.5rem 0.5rem 0;
-        line-height: 3rem;
-        font-size: 24px;
-    }
-    .button {
-
-        margin: 0.5rem 0;
-        line-height: 1rem;
-        padding: 0.5rem;
-        margin: 0.5rem;
-        display: inline-block;
-        font-size: 12px;
-        font-weight: bold;
-//        color: #a68205;
-    }
-
-}
+$input-validation-padding: 0.25rem;
 
 .registration-form {
 
@@ -218,9 +15,10 @@ input[type="password"] {
 
         display: inline-block;
         width: 80%;
-        margin: 0 0 0.5rem 0;
+        margin: 0.5rem 0 0 0;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
+        border-right: 0;
     }
 
     .input-validation {
@@ -230,11 +28,13 @@ input[type="password"] {
         border-radius: 3px;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
-        margin: 0 0 0.5rem 0;
+        margin: 0.5rem 0 0 0;
 	    border: 1px solid #328655; // #184b94
         border-left: 0;
         height: 2.5rem;
         background-color: #f0f8f3;
+        position: relative;
+        padding: $input-validation-padding;
     }
 
     input[type="submit"] {
@@ -246,8 +46,32 @@ input[type="password"] {
     h1 {
 
         display: block;
-        margin: 0.5rem 0 1rem;
+        margin: 0.5rem 0 0.25rem 0;
         font-size: 24px;
     }
+}
+
+.validation-status {
+
+    max-width: 100%;
+    height: calc(100% - (2 * #{$input-validation-padding}));
+    position: absolute;
+    right: 0.5rem;
+}
+
+.validation-message {
+
+    margin: 0.25rem 0 0.75rem;
+    font-size: 1rem;
+}
+
+div.valid {
+
+    color: #328655;
+}
+
+div.invalid {
+
+    color: #ed4c2a;
 }
 

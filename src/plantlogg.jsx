@@ -12,7 +12,7 @@ import rootReducer from './reducers';
 import { mediator }  from './mediator';
 import { asyncHandler } from './async';
 import Home from './component/pages/home';
-import Register from './component/pages/register';
+import RegisterContainer from './container/register-container';
 
 console.log('Running plantlogg.js');
 if (process.env.NODE_ENV !== 'production') {
@@ -61,7 +61,7 @@ class Root extends Component {
             <React.Fragment>
                 <Route exact path='/' component={Home} />
                 <Route path='/test' component={Test} />
-                <Route path='/register' component={Register} />
+                <Route path='/register' component={RegisterContainer} />
                 <Route exact path='/activate' component={Test} />
                 <Route path='/activate/:userId/:code' component={Test} />
             </React.Fragment>

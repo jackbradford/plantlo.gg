@@ -73,34 +73,34 @@ export default class Header extends Component {
                         />
                     </button>
                 </div>
+                <nav id="main-menu">
+                    <div className="login">
+                        <input
+                            type="text"
+                            id="login-email"
+                            placeholder="your email"
+                        />
+                        <input
+                            type="password"
+                            id="login-password"
+                            placeholder="password" />
+                        <input 
+                            className="primary-button"
+                            type="submit"
+                            value="Login"
+                            onClick={this.props.onLoginClick}/>
+                    </div>
+                    <LoginError errorMessage={this.props.loginMessage} />
+                    <div className="register">
+                        <h2>Not a member?</h2>
+                        <Link to="/register" 
+                            className="secondary-button button"
+                        >
+                            Join
+                        </Link>
+                    </div>
+                </nav>
             </header>
-            <nav id="main-menu">
-                <div className="login">
-                    <input
-                        type="text"
-                        id="login-email"
-                        placeholder="your email"
-                    />
-                    <input
-                        type="password"
-                        id="login-password"
-                        placeholder="password" />
-                    <input 
-                        className="primary-button"
-                        type="submit"
-                        value="Login"
-                        onClick={this.props.onLoginClick}/>
-                </div>
-                <LoginError errorMessage={this.props.loginMessage} />
-                <div className="register">
-                    <h2>Not a member?</h2>
-                    <Link to="/register" 
-                        className="secondary-button button"
-                    >
-                        Join
-                    </Link>
-                </div>
-            </nav>
             </React.Fragment>
         );
     }

@@ -1,0 +1,86 @@
+/*
+ * _interface.scss
+ * This file provides the styles for the various features of the user
+ * interface. 
+ *
+ */
+.primary-button {
+
+    text-align: center;
+	color: #fff;
+	letter-spacing: 0.05rem;
+	@include linear-gradient-background(#3ea86a, #328655);
+	border: 1px solid #328655; // #184b94
+	border-bottom-color: #40584a;
+	border-radius: 3px;
+    font-family: $font-stack;
+    font-weight: bold;
+
+	&:hover {
+
+		@include linear-gradient-background(#328655, #3ea86a);
+	}
+}
+
+.secondary-button {
+
+    text-align: center;
+	color: #fff;
+	letter-spacing: 0.05rem;
+	@include linear-gradient-background(#eac33c, #e8b503);
+	border: 1px solid #bc9408; // #184b94
+	border-bottom-color: #a68205;
+	border-radius: 3px;
+    font-family: $font-stack;
+    font-weight: bold;
+
+	&:hover {
+
+		@include linear-gradient-background(#e8b503, #eac33c);
+	}
+}
+
+.blue-button {
+
+    text-align: center;
+	color: #fff;
+	letter-spacing: 0.05rem;
+	@include linear-gradient-background(#4d86da, #2a6bca);
+	border: 1px solid #2867c2; // #184b94
+	border-bottom-color: #245bac;
+	border-radius: 3px;
+
+	&:hover {
+
+		@include linear-gradient-background(#2a6bca, #4d86da);
+	}
+}
+
+input {
+
+    display: inline-block;
+}
+
+input[type="submit"],
+input[type="text"],
+input[type="password"] {
+
+    height: 2.5rem;
+    font-size: 12px;
+    font-family: $font-stack;
+    font-weight: bold;
+    border-radius: 5px;
+    line-height: 1rem;
+    padding: 0;
+}
+
+input[type="text"],
+input[type="password"] {
+
+    background-color: #f0f8f3;
+    color: #28372e;
+    padding: 0 0 0 0.5rem;
+//    border: 1px solid #b0cbbb;
+	border: 1px solid #328655; // #184b94
+}
+

@@ -28,25 +28,55 @@ var asyncHandler = (function() {
      * send()
      * Send an asynchronous request.
      *
-     * string url
-     * The URL of the script to access. The URL may include a query string.
+     * object options
+     * An object with the properties 'url' and 'data'.
      *
-     * object data
-     * An object to be JSON and URI encoded and passed via POST to the server
-     * at the given URL.
+     * string options.url
+     * The URL of the request.
      *
-     * function callback
-     * A function which will be passed "response text" and the response from
-     * the server.
+     * object options.data
+     * This object will be converted to JSON and URI encoded before being
+     * passed to the server via post.
      *
-     * object info
-     * This used to be called, cryptically, "arg." It can be used to pass
-     * information to the response-handling callback from the response-
-     * initiator.
+     * 
      *
      */
-    var send = function(url, data, callback, info) {
+    var send = function(options) {
 
+        console.log('Attempting async request...');
+        var url = options.url;
+        var data = encodeURIComponent(JSON.stringify(object.data));
+        return fetch(url, {
+            method: "POST",
+            headers: { 
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: "data=" + data + "&async=1"
+
+        })
+            .then(handleErrors)
+            .then( (response) => { 
+            
+                console.log("TEST");
+                console.log(response);
+                return response.text();
+            });
+    };
+
+    var handleErrors = function(response) {
+
+        console.log("Handling errors (async).");
+        if (!response.ok) {
+            var errorMsg;
+            if (response.status == 500) {
+                errorMsg = 'Sorry! The server is having some trouble at the moment.'
+            }
+            else errorMsg = response.statusText;
+            throw Error(errorMsg);
+        }
+        return response;
+    };
+/*
         var req = new XMLHttpRequest();
         info = info || null;
         data = encodeURIComponent(JSON.stringify(data));
@@ -55,7 +85,6 @@ var asyncHandler = (function() {
             alert('Cannot create an XMLHttpRequest instance.'); // TODO replace
             return false;
         }
-
         var params = "data=" + data + "&async=1";
 
         req.onreadystatechange = alertContents;
@@ -74,11 +103,11 @@ var asyncHandler = (function() {
                 }
                 else alert('There was a problem with the request.'); // TODO replace
             }
-        }
-    };
+        }*/
+//    };
 
 //    mediator.subscribe('async-request', handleRequest);
-    return { send: send };
+    return { request: send };
 }());
 
 export { asyncHandler };
