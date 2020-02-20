@@ -4,11 +4,21 @@ import {
     VALIDATE_FORM_FIELD_BEGIN,
     VALIDATE_FORM_FIELD_END,
     VALIDATE_FORM_FIELD_ERROR,
+    RESET_REGISTER_NAME,
+    REGISTER_USER_BEGIN,
+    REGISTER_USER_END,
+    REGISTER_USER_ERROR,
 } from '../actions';
 
 export default function register(
 
     state = {
+        form: {
+            isBeingSubmitted: false,
+            hasErrors: false,
+            error: null,
+            message: '',
+        },
         fields: {
             emailAddress: {
                 error: null,
@@ -59,6 +69,22 @@ export default function register(
 
     switch (action.type) {
 
+        case RESET_REGISTER_NAME:
+            console.log('FIELD TEST');
+            var field = action.payload.fieldType;
+            console.log(field);
+            var newFieldState = {};
+            newFieldState[field] = {
+                isValidating: false,
+                error: null,
+                message: null,
+                isValid: null,
+                serverData: null,
+            };
+            return Object.assign({}, state, {
+                fields: Object.assign({}, state.fields, newFieldState),
+            });
+
         case VALIDATE_FORM_FIELD_BEGIN:
             var field = action.payload.fieldType;
             var newFieldState = {};
@@ -66,8 +92,6 @@ export default function register(
                 isValidating: true,
                 error: null
             };
-            console.log('FIELD TEST');
-            console.log(state.fields[field]);
             var updatedFields = Object.assign({}, state.fields, newFieldState);
             return Object.assign({}, state, {
 
@@ -75,20 +99,21 @@ export default function register(
             });
 
         case VALIDATE_FORM_FIELD_END:
-            var field = action.payload.fieldType;
+            var response = action.payload.serverResponse;
+            var field = response.data.fieldType;
             var newFieldState = {};
             newFieldState[field] = {
                 isValidating: false,
-                isValid: res.data.isValid,
-                message: res.data.message,
-                serverData: res.data,
+                isValid: response.data.success,
+                message: response.data.message,
+                serverData: response.data,
             };
             return Object.assign({}, state, {
                 fields: Object.assign({}, state.fields, newFieldState),
             });
 
         case VALIDATE_FORM_FIELD_ERROR:
-            var field = action.payload.fieldType;
+            var field = action.payload.error.fieldType;
             var newFieldState = {};
             newFieldState[field] = {
                 error: action.payload.error,
@@ -98,6 +123,33 @@ export default function register(
             };
             return Object.assign({}, state, {
                 fields: Object.assign({}, state.fields, newFieldState),
+            });
+
+        case REGISTER_USER_BEGIN:
+            return Object.assign({}, state, {
+                form: Object.assign({}, state.form, {
+                    isBeingSubmitted: true,
+                }),
+            });
+
+        case REGISTER_USER_END:
+            var response = action.payload.response;
+            return Object.assign({}, state, {
+                form: Object.assign({}, state.form, {
+                    isBeingSubmitted: false,
+                    hasErrors: !response.data.success,
+                    message: response.data.message
+                }),
+            });
+
+        case REGISTER_USER_ERROR:
+            var error = action.payload.error;
+            return Object.assign({}, state, {
+                form: Object.assign({}, state.form, {
+                    isBeingSubmitted: false,
+                    hasErrors: true,
+                    message: error.message
+                }),
             });
 
         default:

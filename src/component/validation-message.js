@@ -19,6 +19,7 @@ export default class ValidationMessage extends Component {
         var cl = '';
         if (this.props.message) cl += "validation-message ";
         cl += (this.props.isValid) ? "valid" : "invalid";
+        cl += (this.props.className) ? " " + this.props.className : '';
         return (
             <React.Fragment>
             <div className={cl}>{ this.props.message }</div>

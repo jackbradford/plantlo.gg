@@ -8,7 +8,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Register from '../component/pages/register';
 import {
-    attemptValidateFormField
+    attemptRegisterUser,
+    registerUserEnd,
+    attemptValidateFormField,
+    validateFormFieldEnd,
+    resetRegisterName
 } from '../actions';
 
 const mapStateToProps = function(state) {
@@ -20,33 +24,32 @@ const mapStateToProps = function(state) {
         email: state.register.fields.emailAddress,
         username: state.register.fields.username,
         password: state.register.fields.password,
+        passwordMatch: state.register.fields.passwordMatch,
         firstName: state.register.fields.firstName,
         lastName: state.register.fields.lastName,
+        formStatus: state.register.form,
     }
-    /*
-    return {
-
-        emailIsValid: state.register.emailIsValid,
-        usernameIsValid: state.register.usernameIsValid,
-        passwordIsValid: state.register.passwordIsValid,
-        passwordMatches: state.register.passwordMatches,
-        firstNameIsValid: state.register.firstNameIsValid,
-        lastNameIsValid: state.register.lastNameIsValid,
-    }
-    */
 };
 
 const mapDispatchToProps = function(dispatch) {
 
     return {
 
+        attemptRegisterUser: (formData) => {
+            dispatch(attemptRegisterUser(formData))
+        },
+        registerUserEnd: (response) => {
+            dispatch(registerUserEnd(response))
+        },
+        resetName: (options) => {
+            dispatch(resetRegisterName(options))
+        },
         validate: {
             emailAddress: (e) => { 
                 dispatch(attemptValidateFormField({
                     fieldType: 'emailAddress',
                     fieldId: 'register-email-address',
                     e: e,
-                    async: true,
                 }));
             },
             username: (e) => {
@@ -54,32 +57,18 @@ const mapDispatchToProps = function(dispatch) {
                     fieldType: 'username',
                     fieldId: 'register-username',
                     e: e,
-                    async: true,
                 }));
             },
-            password: (e) => { 
-                dispatch(attemptValidateFormField({
-                    fieldType: 'password',
-                    fieldId: 'register-password',
-                    e: e,
-                    async: false,
-                }));
+            password: (options) => { 
+                console.log("OPTIONS");
+                console.log(options);
+                dispatch(validateFormFieldEnd(options))
             },
-            passwordMatch: (e) => { 
-                dispatch(attemptValidateFormField({
-                    fieldType: 'passwordMatch',
-                    fieldId: 'register-password-match',
-                    e: e,
-                    async: false,
-                }));
+            passwordMatch: (options) => { 
+                dispatch(validateFormFieldEnd(options))
             },
-            name: (e) => { 
-                dispatch(attemptValidateFormField({
-                    fieldType: 'name',
-                    fieldId: '',
-                    e: e,
-                    async: false,
-                }));
+            name: (options) => { 
+                dispatch(validateFormFieldEnd(options))
             },
         }
     };

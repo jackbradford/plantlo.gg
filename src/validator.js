@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 
 var validator = (function() {
 
+    var fieldType;
     /**
      * fields.validate()
      * Attempt to log a user into the site. Works with completeLogin(), which
@@ -20,11 +21,12 @@ var validator = (function() {
      */
     var checkField = function(options) {
 
+        fieldType = options.fieldType;
         console.log('Attempting async field validate...');
         var url = '/index.php?ctrl=public&actn=validateField';
         var data = encodeURIComponent(JSON.stringify({
             fieldType: options.fieldType,
-            value: document.getElementById(options.fieldId).value,
+            userInput: document.getElementById(options.fieldId).value,
         }));
         return fetch(url, {
             method: "POST",
@@ -43,14 +45,23 @@ var validator = (function() {
 
     var handleErrors = function(response) {
 
+        function ServerErrorException(message, response, fieldType) {
+            this.message = message;
+            this.response = response;
+            this.fieldType = fieldType;
+        }
+
         console.log("Handling errors.");
+        console.log(fieldType);
         if (!response.ok) {
             var errorMsg;
             if (response.status == 500) {
                 errorMsg = 'Internal server error.'
             }
             else errorMsg = response.statusText;
-            throw Error(errorMsg);
+            console.log("BODY");
+            console.log(response.body);
+            throw new ServerErrorException(errorMsg, response, fieldType);
         }
         return response;
     }

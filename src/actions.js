@@ -3,7 +3,63 @@
  *
  */
 import { auth } from './auth';
+import { async } from './async';
 import { validator } from './validator';
+
+export const REGISTER_USER_BEGIN = 'REGISTER_USER_BEGIN';
+export const REGISTER_USER_END = 'REGISTER_USER_END';
+export const REGISTER_USER_ERROR = 'REGISTER_USER_ERROR';
+
+export const attemptRegisterUser = (formData) => {
+
+    return (dispatch) => {
+
+        dispatch(registerUserBegin());
+        return async.request({
+            url: 'index.php?ctrl=public&actn=registerUser',
+            data: formData
+        })
+        .then(
+            (response) => {
+                response = JSON.parse(response);
+                dispatch(registerUserEnd(response));
+            }
+        )
+        .catch(
+            (error) => {
+                console.log("TEST: ");
+                console.log(error);
+                dispatch(registerUserError(error));
+            }
+        );
+    };
+};
+
+export const registerUserBegin = () => {
+
+    return {
+        type: REGISTER_USER_BEGIN,
+    }
+}
+
+export const registerUserEnd = (response) => {
+
+    return {
+        type: REGISTER_USER_END,
+        payload: { response: response }
+    };
+};
+
+export const registerUserError = (error) => {
+
+    return {
+        type: REGISTER_USER_ERROR,
+        payload: {
+            error: error,
+        }
+    };
+};
+
 
 /**
  * Actions for /register
@@ -12,6 +68,7 @@ import { validator } from './validator';
 export const VALIDATE_FORM_FIELD_BEGIN = 'VALIATE_FORM_FIELD_BEGIN';
 export const VALIDATE_FORM_FIELD_END = 'VALIATE_FORM_FIELD_END';
 export const VALIDATE_FORM_FIELD_ERROR = 'VALIATE_FORM_FIELD_ERROR';
+export const RESET_REGISTER_NAME = 'RESET_REGISTER_NAME';
 
 /**
  * string options.fieldType
@@ -22,7 +79,7 @@ export const VALIDATE_FORM_FIELD_ERROR = 'VALIATE_FORM_FIELD_ERROR';
  *  passwordMatch
  *  name
  *
- * string options.fieldId
+ * string options.fieldId   
  * The ID of the field to validate.
  *
  * Event options.e
@@ -31,23 +88,25 @@ export const VALIDATE_FORM_FIELD_ERROR = 'VALIATE_FORM_FIELD_ERROR';
  */
 export const attemptValidateFormField = (options) => {
 
-    if (options.async === false) {
-
-
-    }
-    else return (dispatch) => {
+    return (dispatch) => {
 
         dispatch(validateFormFieldBegin(options));
-        return validator.checkField(options)
-            .then(
-                (response) => {
-                    response = JSON.parse(response);
-                    dispatch(validateFormFieldEnd(response, options.fieldType));
-                }
-            )
-            .catch(
-                (error) => { dispatch(validateFormFieldError(error, options.fieldType)); }
-            );
+        return validator.checkField(
+            options
+        )
+        .then(
+            (response) => {
+                response = JSON.parse(response);
+                dispatch(validateFormFieldEnd(response));
+            }
+        )
+        .catch(
+            (error) => {
+                console.log("TEST: ");
+                console.log(error);
+                dispatch(validateFormFieldError(error));
+            }
+        );
     };
 };
 
@@ -67,32 +126,43 @@ export const validateFormFieldBegin = (options) => {
     };
 };
 
-export const validateFormFieldEnd = (serverResponse, fieldType) => {
+export const validateFormFieldEnd = (serverResponse) => {
 
-    console.log("field type: " + options.fieldType);
+//    console.log("field type: " + options.fieldType);
     console.log("RESPONSE:");
     console.log(serverResponse);
     return {
 
         type: VALIDATE_FORM_FIELD_END,
         payload: {
-            fieldType: fieldType,
+//            fieldType: fieldType,
             serverResponse: serverResponse,
         }
     };
 };
 
-export const validateFormFieldError = (error, fieldType) => {
+export const validateFormFieldError = (error) => {
 
     return {
 
         type: VALIDATE_FORM_FIELD_ERROR,
         payload: {
-            fieldType: fieldType,
+//            fieldType: fieldType,
             error: error
         }
         
     };
+};
+
+export const resetRegisterName = (options) => {
+
+    return {
+
+        type: RESET_REGISTER_NAME,
+        payload: {
+            fieldType: options.fieldType
+        }
+    }
 };
 
 /**
@@ -164,6 +234,7 @@ export const resetLoginMessage = () => {
     };
 };
 
+// TODO: is this used??
 export const attemptValidateUsername = () => {
 
     return (dispatch) => {

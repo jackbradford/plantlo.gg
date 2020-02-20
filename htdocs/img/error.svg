@@ -22,7 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -40,8 +40,8 @@
      id="namedview1122"
      showgrid="false"
      inkscape:zoom="16"
-     inkscape:cx="13.357978"
-     inkscape:cy="11.952405"
+     inkscape:cx="17.272399"
+     inkscape:cy="13.250542"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="0"
@@ -52,7 +52,7 @@
      id="defs1115" />
   <path
      id="path1669"
-     style="opacity:1;fill:#ee8a6b;fill-opacity:1;stroke:none;stroke-width:0.62930077;stroke-opacity:1"
+     style="opacity:1;fill:#efa893;fill-opacity:1;stroke:none;stroke-width:0.62930077;stroke-opacity:1"
      d="M 17.027344,4.2558594 4.4394531,24.244141 c -0.070603,0.456708 0.301342,0.569399 0.4335928,0.791052 0.1108442,0.0885 0.2447369,0.172325 0.3300781,0.289063 0.055047,0.06858 0.081561,0.149528 0.117187,0.214842 l 23.857421,-0.02148 c 0.0286,-0.07773 0.02011,-0.169282 0.02738,-0.230473 -0.0065,-0.134115 0.05715,-0.236759 0.09571,-0.328131 0.07618,-0.173658 0.153307,-0.418533 0.19531,-0.533203 0.170359,-0.01586 0.1993,-0.0093 0.287109,-0.01367 z"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="ccccccccccc" />

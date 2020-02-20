@@ -7,6 +7,7 @@ ini_set('error_log', '/var/www/vhosts/plantlo.gg.dev/error.log');
 require_once '/var/www/vhosts/plantlo.gg.dev/vendor/autoload.php';
 require_once '/var/www/vhosts/plantlo.gg.dev/src/Controllers/PublicController.php';
 use JackBradford\Disphatch\Router\Router;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 $config = '/var/www/vhosts/plantlo.gg.dev/disphatch.conf.json';
 $router = Router::init($config);

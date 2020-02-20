@@ -6,7 +6,7 @@
  */
 import { mediator } from './mediator';
 
-var asyncHandler = (function() {
+var async = (function() {
 
     /**
      * handleRequest()
@@ -45,7 +45,7 @@ var asyncHandler = (function() {
 
         console.log('Attempting async request...');
         var url = options.url;
-        var data = encodeURIComponent(JSON.stringify(object.data));
+        var data = encodeURIComponent(JSON.stringify(options.data));
         return fetch(url, {
             method: "POST",
             headers: { 
@@ -110,5 +110,5 @@ var asyncHandler = (function() {
     return { request: send };
 }());
 
-export { asyncHandler };
+export { async };
 
