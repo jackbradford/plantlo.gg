@@ -60,7 +60,7 @@ nav {
     transition-duration: 0.5s;
     @include gradient-bottom-edge(#fcfcfc, $bottom-color, $accent-color, 35px);
     padding: 0.5rem 1rem;
-    z-index: 62;
+    z-index: -62;
 
     .login {
 
@@ -83,6 +83,7 @@ nav {
 
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
+        border-right: 0;
     }
 
     input[type="password"] {

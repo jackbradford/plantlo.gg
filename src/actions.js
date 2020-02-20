@@ -27,8 +27,6 @@ export const attemptRegisterUser = (formData) => {
         )
         .catch(
             (error) => {
-                console.log("TEST: ");
-                console.log(error);
                 dispatch(registerUserError(error));
             }
         );
@@ -102,8 +100,6 @@ export const attemptValidateFormField = (options) => {
         )
         .catch(
             (error) => {
-                console.log("TEST: ");
-                console.log(error);
                 dispatch(validateFormFieldError(error));
             }
         );
@@ -112,7 +108,6 @@ export const attemptValidateFormField = (options) => {
 
 export const validateFormFieldBegin = (options) => {
 
-    console.log("FIELD_TYPE: " + options.fieldType);
     return {
 
         type: VALIDATE_FORM_FIELD_BEGIN,
@@ -128,14 +123,10 @@ export const validateFormFieldBegin = (options) => {
 
 export const validateFormFieldEnd = (serverResponse) => {
 
-//    console.log("field type: " + options.fieldType);
-    console.log("RESPONSE:");
-    console.log(serverResponse);
     return {
 
         type: VALIDATE_FORM_FIELD_END,
         payload: {
-//            fieldType: fieldType,
             serverResponse: serverResponse,
         }
     };
@@ -147,7 +138,6 @@ export const validateFormFieldError = (error) => {
 
         type: VALIDATE_FORM_FIELD_ERROR,
         payload: {
-//            fieldType: fieldType,
             error: error
         }
         
@@ -231,27 +221,6 @@ export const resetLoginMessage = () => {
     return {
 
         type: RESET_LOGIN_MESSAGE
-    };
-};
-
-// TODO: is this used??
-export const attemptValidateUsername = () => {
-
-    return (dispatch) => {
-
-        dispatch(validateUsernameBegin());
-        return async.request({
-            url: 'index.php?ctrl=auth&actn=validateUsername',
-            data: {
-                username: document.getElementById('register-username').value,
-            }
-        })
-            .then(
-                (response) => { dispatch(validateUsernameEnd(JSON.parse(response))); }
-            )
-            .catch(
-                (error) => { dispatch(validateUsernameError(error)); }
-            );
     };
 };
 

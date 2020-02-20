@@ -29,9 +29,6 @@ export default function header(
             });
 
         case LOGIN_REQUEST_END:
-            console.log('state/payload');
-            console.log(state);
-            console.log(action.payload.serverResponse);
             var res = action.payload.serverResponse;
             return Object.assign({}, state, {
 

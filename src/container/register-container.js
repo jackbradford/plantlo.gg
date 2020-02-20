@@ -17,8 +17,6 @@ import {
 
 const mapStateToProps = function(state) {
 
-    console.log("STATE");
-    console.log(state);
     return {
 
         email: state.register.fields.emailAddress,
@@ -60,8 +58,6 @@ const mapDispatchToProps = function(dispatch) {
                 }));
             },
             password: (options) => { 
-                console.log("OPTIONS");
-                console.log(options);
                 dispatch(validateFormFieldEnd(options))
             },
             passwordMatch: (options) => { 

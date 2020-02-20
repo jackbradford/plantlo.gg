@@ -4,7 +4,7 @@
  */
 import React, { Component } from 'react';
 import ReactDOM from "react-dom";
-import LoginError from '../login-error';
+import LoginError from './login-error';
 import { mediator }  from '../mediator';
 import { auth } from '../auth';
 import {
@@ -36,7 +36,6 @@ export default class Header extends Component {
 
     toggleMenu() {
 
-        console.log('Running openMenu.');
         var menu = document.getElementById('main-menu');
         var header = document.getElementById('app-header');
         if (menu.style.transform == "translateY(0px)") {
@@ -49,8 +48,6 @@ export default class Header extends Component {
 
     goToRegister() {
 
-        console.log("Sending to registration page.");
-        console.log(history);
         history.push('/register');
     }
 

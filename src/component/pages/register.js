@@ -55,8 +55,6 @@ export default class Register extends Component {
         }
         catch (error) {
 
-            console.log("ERROR");
-            console.log("ERROR");
             this.props.validate.password({
                 success:true,
                 data: {
@@ -305,7 +303,7 @@ export default class Register extends Component {
                     />
                     <input
                         type="text"
-                        placeholder="first name"
+                        placeholder="first name (optional)"
                         onBlur={ this.validateName }
                         id="register-first-name"
                         className={
@@ -329,7 +327,7 @@ export default class Register extends Component {
                     />
                     <input
                         type="text"
-                        placeholder="last name"
+                        placeholder="last name (optional)"
                         onBlur={ this.validateName }
                         id="register-last-name"
                         className={

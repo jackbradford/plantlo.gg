@@ -18,7 +18,6 @@ var auth = (function() {
      */
     var attemptLogin = function(dispatch) {
 
-        console.log('Attempting async login...');
         var url = '/index.php?ctrl=auth&actn=auth';
         var data = encodeURIComponent(JSON.stringify({
         
@@ -36,15 +35,12 @@ var auth = (function() {
             .then(handleErrors)
             .then( (response) => { 
             
-                console.log("TEST");
-                console.log(response);
                 return response.text();
             });
     };
 
     var handleErrors = function(response) {
 
-        console.log("Handling errors.");
         if (!response.ok) {
             var errorMsg;
             if (response.status == 500) {

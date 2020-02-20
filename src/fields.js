@@ -22,7 +22,6 @@ var fields = (function() {
      */
     var attemptValidate = function(options) {
 
-        console.log('Attempting field validate...');
         var url = '/index.php?ctrl=public&actn=validateField';
         var data = encodeURIComponent(JSON.stringify());
         return fetch(url, {
@@ -36,15 +35,12 @@ var fields = (function() {
             .then(handleErrors)
             .then( (response) => { 
             
-                console.log("TEST");
-                console.log(response);
                 return response.text();
             });
     };
 
     var handleErrors = function(response) {
 
-        console.log("Handling errors.");
         if (!response.ok) {
             var errorMsg;
             if (response.status == 500) {

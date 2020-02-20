@@ -70,9 +70,7 @@ export default function register(
     switch (action.type) {
 
         case RESET_REGISTER_NAME:
-            console.log('FIELD TEST');
             var field = action.payload.fieldType;
-            console.log(field);
             var newFieldState = {};
             newFieldState[field] = {
                 isValidating: false,

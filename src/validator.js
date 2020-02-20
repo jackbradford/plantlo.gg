@@ -22,7 +22,6 @@ var validator = (function() {
     var checkField = function(options) {
 
         fieldType = options.fieldType;
-        console.log('Attempting async field validate...');
         var url = '/index.php?ctrl=public&actn=validateField';
         var data = encodeURIComponent(JSON.stringify({
             fieldType: options.fieldType,
@@ -51,16 +50,12 @@ var validator = (function() {
             this.fieldType = fieldType;
         }
 
-        console.log("Handling errors.");
-        console.log(fieldType);
         if (!response.ok) {
             var errorMsg;
             if (response.status == 500) {
                 errorMsg = 'Internal server error.'
             }
             else errorMsg = response.statusText;
-            console.log("BODY");
-            console.log(response.body);
             throw new ServerErrorException(errorMsg, response, fieldType);
         }
         return response;
