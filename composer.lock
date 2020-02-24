@@ -512,12 +512,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jackbradford/disphatch.git",
-                "reference": "71870ad26246c8c3ed990900ca3fdbb3fcff39a4"
+                "reference": "d5e15f9a636a4a939e552da66317bc7c9c3bc688"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jackbradford/disphatch/zipball/71870ad26246c8c3ed990900ca3fdbb3fcff39a4",
-                "reference": "71870ad26246c8c3ed990900ca3fdbb3fcff39a4",
+                "url": "https://api.github.com/repos/jackbradford/disphatch/zipball/d5e15f9a636a4a939e552da66317bc7c9c3bc688",
+                "reference": "d5e15f9a636a4a939e552da66317bc7c9c3bc688",
                 "shasum": ""
             },
             "require": {
@@ -525,6 +525,7 @@
                 "illuminate/database": "^6.10",
                 "illuminate/events": "^6.0",
                 "illuminate/pagination": "^6.0",
+                "phpmailer/phpmailer": "^6.1",
                 "symfony/http-foundation": "^5.0"
             },
             "require-dev": {
@@ -541,7 +542,7 @@
                 "source": "https://github.com/jackbradford/disphatch/tree/master",
                 "issues": "https://github.com/jackbradford/disphatch/issues"
             },
-            "time": "2020-02-19T19:12:49+00:00"
+            "time": "2020-02-24T19:39:20+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -612,6 +613,68 @@
                 "time"
             ],
             "time": "2020-02-07T15:25:46+00:00"
+        },
+        {
+            "name": "phpmailer/phpmailer",
+            "version": "v6.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPMailer/PHPMailer.git",
+                "reference": "c5e61d0729507049cec9673aa1a679f9adefd683"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/c5e61d0729507049cec9673aa1a679f9adefd683",
+                "reference": "c5e61d0729507049cec9673aa1a679f9adefd683",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-filter": "*",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^1.2",
+                "friendsofphp/php-cs-fixer": "^2.2",
+                "phpunit/phpunit": "^4.8 || ^5.7"
+            },
+            "suggest": {
+                "ext-mbstring": "Needed to send email in multibyte encoding charset",
+                "hayageek/oauth2-yahoo": "Needed for Yahoo XOAUTH2 authentication",
+                "league/oauth2-google": "Needed for Google XOAUTH2 authentication",
+                "psr/log": "For optional PSR-3 debug logging",
+                "stevenmaguire/oauth2-microsoft": "Needed for Microsoft XOAUTH2 authentication",
+                "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPMailer\\PHPMailer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1-only"
+            ],
+            "authors": [
+                {
+                    "name": "Marcus Bointon",
+                    "email": "phpmailer@synchromedia.co.uk"
+                },
+                {
+                    "name": "Jim Jagielski",
+                    "email": "jimjag@gmail.com"
+                },
+                {
+                    "name": "Andy Prevost",
+                    "email": "codeworxtech@users.sourceforge.net"
+                },
+                {
+                    "name": "Brent R. Matzelle"
+                }
+            ],
+            "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
+            "time": "2019-12-10T11:17:38+00:00"
         },
         {
             "name": "psr/container",
