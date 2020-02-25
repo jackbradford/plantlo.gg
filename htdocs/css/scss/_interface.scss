@@ -4,10 +4,18 @@
  * interface. 
  *
  */
+.button {
+
+    text-align: center;
+    color: #fff;
+    letter-spacing: 0.05rem;
+    font-family: $font-stack;
+}
+
 .primary-button {
 
     text-align: center;
-	color: #fff;
+	color: #cfeddb;
 	letter-spacing: 0.05rem;
 	@include linear-gradient-background(#3ea86a, #328655);
 	border: 1px solid #328655; // #184b94
@@ -51,6 +59,23 @@
 	&:hover {
 
 		@include linear-gradient-background(#2a6bca, #4d86da);
+	}
+}
+
+.error-button {
+
+    text-align: center;
+	color: #fff;
+	letter-spacing: 0.05rem;
+	@include linear-gradient-background(#ef6b42, #ed4c2a);
+	border: 1px solid #d03514;
+	border-bottom-color: #94260e;
+	border-radius: 3px;
+    font-family: $font-stack;
+
+	&:hover {
+
+		@include linear-gradient-background(#ed4c2a, #ef6b42);
 	}
 }
 

@@ -12,7 +12,8 @@ import {
     registerUserEnd,
     attemptValidateFormField,
     validateFormFieldEnd,
-    resetRegisterName
+    resetRegisterName,
+    resetFormStatus
 } from '../actions';
 
 const mapStateToProps = function(state) {
@@ -41,6 +42,9 @@ const mapDispatchToProps = function(dispatch) {
         },
         resetName: (options) => {
             dispatch(resetRegisterName(options))
+        },
+        resetFormStatus: () => {
+            dispatch(resetFormStatus())
         },
         validate: {
             emailAddress: (e) => { 

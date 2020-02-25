@@ -5,6 +5,7 @@ import {
     VALIDATE_FORM_FIELD_END,
     VALIDATE_FORM_FIELD_ERROR,
     RESET_REGISTER_NAME,
+    RESET_REGISTER_FORM_STATUS,
     REGISTER_USER_BEGIN,
     REGISTER_USER_END,
     REGISTER_USER_ERROR,
@@ -15,9 +16,11 @@ export default function register(
     state = {
         form: {
             isBeingSubmitted: false,
+            submittedSuccessfully: null,
             hasErrors: false,
             error: null,
             message: '',
+            email: null,
         },
         fields: {
             emailAddress: {
@@ -80,21 +83,30 @@ export default function register(
                 serverData: null,
             };
             return Object.assign({}, state, {
-                fields: Object.assign({}, state.fields, newFieldState),
+                fields: Object.assign({}, state.fields, {
+                    [field]: Object.assign({}, state.fields[field], {
+                        isValidating: false,
+                        error: null,
+                        message: null,
+                        isValid: null,
+                        serverData: null,
+                    })
+                }),
             });
 
         case VALIDATE_FORM_FIELD_BEGIN:
             var field = action.payload.fieldType;
-            var newFieldState = {};
-            newFieldState[field] = {
-                isValidating: true,
-                error: null
+            return {
+                ...state,
+                fields: {
+                    ...state.fields,
+                    [field]: {
+                        ...state.fields[field],
+                        isValidating: true,
+                        error: null
+                    }
+                }
             };
-            var updatedFields = Object.assign({}, state.fields, newFieldState);
-            return Object.assign({}, state, {
-
-                fields: updatedFields
-            });
 
         case VALIDATE_FORM_FIELD_END:
             var response = action.payload.serverResponse;
@@ -136,7 +148,10 @@ export default function register(
                 form: Object.assign({}, state.form, {
                     isBeingSubmitted: false,
                     hasErrors: !response.data.success,
-                    message: response.data.message
+                    message: response.data.message,
+                    email: response.data.email,
+                    submittedSuccessfully: response.data.success
+                    
                 }),
             });
 
@@ -146,7 +161,20 @@ export default function register(
                 form: Object.assign({}, state.form, {
                     isBeingSubmitted: false,
                     hasErrors: true,
-                    message: error.message
+                    message: error.message,
+                    submittedSuccessfully: false
+                }),
+            });
+
+        case RESET_REGISTER_FORM_STATUS:
+            return Object.assign({}, state, {
+                form: Object.assign({}, state.form, {
+                    isBeingSubmitted: false,
+                    submittedSuccessfully: null,
+//                    hasErrors: false,
+//                    error: null,
+//                    message: '',
+                    email: null,
                 }),
             });
 

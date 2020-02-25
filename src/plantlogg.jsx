@@ -40,7 +40,7 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <Router history={history}>
-                    <Root />
+                    <Root history={history}/>
                 </Router>
             </Provider>
         );
@@ -61,7 +61,10 @@ class Root extends Component {
             <React.Fragment>
                 <Route exact path='/' component={Home} />
                 <Route path='/test' component={Test} />
-                <Route path='/register' component={RegisterContainer} />
+                <Route
+                    path='/register'
+                    render={ props => <RegisterContainer {...props} />}
+                />
                 <Route exact path='/activate' component={Test} />
                 <Route path='/activate/:userId/:code' component={Test} />
             </React.Fragment>

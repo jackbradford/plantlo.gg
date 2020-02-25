@@ -8,6 +8,7 @@ import { auth } from '../../auth';
 import HeaderContainer from '../../container/header-container';
 import ValidationStatusIcon from '../validation-status-icon';
 import ValidationMessage from '../validation-message';
+import ModalBox from '../modal-box';
 import ReactDOM from "react-dom";
 import { TailSpin } from "svg-loaders-react"
 import {
@@ -22,10 +23,22 @@ export default class Register extends Component {
 
     constructor() {
         super();
+        this.validateEmail = this.validateEmail.bind(this);
+        this.validateUsername = this.validateUsername.bind(this);
         this.validatePassword = this.validatePassword.bind(this);
         this.validatePasswordMatch = this.validatePasswordMatch.bind(this);
         this.validateName = this.validateName.bind(this);
         this.attemptRegisterUser = this.attemptRegisterUser.bind(this);
+    }
+
+    validateEmail(e) {
+
+        this.props.validate.emailAddress(e);
+    }
+
+    validateUsername(e) {
+
+        this.props.validate.username(e);
     }
 
     /**
@@ -167,6 +180,7 @@ export default class Register extends Component {
 
         var formMessage;
         var submitButton;
+        var submitModal;
         if (this.props.formStatus.hasErrors) {
             formMessage = (
                 <ValidationMessage
@@ -181,7 +195,6 @@ export default class Register extends Component {
             submitButton = (
                 <div
                     className="primary-button submit"
-                    onClick={ this.attemptRegisterUser }
                 >
                     <span><TailSpin /></span>
                 </div>
@@ -199,6 +212,37 @@ export default class Register extends Component {
             );
         }
 
+        if (this.props.formStatus.submittedSuccessfully === true) {
+
+            var msg = "You're almost done! We've sent an activation link to the email address you provided.";
+            var redir = "/login";
+            var title = "Success!";
+            submitModal = (
+                <ModalBox
+                    type="success"
+                    title={title}
+                    message={msg}
+                    redirect={redir}
+                    history={this.props.history}
+                    id="register-success-modal"
+                />
+            );
+        }
+        if (this.props.formStatus.submittedSuccessfully === false) {
+
+            var msg = "Something went wrong! Please try again later.";
+            var title = "Error";
+            submitModal = (
+                <ModalBox
+                    type="error"
+                    title={title}
+                    message={msg}
+                    id="register-error-modal"
+                    reset={this.props.resetFormStatus}
+                />
+            );
+        }
+
         return (
             <React.Fragment>
             <HeaderContainer />
@@ -208,7 +252,8 @@ export default class Register extends Component {
                     <input 
                         type="text"
                         placeholder="your email"
-                        onBlur={ this.props.validate.emailAddress }
+                        onFocus={ this.props.resetFormStatus }
+                        onBlur={ this.validateEmail }
                         id="register-email-address"
                         className={ 
                             (this.props.email.isValid !== false)
@@ -232,6 +277,7 @@ export default class Register extends Component {
                     <input
                         type="text"
                         placeholder="a new username"
+                        onFocus={ this.props.resetFormStatus }
                         onBlur={ this.props.validate.username }
                         id="register-username"
                         className={
@@ -256,6 +302,7 @@ export default class Register extends Component {
                     <input
                         type="password"
                         placeholder="a new password"
+                        onFocus={ this.props.resetFormStatus }
                         onBlur={ this.validatePassword }
                         id="register-password"
                         className={
@@ -280,6 +327,7 @@ export default class Register extends Component {
                     <input
                         type="password"
                         placeholder="please retype your password"
+                        onFocus={ this.props.resetFormStatus }
                         onBlur={ this.validatePasswordMatch }
                         id="register-password-match"
                         className={
@@ -304,6 +352,7 @@ export default class Register extends Component {
                     <input
                         type="text"
                         placeholder="first name (optional)"
+                        onFocus={ this.props.resetFormStatus }
                         onBlur={ this.validateName }
                         id="register-first-name"
                         className={
@@ -328,6 +377,7 @@ export default class Register extends Component {
                     <input
                         type="text"
                         placeholder="last name (optional)"
+                        onFocus={ this.props.resetFormStatus }
                         onBlur={ this.validateName }
                         id="register-last-name"
                         className={
@@ -351,6 +401,7 @@ export default class Register extends Component {
                     />
                     { formMessage }
                     { submitButton }
+                    { submitModal }
                 </div>
             </main>
             </React.Fragment>

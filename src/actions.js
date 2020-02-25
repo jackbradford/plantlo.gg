@@ -9,6 +9,14 @@ import { validator } from './validator';
 export const REGISTER_USER_BEGIN = 'REGISTER_USER_BEGIN';
 export const REGISTER_USER_END = 'REGISTER_USER_END';
 export const REGISTER_USER_ERROR = 'REGISTER_USER_ERROR';
+export const RESET_REGISTER_FORM_STATUS = 'RESET_REGISTER_FORM_STATUS';
+
+export const resetFormStatus = () => {
+
+    return {
+        type: RESET_REGISTER_FORM_STATUS,
+    }
+}
 
 export const attemptRegisterUser = (formData) => {
 

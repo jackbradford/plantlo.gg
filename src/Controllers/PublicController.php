@@ -13,20 +13,31 @@ class PublicController extends Controller implements IRequestController {
         echo "Home";
     }
 
+    /**
+     * @method PublicController::registerUser()
+     * Register a new site user.
+     *
+     * @param string $_POST['data']
+     * A JSON-encoded data object containing these properties:
+     * `emailAddress`
+     * `username`
+     * `firstName`
+     * `lastName`
+     * `password`
+     *
+     * @return ControllerResponse
+     */
     public function registerUser() {
 
         $data = json_decode($this->fromPOST('data'));
         $email = $data->emailAddress;
-        $username = $data->username;
-        $firstName = $data->firstName;
-        $lastName = $data->lastName;
-
-        // TODO ensure username <36 characters.
+        $username = $this->validateUsername($data->username);
+        $firstName = (empty($data->firstName)) ? null : $data->firstName;
+        $lastName = (empty($data->lastName)) ? null : $data->lastName;
 
         try {
 
-            // Creates a Sentinel user but returns a Disphatch User.
-            $user = $this->addUserRecord($data);
+            $user = $this->addUserRecord($data); // Creates a Sentinel user but returns a Disphatch User.
             $activation = $user->getActivation();
             $code = $activation->getDetails()->code;
             $recipName = (!empty($firstName) && !empty($lastName))
@@ -35,15 +46,12 @@ class PublicController extends Controller implements IRequestController {
 
             $this->sendActivationEmail($activation, $email, $recipName);
 
-            /*
-            $activation->sendActivationEmail($email, $subject, $body, (object)[]);
-             */
-
             $success = true;
             $data = (object)[
                 'user' => $user->getDetails(),
                 'username' => $username,
                 'activation_code' => $code,
+                'success' => true,
             ];
             $cliMsg = 'User added successfully. Activation code: '
                 . $data->activation_code;
@@ -52,16 +60,31 @@ class PublicController extends Controller implements IRequestController {
 
             $success = false;
             $cliMessage = $e->getMessage();
-            $data = (object) [];
+            $data = (object) [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
         }
         return new ControllerResponse($success, $cliMsg, $data);
     }
 
+    /**
+     * @method PublicController::validateField()
+     * Validate a form field entry.
+     *
+     * @param string $_POST['data']
+     * A JSON-encoded object containing the following properties:
+     * `fieldType` The field to validate. Supported fields are found under
+     *      the variable `$validators`.
+     * `userInput` The user's input.
+     *
+     * @return ControllerResponse
+     */
     public function validateField() {
 
         $validators = [
-            'emailAddress' => 'validateEmailAddress',
-            'username' => 'validateUsername',
+            'emailAddress' => 'checkEmailAddress',
+            'username' => 'checkUsername',
         ];
 
         $data = json_decode($this->fromPOST('data'));
@@ -76,15 +99,18 @@ class PublicController extends Controller implements IRequestController {
 
     private function addUserRecord($userInfo) {
 
+        $username = $this->validateUsername($userInfo->username);
+        $fn = (empty($userInfo->firstName)) ? null : $userInfo->firstName;
+        $ln = (empty($userInfo->lastName)) ? null : $userInfo->lastName;
         $user = $this->userMgr->createUser(
-            $userInfo->firstName,
-            $userInfo->lastName,
+            $fn,
+            $ln,
             $userInfo->emailAddress,
             $userInfo->password
         );
         if (!$this->db->getConnection('default')->insert(
             'INSERT INTO usernames (username, user_id) VALUES (?, ?)',
-            [$userInfo->username, $user->getDetails()->id]
+            [$username, $user->getDetails()->id]
         )) {
             $this->userMgr->deleteUser($user->getDetails()->id);
             throw new \Exception('Could not add username.');
@@ -94,6 +120,7 @@ class PublicController extends Controller implements IRequestController {
 
     private function sendActivationEmail(Activation $activation, $email, $name) {
 
+        $dev = ($this->config->getDirective('dev') === 1) ? true : false;
         $userId = $activation->getDetails()->userId;
         $code = $activation->getDetails()->code;
         $link = "https://plantlo.gg/activate/" . $userId . '/' . $code;
@@ -104,7 +131,8 @@ class PublicController extends Controller implements IRequestController {
 
         $emailConf = $this->config->getDirective('email');
         $recipient = (object) ['address' => $email, 'name' => $name];
-        $activation->sendActivationEmail(
+
+        if ($dev === false) $activation->sendActivationEmail(
             $subject,
             $body,
             (object)[
@@ -116,9 +144,10 @@ class PublicController extends Controller implements IRequestController {
                 'recipients' => [$recipient]
             ]
         );
+        else error_log('Send activation email here.');
     }
 
-    private function validateEmailAddress(string $address) {
+    private function checkEmailAddress(string $address) {
 
         $success = false;
         $message = "Email is already registered.";
@@ -144,41 +173,17 @@ class PublicController extends Controller implements IRequestController {
         ];
     }
 
-    private function validateUsername(string $username) {
+    private function checkUsername(string $username) {
 
         $success = true;
         $message = "Username is available.";
-        $username = strtolower($username);
         try {
 
-            $results = $this->db->getConnection('default')->select(
-                'select * from usernames where username = ?',
-                [$username]
-            );
+            $username = $this->validateUsername($username);
         }
         catch (\Exception $e) {
 
             error_log($e->getMessage());
-            $success = false;
-            $message = "Internal server error.";
-        }
-        try {
-
-            if ($results) {
-
-                throw new \Exception('Username is taken.');
-            }
-            if (!preg_match('/.+/', $username)) {
-
-                throw new \Exception('Username cannot be empty.');
-            }
-            if (preg_match('/(\W|\d)/', $username)) {
-
-                throw new \Exception('Username may only contain letters.');
-            }
-        }
-        catch (\Exception $e) {
-
             $success = false;
             $message = $e->getMessage();
         }
@@ -187,6 +192,38 @@ class PublicController extends Controller implements IRequestController {
             'message' => $message,
             'fieldType' => 'username'
         ];
+    }
+
+    private function validateUsername(string $username) {
+
+        $username = mb_strtolower($username);
+        if (!preg_match('/.+/', $username)) {
+
+            throw new \Exception('Username cannot be empty.');
+        }
+        if (preg_match('/(\W)/', $username)) {
+
+            throw new \Exception('Username may only contain letters and numbers.');
+        }
+        if (mb_strlen($username) > 36) {
+
+            throw new \Exception('Username may not exceed 36 characters.');
+        }
+        try {
+                $results = $this->db->getConnection('default')->select(
+                'select * from usernames where username = ?',
+                [$username]
+            );
+        }
+        catch (\Exception $e) {
+
+            error_log($e->getMessage());
+            throw new \Exception("Internal server error.");
+        }
+        if ($results) {
+            throw new \Exception('Username is taken.');
+        }
+        return $username;
     }
 }
 
