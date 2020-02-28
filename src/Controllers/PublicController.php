@@ -13,6 +13,64 @@ class PublicController extends Controller implements IRequestController {
         echo "Home";
     }
 
+    public function activateUser() {
+
+        $data = json_decode($this->fromPOST('data'));
+        $userId = $data->userId;
+        $code = $data->activationCode;
+
+        try {
+
+            $user = $this->userMgr->getUserById($userId);
+            $user->completeActivation($code);
+            $success = true;
+            $message = 'User account activated.';
+        }
+        catch (\Exception $e) {
+
+            $success = false;
+            $message = $e->getMessage();
+        }
+
+        $returnData = (object) [
+            "success" => $success,
+            "userId" => $userId,
+            "activationCode" => $code,
+            "message" => $message,
+        ];
+        return new ControllerResponse($success, $message, $returnData);
+    }
+
+    public function generateNewActivationLink() {
+
+        $data = json_decode($this->fromPOST('data'));
+        $userId = $data->userId;
+
+        try {
+
+            $user = $this->userMgr->getUserById($userId);
+            $email = $user->getDetails()->email;
+            $activation = $user->getNewActivation();
+            $this->sendActivationEmail($activation, $email, $this->getUsername($userId));
+            $success = true;
+            $code = $activation->getDetails()->code;
+            $message = 'A new activation email has been sent.';
+        }
+        catch (\Exception $e) {
+
+            $success = false;
+            $code = null;
+            $message = $e->getMessage();
+        }
+        $returnData = (object) [
+            "success" => $success,
+            "userId" => $userId,
+            "code" => $code,
+            "message" => $message,
+        ];
+        return new ControllerResponse($success, $message, $returnData);
+    }
+
     /**
      * @method PublicController::registerUser()
      * Register a new site user.
@@ -192,6 +250,16 @@ class PublicController extends Controller implements IRequestController {
             'message' => $message,
             'fieldType' => 'username'
         ];
+    }
+
+    private function getUsername($userId) {
+
+        $results = $this->db->getConnection('default')->select(
+            'SELECT username FROM  usernames WHERE user_id=?',
+            [$userId]
+        ); 
+        if (empty($results)) throw new \Exception('No username found.');
+        return $results[0]->username;
     }
 
     private function validateUsername(string $username) {

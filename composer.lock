@@ -209,7 +209,7 @@
         },
         {
             "name": "illuminate/container",
-            "version": "v6.16.0",
+            "version": "v6.17.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -253,7 +253,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v6.16.0",
+            "version": "v6.17.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -297,16 +297,16 @@
         },
         {
             "name": "illuminate/database",
-            "version": "v6.16.0",
+            "version": "v6.17.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
-                "reference": "f56c632e93e7ae8f675d5fd0d0b3b0a9eede1d22"
+                "reference": "2d24be92d25a5adf68ccea30b5682ed2990fa330"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/database/zipball/f56c632e93e7ae8f675d5fd0d0b3b0a9eede1d22",
-                "reference": "f56c632e93e7ae8f675d5fd0d0b3b0a9eede1d22",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/2d24be92d25a5adf68ccea30b5682ed2990fa330",
+                "reference": "2d24be92d25a5adf68ccea30b5682ed2990fa330",
                 "shasum": ""
             },
             "require": {
@@ -353,11 +353,11 @@
                 "orm",
                 "sql"
             ],
-            "time": "2020-02-18T15:08:16+00:00"
+            "time": "2020-02-25T14:08:02+00:00"
         },
         {
             "name": "illuminate/events",
-            "version": "v6.16.0",
+            "version": "v6.17.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/events.git",
@@ -402,7 +402,7 @@
         },
         {
             "name": "illuminate/pagination",
-            "version": "v6.16.0",
+            "version": "v6.17.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/pagination.git",
@@ -447,16 +447,16 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v6.16.0",
+            "version": "v6.17.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "2f5f449750e6821f2d8c4e993a4ff77c7d7d5cc8"
+                "reference": "468b76701a1caf8859b2af7c770a3f293c4f065b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/2f5f449750e6821f2d8c4e993a4ff77c7d7d5cc8",
-                "reference": "2f5f449750e6821f2d8c4e993a4ff77c7d7d5cc8",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/468b76701a1caf8859b2af7c770a3f293c4f065b",
+                "reference": "468b76701a1caf8859b2af7c770a3f293c4f065b",
                 "shasum": ""
             },
             "require": {
@@ -504,7 +504,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2020-02-14T14:20:14+00:00"
+            "time": "2020-02-24T17:34:22+00:00"
         },
         {
             "name": "jackbradford/disphatch",
@@ -512,12 +512,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jackbradford/disphatch.git",
-                "reference": "5e00ca3a94d39117392b975c5588651af60c86ab"
+                "reference": "05946d4e025f3e3fd807da32533692060c10defc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jackbradford/disphatch/zipball/5e00ca3a94d39117392b975c5588651af60c86ab",
-                "reference": "5e00ca3a94d39117392b975c5588651af60c86ab",
+                "url": "https://api.github.com/repos/jackbradford/disphatch/zipball/05946d4e025f3e3fd807da32533692060c10defc",
+                "reference": "05946d4e025f3e3fd807da32533692060c10defc",
                 "shasum": ""
             },
             "require": {
@@ -542,7 +542,7 @@
                 "source": "https://github.com/jackbradford/disphatch/tree/master",
                 "issues": "https://github.com/jackbradford/disphatch/issues"
             },
-            "time": "2020-02-24T22:32:08+00:00"
+            "time": "2020-02-28T00:16:26+00:00"
         },
         {
             "name": "nesbot/carbon",

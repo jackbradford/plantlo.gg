@@ -20,9 +20,9 @@ export default class ValidationStatusIcon extends Component {
         var isValid = this.props.isValid;
         if (isValid != null) {
             if (isValid) {
-                img = <img src="img/valid.svg" className="validation-status" alt="A checkmark." />;
+                img = <img src="/img/valid.svg" className="validation-status" alt="A checkmark." />;
             }
-            else img = <img src="img/error.svg" className="validation-status"  alt="A warning triangle." />;
+            else img = <img src="/img/error.svg" className="validation-status"  alt="A warning triangle." />;
         }
         return (
             <React.Fragment>

@@ -47,7 +47,7 @@ var async = (function() {
         if (!response.ok) {
             var errorMsg;
             if (response.status == 500) {
-                errorMsg = 'Sorry! Internal server error (500).'
+                errorMsg = 'Internal server error (500).'
             }
             else errorMsg = response.statusText;
             throw Error(errorMsg);

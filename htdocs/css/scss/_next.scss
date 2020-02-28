@@ -203,3 +203,55 @@ $input-validation-padding: 0.25rem;
     }
 }
 
+.activate {
+
+    padding: 10%;
+ //   background: linear-gradient(to right, rgba(117,212,191,0.5) 0%, rgba(207,237,219,0.5) 10%, rgba(207,237,219,0.5) 90%, rgba(117,212,191,0.5) 100%);
+//    background: radial-gradient(ellipse closest-side, rgba(207,237,219,0.85) 50%, rgba(207,237,219,0.85) 100%);
+
+    h1 {
+
+        font-size: 150%;
+    }
+
+    p {
+
+        margin: 1rem 0 0;
+
+        &:nth-child(3) {
+
+            margin: 2rem 0 0;
+        }
+    }
+
+    button {
+
+        display: block;
+        margin: 1rem 0 0;
+        padding: 0.5rem;
+        width: 100%;
+    }
+
+    .svg-container {
+
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        display: block;
+        background: radial-gradient(ellipse closest-side, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.175) 100%);
+
+        svg {
+
+            width: 50%;
+            height: auto;
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+    }
+}
+

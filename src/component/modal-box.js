@@ -41,16 +41,38 @@ export default class ModalBox extends Component {
 
         if (this.props.type == 'success') {
             classes += "success-modal";
-            src = "img/valid.svg";
+            src = "/img/valid.svg";
             alt = "A green checkmark.";
             okayClass = "button primary-button";
         }
         if (this.props.type == 'error') {
             classes += "error-modal";
-            src = "img/error.svg";
+            src = "/img/error.svg";
             alt = "An orange warning sign.";
             okayClass = "button error-button";
         }
+
+        okay = this.renderOkayButton(okayClass, okayId);
+
+        return (
+            <React.Fragment>
+            <div className={classes} id={this.props.id}>
+                <div className="rel-abs-container">
+                <div className="rel-abs-inner">
+                <img src={src} alt={alt} />
+                <h1>{ this.props.title }</h1>
+                <p>{ this.props.message }</p>
+                { okay }
+                </div></div>
+            </div>
+            </React.Fragment>
+        );
+    }
+
+    renderOkayButton(okayClass, okayId) {
+    
+        var okay;
+
         if (this.props.redirect != undefined) {
 
             okay = (
@@ -87,20 +109,7 @@ export default class ModalBox extends Component {
                 </div>
             );
         }
-
-        return (
-            <React.Fragment>
-            <div className={classes} id={this.props.id}>
-                <div className="rel-abs-container">
-                <div className="rel-abs-inner">
-                <img src={src} alt={alt} />
-                <h1>{ this.props.title }</h1>
-                <p>{ this.props.message }</p>
-                { okay }
-                </div></div>
-            </div>
-            </React.Fragment>
-        );
+        return okay;
     }
 }
 

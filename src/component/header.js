@@ -60,12 +60,12 @@ export default class Header extends Component {
                 <div>
                     <img
                         className="logo-name"
-                        src="img/plantlogg.svg"
+                        src="/img/plantlogg.svg"
                         alt="plantlogg's flower logo"
                     />
                     <button className="menu" onClick={this.toggleMenu}>
                         <img
-                            src="img/menu-disc-list.svg"
+                            src="/img/menu-disc-list.svg"
                             alt="Press here to open the main menu."
                         />
                     </button>
