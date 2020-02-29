@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
 import { auth } from '../auth';
 import {
+    LOGIN_REQUEST_BEGIN,
+    LOGIN_REQUEST_END,
+    LOGIN_REQUEST_ERROR,
+    RESET_LOGIN_MESSAGE,
     CHECK_LOGIN_BEGIN,
     CHECK_LOGIN_END,
     CHECK_LOGIN_ERROR
@@ -9,14 +13,25 @@ import {
 export default function user(
 
     state = {
-        checkingLogin: false,
-        email: null,
-        isLoggedIn: null,
-        firstName: null,
-        lastName: null,
-        message: '',
-        userId: null,
-        username: null,
+        details: {
+            email: null,
+            isLoggedIn: null,
+            firstName: null,
+            lastName: null,
+            userId: null,
+            username: null
+            
+        },
+        loginRequest: {
+            error: null,
+            loading: false,
+            message: '',
+        },
+        loginCheck: {
+            error: null,
+            loading: false,
+            message: ''
+        },
     },
     action
 ) {
@@ -26,7 +41,11 @@ export default function user(
         case CHECK_LOGIN_BEGIN:
             return {
                 ...state,
-                checkingLogin: true
+                loginCheck: {
+                    ...state.loginCheck,
+                    error: null,
+                    loading: true,
+                }
             };
 
         case CHECK_LOGIN_END:
@@ -35,20 +54,85 @@ export default function user(
             console.log(state);
             return {
                 ...state,
-                checkingLogin: false,
-                email: response.data.email,
-                isLoggedIn: response.data.isLoggedIn,
-                firstName: response.data.firstName,
-                lastName: response.data.lastName,
-                userId: response.data.userId,
-                username: response.data.username
+                details: {
+                    ...state.details,
+                    email: response.data.email,
+                    isLoggedIn: response.data.isLoggedIn,
+                    firstName: response.data.firstName,
+                    lastName: response.data.lastName,
+                    userId: response.data.userId,
+                    username: response.data.username,
+                    
+                },
+                loginCheck: {
+                    ...state.loginCheck,
+                    loading: false,
+                    message: response.data.message,
+                }
             };
 
         case CHECK_LOGIN_ERROR:
             return {
                 ...state,
-                checkingLogin: false,
-                message: action.payload.error.message
+                loginCheck: {
+                    ...state.loginCheck,
+                    error: action.payload.error,
+                    loading: false,
+                    message: action.payload.error.message
+                }
+            };
+
+        case LOGIN_REQUEST_BEGIN:
+            return {
+                ...state,
+                loginRequest: {
+                    ...state.loginRequest,
+                    loading: true,
+                    error: null
+                }
+            };
+
+        case LOGIN_REQUEST_END:
+            var res = action.payload.serverResponse;
+            console.log("RESPONSE");
+            console.log(res);
+            return {
+                ...state,
+                details: {
+                    ...state.details,
+                    email: res.data.email,
+                    isLoggedIn: res.userIsLoggedIn,
+                    firstName: res.data.firstName,
+                    lastName: res.data.lastName,
+                    userId: res.data.userId,
+                    username: res.data.username,
+                },
+                loginRequest: {
+                    ...state.loginRequest,
+                    loading: false,
+                    message: res.data.message,
+
+                }
+            };
+
+        case LOGIN_REQUEST_ERROR:
+            return {
+                ...state,
+                loginRequest: {
+                    ...state.loginRequest,
+                    error: action.payload.error,
+                    loading: false,
+                    message: action.payload.error.message
+                }
+            };
+
+        case RESET_LOGIN_MESSAGE:
+            return {
+                ...state,
+                loginRequest: {
+                    ...state.loginRequest,
+                    message: ''
+                }
             };
 
         default:

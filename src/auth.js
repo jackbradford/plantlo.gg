@@ -18,7 +18,7 @@ var auth = (function() {
      */
     var attemptLogin = function(dispatch) {
 
-        var url = '/index.php?ctrl=auth&actn=auth';
+        var url = '/index.php?ctrl=public&actn=auth';
         var data = encodeURIComponent(JSON.stringify({
         
             un: document.getElementById('login-email').value,

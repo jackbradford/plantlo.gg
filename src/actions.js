@@ -6,6 +6,62 @@ import { auth } from './auth';
 import { async } from './async';
 import { validator } from './validator';
 
+export const LOAD_PLANTS_BEGIN = 'LOAD_PLANTS_BEGIN';
+export const LOAD_PLANTS_END = 'LOAD_PLANTS_END';
+export const LOAD_PLANTS_ERROR = 'LOAD_PLANTS_ERROR';
+
+export const tryLoadPlants = (userId) => {
+
+    return (dispatch) => {
+
+        dispatch(loadPlantsBegin());
+        return async.request({
+            url: '/index.php?ctrl=public&actn=getPlants',
+            data: {},
+        }).then(
+            (serverResponse) => {
+                var response = JSON.parse(serverResponse);
+                console.log(response);
+                dispatch(loadPlantsEnd(response));
+            }
+        )
+        .catch (
+            (error) => {
+                console.log(error);
+                dispatch(loadPlantsError(error));
+            }
+        )
+    }
+}
+
+export const loadPlantsBegin = () => {
+
+    return {
+        type: LOAD_PLANTS_BEGIN,
+    };
+}
+
+export const loadPlantsEnd = (response) => {
+
+    return {
+        type: LOAD_PLANTS_END,
+        payload: {
+            varieties: response.data.plants.varieties,
+            individuals: response.data.plants.individuals,
+        }
+    };
+}
+
+export const loadPlantsError = (error) => {
+
+    return {
+        type: LOAD_PLANTS_ERROR,
+        payload: {
+            error: error
+        }
+    }
+}
+
 export const CHECK_LOGIN_BEGIN = 'CHECK_LOGIN_BEGIN';
 export const CHECK_LOGIN_END = 'CHECK_LOGIN_END';
 export const CHECK_LOGIN_ERROR = 'CHECK_LOGIN_ERROR';
@@ -199,6 +255,7 @@ export const REGISTER_USER_BEGIN = 'REGISTER_USER_BEGIN';
 export const REGISTER_USER_END = 'REGISTER_USER_END';
 export const REGISTER_USER_ERROR = 'REGISTER_USER_ERROR';
 export const RESET_REGISTER_FORM_STATUS = 'RESET_REGISTER_FORM_STATUS';
+export const TOGGLE_MENU = 'TOGGLE_MENU';
 
 export const resetFormStatus = () => {
 
@@ -361,14 +418,22 @@ export const LOGIN_REQUEST_END = 'LOGIN_REQUEST_END';
 export const LOGIN_REQUEST_ERROR = 'LOGIN_REQUEST_ERROR';
 export const RESET_LOGIN_MESSAGE = 'RESET_LOGIN_MESSAGE';
 
-export const attemptLoginRequest = () => {
+export const attemptLoginRequest = (history) => {
 
     return (dispatch) => {
 
         dispatch(loginRequestBegin());
         return auth.login()
             .then(
-                (response) => { dispatch(loginRequestEnd(JSON.parse(response))); }
+                (response) => { 
+                    response = JSON.parse(response);
+                    dispatch(loginRequestEnd(response));
+                    if (response.success === true) {
+                        console.log("Logged in, going home.");
+                        history.push('/');
+                        dispatch(toggleMenu());
+                    }
+                }
             )
             .catch(
                 (error) => { dispatch(loginRequestError(error)); }
@@ -420,4 +485,12 @@ export const resetLoginMessage = () => {
         type: RESET_LOGIN_MESSAGE
     };
 };
+
+export const toggleMenu = () => {
+
+    return {
+
+        type: TOGGLE_MENU,
+    };
+}
 

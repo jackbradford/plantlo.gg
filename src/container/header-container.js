@@ -8,14 +8,16 @@ import { bindActionCreators } from 'redux';
 import Header from '../component/header';
 import {
     attemptLoginRequest,
-    resetLoginMessage
+    resetLoginMessage,
+    toggleMenu
 } from '../actions';
 
 const mapStateToProps = function(state) {
 
     return {
 
-        loginMessage: state.header.loginMessage,
+        loginMessage: state.user.loginRequest.message,
+        menuExpand: state.header.menuExpand,
     }
 };
 
@@ -23,14 +25,18 @@ const mapDispatchToProps = function(dispatch) {
 
     return {
 
-        onLoginClick: () => {
+        attemptLogin: (history) => {
 
-            dispatch(attemptLoginRequest());
+            dispatch(attemptLoginRequest(history));
         },
         resetLoginMessage: () => {
 
             dispatch(resetLoginMessage());
-        }
+        },
+        toggleMenu: () => {
+        
+            dispatch(toggleMenu());
+        },
     }
 };
 

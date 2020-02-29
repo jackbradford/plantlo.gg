@@ -41,6 +41,71 @@ class PublicController extends Controller implements IRequestController {
         return new ControllerResponse($success, $message, $returnData);
     }
 
+    public function auth() {
+
+        $user = null;
+        $data = $this->validateAuthData(json_decode($this->fromPOST('data')));
+        $cred = [
+
+            'un' => $data->un,
+            'pw' => $data->pw,
+        ];
+        try {
+
+            $this->userMgr->login($cred);
+            $user = $this->userMgr->getCurrentUser();
+            if (!empty($user)) $user = $user->getDetails();
+            $username = $this->getUsername($user->id);
+            $success = true;
+            $message = '';// "Hi, $username!";
+        }
+        catch (\Exception $e) {
+
+            $success = false;
+            $message = $e->getMessage();
+        }
+        return new ControllerResponse($success, $message, (object)[
+            'email' => (empty($user)) ? null : $user->email,
+            'firstName' => (empty($user)) ? null : $user->firstName,
+            'lastName' => (empty($user)) ? null : $user->lastName,
+            'message' => $message,
+            'userId' => (empty($user)) ? null : $user->id,
+            'username' => (empty($user)) ? null : $username,
+        ]);
+    }
+
+    public function checkUserIsLoggedIn() {
+
+        $success = true;
+        $user = $this->userMgr->getCurrentUser();
+        if ($this->userMgr->isLoggedIn()) {
+
+            $user = $this->userMgr->getCurrentUser()->getDetails();
+            if ($user === null) {
+
+                throw new \Exception('Could not get logged in user.');
+            }
+            $username = $this->getUsername($user->id);
+            $message = "Hi, $username!";
+        }
+        else {
+
+            $user = null;
+            $message = "Not logged in.";
+        }
+
+        return new ControllerResponse($success, $message, (object) [
+            "email" => (empty($user)) ? null : $user->email,
+            "isLoggedIn" => (empty($user)) ? false : true,
+            "firstName" => (empty($user)) ? null : $user->firstName,
+            "lastName" => (empty($user)) ? null : $user->lastName,
+            "message" => $message,
+            "success" => $success,
+            "userId" => (empty($user)) ? null : $user->id,
+            "username" => (empty($user)) ? null : $username,
+        ]);
+    }
+
     public function generateNewActivationLink() {
 
         $data = json_decode($this->fromPOST('data'));
@@ -69,6 +134,25 @@ class PublicController extends Controller implements IRequestController {
             "message" => $message,
         ];
         return new ControllerResponse($success, $message, $returnData);
+    }
+
+    public function getPlants() {
+
+        $user = $this->userMgr->getCurrentUser();
+        if (empty($user)) {
+
+            $success = false;
+            $message = "No user logged in.";
+        }
+        else {
+
+            $success = true;
+            $messgae = "Loaded plants.";
+        }
+        return new ControllerResponse($success, $message, (object)[
+            "individuals" => [],
+            "varieties" => ['aye', 'bee', 'see', 'dee'],
+        ]);
     }
 
     /**
@@ -260,6 +344,19 @@ class PublicController extends Controller implements IRequestController {
         ); 
         if (empty($results)) throw new \Exception('No username found.');
         return $results[0]->username;
+    }
+
+    private function validateAuthData($data) {
+
+        if ($data === null) {
+
+            throw new \Exception("Data from client not found or invalid.");
+        }
+        if (!is_object($data)) {
+
+            throw new \Exception("Data from client must be an object.");
+        }
+        return $data;
     }
 
     private function validateUsername(string $username) {

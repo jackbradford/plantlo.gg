@@ -8,10 +8,13 @@ import { bindActionCreators } from 'redux';
 import Root from '../component/root';
 import {
     checkUserIsLoggedIn,
+    tryLoadPlants,
 } from '../actions';
 
 const mapStateToProps = function(state) {
 
+    console.log("STATE");
+    console.log(state);
     return {
 
         user: state.user,
@@ -24,6 +27,9 @@ const mapDispatchToProps = function(dispatch) {
 
         checkUserIsLoggedIn: () => {
             dispatch(checkUserIsLoggedIn())
+        },
+        loadPlants: (userId) => {
+            dispatch(tryLoadPlants(userId));
         },
     };
 };

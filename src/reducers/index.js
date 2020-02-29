@@ -6,10 +6,10 @@ import activate from './activate-reducer.js';
 import user from './user-reducer.js';
 
 export default combineReducers({
-    header,
-    routing: routerReducer,
-    register,
     activate,
+    header,
+    register,
+    routing: routerReducer,
     user,
 });
 

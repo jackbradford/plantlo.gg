@@ -12,7 +12,7 @@ export default class LoginError extends Component {
         return (
         
             <React.Fragment>
-                <div id="login-error">{this.props.errorMessage}</div>
+                <div id="login-error" className="error">{this.props.errorMessage}</div>
             </React.Fragment>
         );
     }

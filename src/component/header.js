@@ -7,6 +7,7 @@ import ReactDOM from "react-dom";
 import LoginError from './login-error';
 import { mediator }  from '../mediator';
 import { auth } from '../auth';
+import { withRouter } from 'react-router';
 import {
     BrowserRouter as Router,
     Switch,
@@ -14,36 +15,28 @@ import {
     Link
 } from "react-router-dom";
 
-export default class Header extends Component {
+class Header extends Component {
 
     componentDidMount() {
 
         this.props.resetLoginMessage();
     }
 
-    attemptLogin() {
+    attemptLogin(e) {
 
-        var response = auth.login;
-        if (response.success === true) {
-
-            // Login Succeeded
-        }
-        else {
-
-
-        }
+        this.props.attemptLogin(this.props.history);
     }
 
     toggleMenu() {
 
         var menu = document.getElementById('main-menu');
         var header = document.getElementById('app-header');
-        if (menu.style.transform == "translateY(0px)") {
+        var className = '';
+        if (this.props.menuExpand === true) {
 
-            var height = menu.clientHeight + header.clientHeight;
-            menu.style.transform = "translateY(-"+ height +"px)";
+            className = "expanded";
         }
-        else menu.style.transform = "translateY(0px)";
+        return className;
     }
 
     goToRegister() {
@@ -53,6 +46,7 @@ export default class Header extends Component {
 
     render() {
 
+        var navClass = this.toggleMenu.bind(this)();
         return (
 
             <React.Fragment>
@@ -63,14 +57,14 @@ export default class Header extends Component {
                         src="/img/plantlogg.svg"
                         alt="plantlogg's flower logo"
                     />
-                    <button className="menu" onClick={this.toggleMenu}>
+                    <button className="menu" onClick={this.props.toggleMenu}>
                         <img
                             src="/img/menu-disc-list.svg"
                             alt="Press here to open the main menu."
                         />
                     </button>
                 </div>
-                <nav id="main-menu">
+                <nav id="main-menu" className={navClass}>
                     <div className="login">
                         <input
                             type="text"
@@ -85,7 +79,7 @@ export default class Header extends Component {
                             className="primary-button"
                             type="submit"
                             value="Login"
-                            onClick={this.props.onLoginClick}/>
+                            onClick={this.attemptLogin.bind(this)} />
                     </div>
                     <LoginError errorMessage={this.props.loginMessage} />
                     <div className="register">
@@ -102,4 +96,6 @@ export default class Header extends Component {
         );
     }
 }
+
+export default withRouter(Header);
 
