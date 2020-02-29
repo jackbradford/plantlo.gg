@@ -21,6 +21,7 @@ export const tryLoadPlants = (userId) => {
         }).then(
             (serverResponse) => {
                 var response = JSON.parse(serverResponse);
+                console.log("GET_PLANTS_RESPONSE");
                 console.log(response);
                 dispatch(loadPlantsEnd(response));
             }
@@ -46,8 +47,8 @@ export const loadPlantsEnd = (response) => {
     return {
         type: LOAD_PLANTS_END,
         payload: {
-            varieties: response.data.plants.varieties,
-            individuals: response.data.plants.individuals,
+            varieties: response.data.varieties,
+            individuals: response.data.individuals,
         }
     };
 }

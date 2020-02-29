@@ -78,13 +78,9 @@ class PublicController extends Controller implements IRequestController {
 
         $success = true;
         $user = $this->userMgr->getCurrentUser();
-        if ($this->userMgr->isLoggedIn()) {
+        if ($this->userMgr->isLoggedIn() === true) {
 
-            $user = $this->userMgr->getCurrentUser()->getDetails();
-            if ($user === null) {
-
-                throw new \Exception('Could not get logged in user.');
-            }
+            $user = $user->getDetails();
             $username = $this->getUsername($user->id);
             $message = "Hi, $username!";
         }
