@@ -9,11 +9,12 @@ import { bindActionCreators } from 'redux';
 import Register from '../component/pages/register';
 import {
     attemptRegisterUser,
-    registerUserEnd,
     attemptValidateFormField,
-    validateFormFieldEnd,
+    registerUserEnd,
+    resetFormStatus,
+    resetMenuExpand,
     resetRegisterName,
-    resetFormStatus
+    validateFormFieldEnd,
 } from '../actions';
 
 const mapStateToProps = function(state) {
@@ -21,12 +22,12 @@ const mapStateToProps = function(state) {
     return {
 
         email: state.register.fields.emailAddress,
-        username: state.register.fields.username,
+        firstName: state.register.fields.firstName,
+        formStatus: state.register.form,
+        lastName: state.register.fields.lastName,
         password: state.register.fields.password,
         passwordMatch: state.register.fields.passwordMatch,
-        firstName: state.register.fields.firstName,
-        lastName: state.register.fields.lastName,
-        formStatus: state.register.form,
+        username: state.register.fields.username,
     }
 };
 
@@ -40,11 +41,14 @@ const mapDispatchToProps = function(dispatch) {
         registerUserEnd: (response) => {
             dispatch(registerUserEnd(response))
         },
-        resetName: (options) => {
-            dispatch(resetRegisterName(options))
-        },
         resetFormStatus: () => {
             dispatch(resetFormStatus())
+        },
+        resetMenuExpand: () => {
+            dispatch(resetMenuExpand())
+        },
+        resetName: (options) => {
+            dispatch(resetRegisterName(options))
         },
         validate: {
             emailAddress: (e) => { 
@@ -54,12 +58,8 @@ const mapDispatchToProps = function(dispatch) {
                     e: e,
                 }));
             },
-            username: (e) => {
-                dispatch(attemptValidateFormField({
-                    fieldType: 'username',
-                    fieldId: 'register-username',
-                    e: e,
-                }));
+            name: (options) => { 
+                dispatch(validateFormFieldEnd(options))
             },
             password: (options) => { 
                 dispatch(validateFormFieldEnd(options))
@@ -67,8 +67,12 @@ const mapDispatchToProps = function(dispatch) {
             passwordMatch: (options) => { 
                 dispatch(validateFormFieldEnd(options))
             },
-            name: (options) => { 
-                dispatch(validateFormFieldEnd(options))
+            username: (e) => {
+                dispatch(attemptValidateFormField({
+                    fieldType: 'username',
+                    fieldId: 'register-username',
+                    e: e,
+                }));
             },
         }
     };

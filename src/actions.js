@@ -6,6 +6,15 @@ import { auth } from './auth';
 import { async } from './async';
 import { validator } from './validator';
 
+export const RESET_MENU_EXPAND = 'RESET_MENU_EXPAND';
+
+export const resetMenuExpand = () => {
+
+    return {
+        type: RESET_MENU_EXPAND,
+    };
+};
+
 export const LOAD_PLANTS_BEGIN = 'LOAD_PLANTS_BEGIN';
 export const LOAD_PLANTS_END = 'LOAD_PLANTS_END';
 export const LOAD_PLANTS_ERROR = 'LOAD_PLANTS_ERROR';

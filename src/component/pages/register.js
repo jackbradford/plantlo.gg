@@ -31,6 +31,11 @@ export default class Register extends Component {
         this.attemptRegisterUser = this.attemptRegisterUser.bind(this);
     }
 
+    componentDidMount() {
+
+        this.props.resetMenuExpand();
+    }
+
     validateEmail(e) {
 
         this.props.validate.emailAddress(e);

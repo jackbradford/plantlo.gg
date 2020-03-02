@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { auth } from '../auth';
 import {
+    RESET_MENU_EXPAND,
     TOGGLE_MENU,
 } from '../actions';
 
@@ -14,6 +15,11 @@ export default function header(
 
     switch (action.type) {
 
+        case RESET_MENU_EXPAND:
+            return {
+                ...state,
+                menuExpand: false,
+            };
         case TOGGLE_MENU:
             return {
                 ...state,
