@@ -19,6 +19,7 @@ class Activate extends Component {
         var code = this.props.match.params.code;
         console.log(this.props);
         this.props.attemptActivateUser(userId, code);
+        this.props.resetMenuExpand();
     }
 
     getNewActivationLink() {

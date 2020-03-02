@@ -10,7 +10,8 @@ import Activate from '../component/pages/activate';
 import {
     attemptActivateUser,
     attemptGenerateNewActivationLink,
-    resetGenerateNewActivationLink
+    resetGenerateNewActivationLink,
+    resetMenuExpand,
 } from '../actions';
 
 const mapStateToProps = function(state) {
@@ -39,7 +40,10 @@ const mapDispatchToProps = function(dispatch) {
         },
         resetGenerateNewLink: () => {
             dispatch(resetGenerateNewActivationLink());
-        }
+        },
+        resetMenuExpand: () => {
+            dispatch(resetMenuExpand());
+        },
     };
 };
 
