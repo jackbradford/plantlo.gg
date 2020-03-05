@@ -12,4 +12,6 @@ htdocs/js/test.js
 htdocs/css/style.css
 htdocs/css/style.css.map
 *test.sql
+src/schema/users.sql
+*.swp
 
