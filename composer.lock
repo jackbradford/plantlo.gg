@@ -512,12 +512,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jackbradford/disphatch.git",
-                "reference": "661ff1a7e64b3b75290cd12b1114027284d58b94"
+                "reference": "28729140c0e628dcb137d5ac6b1e2be04024a84b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jackbradford/disphatch/zipball/661ff1a7e64b3b75290cd12b1114027284d58b94",
-                "reference": "661ff1a7e64b3b75290cd12b1114027284d58b94",
+                "url": "https://api.github.com/repos/jackbradford/disphatch/zipball/28729140c0e628dcb137d5ac6b1e2be04024a84b",
+                "reference": "28729140c0e628dcb137d5ac6b1e2be04024a84b",
                 "shasum": ""
             },
             "require": {
@@ -542,7 +542,7 @@
                 "source": "https://github.com/jackbradford/disphatch/tree/master",
                 "issues": "https://github.com/jackbradford/disphatch/issues"
             },
-            "time": "2020-03-05T00:58:19+00:00"
+            "time": "2020-03-05T16:23:40+00:00"
         },
         {
             "name": "nesbot/carbon",

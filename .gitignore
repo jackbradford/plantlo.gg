@@ -14,4 +14,5 @@ htdocs/css/style.css.map
 *test.sql
 src/schema/users.sql
 *.swp
+tags
 
