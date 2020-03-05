@@ -263,11 +263,12 @@ class PublicController extends Controller implements IRequestController {
         $code = $activation->getDetails()->code;
         $link = "https://plantlo.gg/activate/" . $userId . '/' . $code;
 
-        $subject = 'Activate your PlantLogg account!';
+        $subject = 'Welcome to PlantLogg!';
+// TODO        $body = $this->getActivationEmailBody();
         $body = '<p>Thank you for joining PlantLogg!</p>';
         $body .= "<p><a href=\"$link\">Click here to activate your account.</a></p>";
 
-        $emailConf = $this->config->getDirective('email');
+        $emailConf = $this->config->getDirective('email')->support_at_plantlogg;
         $recipient = (object) ['address' => $email, 'name' => $name];
 
         if ($dev === false) $activation->sendActivationEmail(
@@ -275,11 +276,17 @@ class PublicController extends Controller implements IRequestController {
             $body,
             (object)[
                 'host' => $emailConf->host,
+                'port' => $emailConf->port,
+                'smtp_secure' => $emailConf->smtpSecure,
                 'username' => $emailConf->username,
                 'password' => $emailConf->password,
-                'fromAddress' => $emailConf->fromAddress,
-                'fromName' => $emailConf->fromName,
-                'recipients' => [$recipient]
+                'fromAddress' => $emailConf->defaultFromAddress,
+                'fromName' => $emailConf->defaultFromName,
+                'recipients' => [$recipient],
+                'dkim_domain' => $emailConf->dkimDomain,
+                'dkim_private' => $emailConf->dkimPrivate,
+                'dkim_selector' => $emailConf->dkimSelector,
+                'dkim_passphrase' => $emailConf->dkimPassphrase,
             ]
         );
         else error_log('Send activation email here.');
