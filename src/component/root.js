@@ -12,9 +12,14 @@ import Home from './pages/home';
  */
 export default class Root extends Component {
 
+    constructor(props) {
+        super(props);
+        this.props.checkUserIsLoggedIn();
+    }
+
     componentDidMount() {
 
-        this.props.checkUserIsLoggedIn();
+        //this.props.checkUserIsLoggedIn();
         this.props.loadPlants(this.props.user.details.userId);
     }
 
