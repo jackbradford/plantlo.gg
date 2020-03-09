@@ -222,17 +222,19 @@ class PublicController extends Controller implements IRequestController {
         $user = $this->userMgr->getCurrentUser();
         if (empty($user)) {
 
+            $varieties = [];
             $success = false;
             $message = "No user logged in.";
         }
         else {
 
+            $varieties = Variety::where('user_id', '=', $user->getDetails()->id)->get();
             $success = true;
             $messgae = "Loaded plants.";
         }
         return new ControllerResponse($success, $message, (object)[
             "individuals" => [],
-            "varieties" => ['aye', 'bee', 'see', 'dee'],
+            "varieties" => $varieties,
         ]);
     }
 
