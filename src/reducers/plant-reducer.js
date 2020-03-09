@@ -29,11 +29,16 @@ export default function plants(
         case LOAD_PLANTS_END:
             console.log("STATE");
             console.log(state);
+            var varieties = {};
+            for (const index in action.payload.varieties) {
+                const variety = action.payload.varieties[index];
+                varieties[variety.id] = variety;
+            }
             return {
                 ...state,
                 loading: false,
                 individuals: action.payload.individuals,
-                varieties: action.payload.varieties,
+                varieties: varieties,
             };
 
         case LOAD_PLANTS_ERROR:

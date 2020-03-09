@@ -442,6 +442,7 @@ export const attemptLoginRequest = (history) => {
                         console.log("Logged in, going home.");
                         history.push('/');
                         dispatch(toggleMenu());
+                        dispatch(tryLoadPlants());
                     }
                 }
             )
