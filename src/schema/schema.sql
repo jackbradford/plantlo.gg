@@ -25,6 +25,7 @@ CREATE TABLE units (
     name VARCHAR(30) NOT NULL,
     name_plural VARCHAR(30) NOT NULL,
     abbreviation VARCHAR(10) NOT NULL,
+    symbol VARCHAR(10) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY pk_units (id),
