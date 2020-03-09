@@ -17,14 +17,54 @@ import {
 
 class Header extends Component {
 
+    attemptLogin(e) {
+
+        this.props.attemptLogin(this.props.history);
+    }
+
     componentDidMount() {
 
         this.props.resetLoginMessage();
     }
 
-    attemptLogin(e) {
+    getAccountSection() {
 
-        this.props.attemptLogin(this.props.history);
+        var user = this.props.user;
+        var html = '';
+        if (user.details.isLoggedIn === true) {
+
+            html = (
+                <div className="menu-user-account">
+
+                </div>
+            );
+        }
+        return html;
+    }
+
+    getUserMenuItems() {
+
+        var user = this.props.user;
+        var html = '';
+        if (user.details.isLoggedIn === true) {
+
+            html = (
+                <li>Plants</li>
+                <li>Gallery</li>
+                <li>Account</li>
+            );
+        }
+        return html;
+    }
+
+    goToHomepage() {
+
+        this.props.history.push('/');
+    }
+
+    handleKeyPress(e) {
+
+        if (e.key === 'Enter') this.props.attemptLogin(this.props.history);
     }
 
     toggleMenu() {
@@ -39,14 +79,11 @@ class Header extends Component {
         return className;
     }
 
-    goToRegister() {
-
-        history.push('/register');
-    }
-
     render() {
 
         var navClass = this.toggleMenu.bind(this)();
+        var userMenuItems = this.getUserMenuItems.bind(this)();
+        var accountSection = this.getAccountSection.bind(this)();
         return (
 
             <React.Fragment>
@@ -54,10 +91,11 @@ class Header extends Component {
                 <div>
                     <img
                         className="logo-name"
-                        src="/img/plantlogg.svg"
+                        src="/img/logo-concept-text.svg"
                         alt="plantlogg's flower logo"
+                        onClick={this.goToHomepage.bind(this)}
                     />
-                    <button className="menu" onClick={this.props.toggleMenu}>
+                    <button className="menu secondary-button button" onClick={this.props.toggleMenu}>
                         <img
                             src="/img/menu-disc-list.svg"
                             alt="Press here to open the main menu."
@@ -74,22 +112,31 @@ class Header extends Component {
                         <input
                             type="password"
                             id="login-password"
-                            placeholder="password" />
-                        <input 
-                            className="primary-button"
+                            placeholder="password"
+                            onKeyPress={this.handleKeyPress.bind(this)}
+                        />
+                        <input
+                            className="primary-button button"
                             type="submit"
                             value="Login"
-                            onClick={this.attemptLogin.bind(this)} />
+                            onClick={this.attemptLogin.bind(this)}
+                        />
                     </div>
                     <LoginError errorMessage={this.props.loginMessage} />
                     <div className="register">
                         <h2>Not a member?</h2>
-                        <Link to="/register" 
+                        <Link to="/register"
                             className="secondary-button button"
                         >
                             Join
                         </Link>
                     </div>
+                    <ul className="menu-items">
+                        <li>Home</li>
+                        {userMenuItems}
+                        <li>About</li>
+                        <li>Help</li>
+                    </ul>
                 </nav>
             </header>
             </React.Fragment>

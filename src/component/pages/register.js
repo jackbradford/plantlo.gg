@@ -199,7 +199,7 @@ export default class Register extends Component {
 
             submitButton = (
                 <div
-                    className="primary-button submit"
+                    className="primary-button button submit"
                 >
                     <span><TailSpin /></span>
                 </div>
@@ -209,7 +209,7 @@ export default class Register extends Component {
 
             submitButton = (
                 <div
-                    className="primary-button submit"
+                    className="primary-button button submit"
                     onClick={ this.attemptRegisterUser }
                 >
                     <span>Register</span>

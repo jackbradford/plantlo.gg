@@ -9,19 +9,16 @@
     text-align: center;
     color: #fff;
     letter-spacing: 0.05rem;
-    font-family: $font-stack;
+	border-radius: 3px;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.25);
 }
 
 .primary-button {
 
-    text-align: center;
 	color: #cfeddb;
-	letter-spacing: 0.05rem;
 	@include linear-gradient-background(#3ea86a, #328655);
 	border: 1px solid #328655; // #184b94
 	border-bottom-color: #40584a;
-	border-radius: 3px;
-    font-family: $font-stack;
 
 	&:hover {
 
@@ -31,14 +28,9 @@
 
 .secondary-button {
 
-    text-align: center;
-	color: #fff;
-	letter-spacing: 0.05rem;
 	@include linear-gradient-background(#eac33c, #e8b503);
 	border: 1px solid #bc9408; // #184b94
 	border-bottom-color: #a68205;
-	border-radius: 3px;
-    font-family: $font-stack;
 
 	&:hover {
 
@@ -46,15 +38,11 @@
 	}
 }
 
-.blue-button {
+.tertiary-button {
 
-    text-align: center;
-	color: #fff;
-	letter-spacing: 0.05rem;
 	@include linear-gradient-background(#4d86da, #2a6bca);
 	border: 1px solid #2867c2; // #184b94
 	border-bottom-color: #245bac;
-	border-radius: 3px;
 
 	&:hover {
 
@@ -62,16 +50,15 @@
 	}
 }
 
+.quaternary-button {
+
+}
+
 .error-button {
 
-    text-align: center;
-	color: #fff;
-	letter-spacing: 0.05rem;
 	@include linear-gradient-background(#ef6b42, #ed4c2a);
 	border: 1px solid #d03514;
 	border-bottom-color: #94260e;
-	border-radius: 3px;
-    font-family: $font-stack;
 
 	&:hover {
 

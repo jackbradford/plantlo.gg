@@ -18,6 +18,7 @@ const mapStateToProps = function(state) {
 
         loginMessage: state.user.loginRequest.message,
         menuExpand: state.header.menuExpand,
+        user: state.user,
     }
 };
 

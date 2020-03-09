@@ -25,27 +25,24 @@ header {
 
         img {
 
-            width: 50%;
+            height: 10vw;
         }
 
         button.menu {
 
-            right: 1rem;
-            top: 0.5rem;
-            display: inline-block;
-            width: 12%;
             position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: inline-block;
+            width: 10%;
+            height: 10vw;
+            padding: 2%;
 
             img {
 
                 width: 100%;
-                // todo: correct the color. It's black, it should match palette
-                background-image:
-                    radial-gradient(
-                        circle,
-                        rgba(0,0,0,0.1),
-                        rgba(255,255,255,0) 60%
-                    );
+                height: auto;
             }
         }
     }
@@ -55,9 +52,13 @@ nav {
 
     position: absolute;
     width: 100%;
-    transform: translateY(-350px);
-    transition-property: transform;
-    transition-duration: 0.5s;
+    /*
+     * This transform aligns the bottom of the menu flush with the top
+     * of the viewport, allowing it to hide completely while instantly
+     * coming into view when expanded.
+     */
+    transform: translateY(calc(-100% - calc(10vw + 1rem)));
+    transition: transform 0.68s cubic-bezier(0.23, 1, 0.32, 1);
     @include gradient-bottom-edge(#fcfcfc, $bottom-color, $accent-color, 35px);
     padding: 0.5rem 1rem;
     z-index: -62;
@@ -70,7 +71,7 @@ nav {
     .login {
 
         display: flex;
-        margin: 1rem 0 0.5rem;
+        margin: 0.25rem 0 0.25rem;
     }
 
     input {
@@ -112,15 +113,14 @@ nav {
         h2 {
 
             display: inline-block;
-            line-height: 3rem;
-            font-size: 24px;
+            line-height: 2.5rem;
+            font-size: 18px;
         }
         .button {
 
-            margin: 0.5rem 0;
             line-height: 1rem;
-            padding: 0.5rem;
-            margin: 0.5rem;
+            padding: 0.35rem 0.5rem;
+            margin: 0.4rem;
             display: inline-block;
             font-size: 12px;
             font-weight: bold;

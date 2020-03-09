@@ -57,7 +57,7 @@ class Activate extends Component {
                     <h1>Your account is active!</h1>
                     <p>Thank you for joining PlantLogg.</p>
                     <button
-                        className="primary-button"
+                        className="primary-button button"
                         onClick={this.goToHomePage.bind(this)}
                     >
                         Onward
@@ -73,7 +73,7 @@ class Activate extends Component {
                     <p>Server said: {this.props.serverMessage}</p>
                     <p>For a new activation link, click below:</p>
                     <button
-                        className="primary-button"
+                        className="primary-button button"
                         onClick={this.getNewActivationLink.bind(this)}
                     >
                         Send New Link
