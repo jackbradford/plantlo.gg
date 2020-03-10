@@ -15,57 +15,54 @@ export const resetMenuExpand = () => {
     };
 };
 
-export const LOAD_PLANTS_BEGIN = 'LOAD_PLANTS_BEGIN';
-export const LOAD_PLANTS_END = 'LOAD_PLANTS_END';
-export const LOAD_PLANTS_ERROR = 'LOAD_PLANTS_ERROR';
+export const LOAD_USER_AND_APP_DATA_BEGIN = 'LOAD_USER_AND_APP_DATA_BEGIN';
+export const LOAD_USER_AND_APP_DATA_END = 'LOAD_USER_AND_APP_DATA_END';
+export const LOAD_USER_AND_APP_DATA_ERROR = 'LOAD_USER_AND_APP_DATA_ERROR';
 
-export const tryLoadPlants = (userId) => {
+export const tryLoadUserAndAppData = (userId) => {
 
     return (dispatch) => {
 
-        dispatch(loadPlantsBegin());
+        dispatch(loadUserAndAppDataBegin());
         return async.request({
-            url: '/index.php?ctrl=public&actn=getPlants',
+            url: '/index.php?ctrl=public&actn=getUserAndAppData',
             data: {},
         }).then(
             (serverResponse) => {
                 var response = JSON.parse(serverResponse);
-                console.log("GET_PLANTS_RESPONSE");
+                console.log("GET_USER_AND_APP_DATA_RESPONSE");
                 console.log(response);
-                dispatch(loadPlantsEnd(response));
+                dispatch(loadUserAndAppDataEnd(response));
             }
         )
         .catch (
             (error) => {
                 console.log(error);
-                dispatch(loadPlantsError(error));
+                dispatch(loadUserAndAppDataError(error));
             }
         )
     }
 }
 
-export const loadPlantsBegin = () => {
+export const loadUserAndAppDataBegin = () => {
 
     return {
-        type: LOAD_PLANTS_BEGIN,
+        type: LOAD_USER_AND_APP_DATA_BEGIN,
     };
 }
 
-export const loadPlantsEnd = (response) => {
+export const loadUserAndAppDataEnd = (response) => {
 
     return {
-        type: LOAD_PLANTS_END,
-        payload: {
-            varieties: response.data.varieties,
-            individuals: response.data.individuals,
-        }
+        type: LOAD_USER_AND_APP_DATA_END,
+        payload: response.data
     };
 }
 
-export const loadPlantsError = (error) => {
+export const loadUserAndAppDataError = (error) => {
 
     return {
-        type: LOAD_PLANTS_ERROR,
+        type: LOAD_USER_AND_APP_DATA_ERROR,
         payload: {
             error: error
         }
@@ -442,7 +439,7 @@ export const attemptLoginRequest = (history) => {
                         console.log("Logged in, going home.");
                         history.push('/');
                         dispatch(toggleMenu());
-                        dispatch(tryLoadPlants());
+                        dispatch(tryLoadUserAndAppData());
                     }
                 }
             )

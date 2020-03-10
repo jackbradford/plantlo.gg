@@ -49,9 +49,11 @@ class Header extends Component {
         if (user.details.isLoggedIn === true) {
 
             html = (
-                <li>Plants</li>
-                <li>Gallery</li>
-                <li>Account</li>
+                <React.Fragment>
+                    <li>Plants</li>
+                    <li>Gallery</li>
+                    <li>Account</li>
+                </React.Fragment>
             );
         }
         return html;

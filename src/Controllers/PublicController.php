@@ -5,6 +5,7 @@ use JackBradford\Disphatch\Controllers\Controller;
 use JackBradford\Disphatch\Controllers\IRequestController;
 use JackBradford\Disphatch\Controllers\ControllerResponse;
 use JackBradford\Disphatch\Etc\Activation;
+use JackBradford\Disphatch\Etc\User as DisphatchUser;
 
 class PublicController extends Controller implements IRequestController {
 
@@ -211,31 +212,57 @@ class PublicController extends Controller implements IRequestController {
         return new ControllerResponse($success, $message, $returnData);
     }
 
+    public function getUserAndAppData() {
+
+        $success = true;
+        $message = '';
+        $user = $this->userMgr->getCurrentUser();
+        $varieties = [];
+        $individuals = [];
+        $units = [];
+
+        try {
+
+            if (empty($user)) {
+
+                $message .= "No user logged in. ";
+            }
+            else {
+
+                $varieties = $this->getVarieties($user);
+                $individuals = [];
+            }
+            $units = $this->getUnits($user);
+            if (empty($units)) error_log("NO UNITS");
+        }
+        catch (\Exception $e) {
+
+            $message .= $e->getMessage();
+            $success = false;
+        }
+        return new ControllerResponse($success, $message, (object)[
+            "individuals" => [],
+            "message" => $message,
+            "units" => $units,
+            "varieties" => $varieties,
+        ]);
+    }
+
     /**
      * @method PublicController::getPlants()
      * Get the varieties and individuals associated with a user.
      *
      * @return ControllerResponse
      */
-    public function getPlants() {
+    protected function getVarieties(DisphatchUser $user) {
 
-        $user = $this->userMgr->getCurrentUser();
-        if (empty($user)) {
+        return Variety::where('user_id', '=', $user->getDetails()->id)->get();
+    }
 
-            $varieties = [];
-            $success = false;
-            $message = "No user logged in.";
-        }
-        else {
+    protected function getUnits() {
 
-            $varieties = Variety::where('user_id', '=', $user->getDetails()->id)->get();
-            $success = true;
-            $messgae = "Loaded plants.";
-        }
-        return new ControllerResponse($success, $message, (object)[
-            "individuals" => [],
-            "varieties" => $varieties,
-        ]);
+//        return Unit::all();
+        return Unit::where('id', '!=', 999)->get();
     }
 
     /**

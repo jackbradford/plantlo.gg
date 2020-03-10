@@ -1,47 +1,52 @@
 import { combineReducers } from 'redux';
 import { auth } from '../auth';
 import {
-    LOAD_PLANTS_BEGIN,
-    LOAD_PLANTS_END,
-    LOAD_PLANTS_ERROR
+    LOAD_USER_AND_APP_DATA_BEGIN,
+    LOAD_USER_AND_APP_DATA_END,
+    LOAD_USER_AND_APP_DATA_ERROR
 } from '../actions';
 
-export default function plants(
+function getUnits(payload) {
+
+    var units = {};
+    for (const index in payload.units) {
+        const unit = payload.units[index];
+        units[unit.id] = unit;
+    }
+    return units;
+}
+
+export default function appData(
 
     state = {
         error: null,
         loading: false,
-        individuals: [],
-        varieties: [],
+        units: [],
     },
     action
 ) {
 
     switch (action.type) {
 
-        case LOAD_PLANTS_BEGIN:
+        case LOAD_USER_AND_APP_DATA_BEGIN:
             return {
                 ...state,
                 error: null,
                 loading: true,
             };
 
-        case LOAD_PLANTS_END:
-            console.log("STATE");
+        case LOAD_USER_AND_APP_DATA_END:
+            console.log("STATE/ACTION");
             console.log(state);
-            var varieties = {};
-            for (const index in action.payload.varieties) {
-                const variety = action.payload.varieties[index];
-                varieties[variety.id] = variety;
-            }
+            console.log(action);
+            const units = getUnits(action.payload);
             return {
                 ...state,
                 loading: false,
-                individuals: action.payload.individuals,
-                varieties: varieties,
+                units: units
             };
 
-        case LOAD_PLANTS_ERROR:
+        case LOAD_USER_AND_APP_DATA_ERROR:
             return {
                 ...state,
                 error: action.payload.error,

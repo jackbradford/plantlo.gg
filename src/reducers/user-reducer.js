@@ -7,12 +7,32 @@ import {
     RESET_LOGIN_MESSAGE,
     CHECK_LOGIN_BEGIN,
     CHECK_LOGIN_END,
-    CHECK_LOGIN_ERROR
+    CHECK_LOGIN_ERROR,
+    LOAD_USER_AND_APP_DATA_BEGIN,
+    LOAD_USER_AND_APP_DATA_END,
+    LOAD_USER_AND_APP_DATA_ERROR,
 } from '../actions';
+
+function getVarieties(payload) {
+
+    var varieties = {};
+    for (const index in payload.varieties) {
+        const variety = payload.varieties[index];
+        varieties[variety.id] = variety;
+    }
+    return varieties;
+}
 
 export default function user(
 
     state = {
+        data: {
+            error: null,
+            individuals: [],
+            loading: false,
+            message: '',
+            varieties: [],
+        },
         details: {
             email: null,
             isLoggedIn: null,
@@ -82,6 +102,40 @@ export default function user(
                 }
             };
 
+        case LOAD_USER_AND_APP_DATA_BEGIN:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    error: null,
+                    loading: true,
+                },
+            };
+
+        case LOAD_USER_AND_APP_DATA_END:
+            console.log("STATE");
+            console.log(state);
+            const varieties = getVarieties(action.payload);
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    loading: false,
+                    individuals: action.payload.individuals,
+                    varieties: varieties,
+                }
+            };
+
+        case LOAD_USER_AND_APP_DATA_ERROR:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    error: action.payload.error,
+                    loading: false,
+                }
+            };
+
         case LOGIN_REQUEST_BEGIN:
             return {
                 ...state,
@@ -106,6 +160,11 @@ export default function user(
                     lastName: res.data.lastName,
                     userId: res.data.userId,
                     username: res.data.username,
+                },
+                loginCheck: {
+                    ...state.loginCheck,
+                    error: null,
+                    message: ''
                 },
                 loginRequest: {
                     ...state.loginRequest,

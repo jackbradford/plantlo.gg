@@ -19,8 +19,7 @@ export default class Root extends Component {
 
     componentDidMount() {
 
-        //this.props.checkUserIsLoggedIn();
-        this.props.loadPlants(this.props.user.details.userId);
+        this.props.loadUserAndAppData();
     }
 
     render() {
