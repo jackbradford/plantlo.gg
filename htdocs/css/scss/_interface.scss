@@ -28,14 +28,23 @@
 
 .secondary-button {
 
-	@include linear-gradient-background(#eac33c, #e8b503);
-	border: 1px solid #bc9408; // #184b94
-	border-bottom-color: #a68205;
+    // e2725b e18a78 (lighter)
+//	@include linear-gradient-background(#eac33c, #e8b503);
+	@include linear-gradient-background(#e29f5b, #e2725b);
+//	border: 1px solid #bc9408; // #184b94   e16248
+	border: 1px solid #e16248; // #184b94   e16248
+//	border-bottom-color: #a68205;
+	border-bottom-color: #e15336;
 
 	&:hover {
 
-		@include linear-gradient-background(#e8b503, #eac33c);
+		@include linear-gradient-background(#e2725b, #e18a78);
 	}
+
+    &:focus {
+
+        outline: 1px #e15336 auto;
+    }
 }
 
 .tertiary-button {
