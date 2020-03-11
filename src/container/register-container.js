@@ -11,6 +11,7 @@ import {
     attemptRegisterUser,
     attemptValidateFormField,
     registerUserEnd,
+    resetForm,
     resetFormStatus,
     resetMenuExpand,
     resetRegisterName,
@@ -40,6 +41,9 @@ const mapDispatchToProps = function(dispatch) {
         },
         registerUserEnd: (response) => {
             dispatch(registerUserEnd(response))
+        },
+        resetForm: () => {
+            dispatch(resetForm())
         },
         resetFormStatus: () => {
             dispatch(resetFormStatus())

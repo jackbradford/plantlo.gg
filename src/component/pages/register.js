@@ -34,6 +34,7 @@ export default class Register extends Component {
     componentDidMount() {
 
         this.props.resetMenuExpand();
+        this.props.resetForm();
     }
 
     validateEmail(e) {

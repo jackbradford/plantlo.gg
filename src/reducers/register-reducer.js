@@ -5,6 +5,7 @@ import {
     VALIDATE_FORM_FIELD_END,
     VALIDATE_FORM_FIELD_ERROR,
     RESET_REGISTER_NAME,
+    RESET_REGISTER_FORM,
     RESET_REGISTER_FORM_STATUS,
     REGISTER_USER_BEGIN,
     REGISTER_USER_END,
@@ -165,6 +166,37 @@ export default function register(
                     submittedSuccessfully: false
                 }),
             });
+
+        case RESET_REGISTER_FORM:
+            const emptyField = {
+                error: null,
+                isValid: null,
+                isValidating: false,
+                message: '',
+                serverData: {},
+            };
+            return {
+                ...state,
+                form: {
+                    ...state.form,
+                    isBeingSubmitted: false,
+                    submittedSuccessfully: null,
+                    hasErrors: false,
+                    error: null,
+                    message: '',
+                    email: null,
+
+                },
+                fields: {
+                    ...state.fields,
+                    emailAddress: emptyField,
+                    username: emptyField,
+                    password: emptyField,
+                    passwordMatch: emptyField,
+                    firstName: emptyField,
+                    lastName: emptyField,
+                }
+            };
 
         case RESET_REGISTER_FORM_STATUS:
             return Object.assign({}, state, {

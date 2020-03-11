@@ -262,7 +262,13 @@ export const REGISTER_USER_BEGIN = 'REGISTER_USER_BEGIN';
 export const REGISTER_USER_END = 'REGISTER_USER_END';
 export const REGISTER_USER_ERROR = 'REGISTER_USER_ERROR';
 export const RESET_REGISTER_FORM_STATUS = 'RESET_REGISTER_FORM_STATUS';
+export const RESET_REGISTER_FORM = 'RESET_REGISTER_FORM';
 export const TOGGLE_MENU = 'TOGGLE_MENU';
+
+export const resetForm = () => {
+
+    return { type: RESET_REGISTER_FORM, }
+}
 
 export const resetFormStatus = () => {
 
