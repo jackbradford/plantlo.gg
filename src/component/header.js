@@ -50,9 +50,33 @@ class Header extends Component {
 
             html = (
                 <React.Fragment>
-                    <li>Plants</li>
-                    <li>Gallery</li>
-                    <li>Account</li>
+                    <li>
+                        <Link
+                            to="/plants"
+                            className="menu-link plants"
+                        >
+                            <span></span>
+                            <span>Plants</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/gallery"
+                            className="menu-link gallery"
+                        >
+                            <span></span>
+                            <span>Gallery</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/account"
+                            className="menu-link account"
+                        >
+                            <span></span>
+                            <span>Account</span>
+                        </Link>
+                    </li>
                 </React.Fragment>
             );
         }
@@ -134,10 +158,34 @@ class Header extends Component {
                         </Link>
                     </div>
                     <ul className="menu-items">
-                        <li>Home</li>
+                        <li>
+                            <Link
+                                to="/"
+                                className="menu-link home"
+                            >
+                                <span></span>
+                                <span>home</span>
+                            </Link>
+                        </li>
                         {userMenuItems}
-                        <li>About</li>
-                        <li>Help</li>
+                        <li>
+                            <Link
+                                to="/about"
+                                className="menu-link about"
+                            >
+                                <span></span>
+                                <span>about</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to="/help"
+                                className="menu-link help"
+                            >
+                                <span></span>
+                                <span>help</span>
+                            </Link>
+                        </li>
                     </ul>
                 </nav>
             </header>
