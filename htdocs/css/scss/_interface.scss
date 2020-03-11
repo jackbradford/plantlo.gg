@@ -38,7 +38,7 @@
 
 	&:hover {
 
-		@include linear-gradient-background(#e2725b, #e18a78);
+		@include linear-gradient-background(#e2725b, #e29f5b);
 	}
 
     &:focus {
@@ -95,7 +95,7 @@ input[type="password"] {
 input[type="text"],
 input[type="password"] {
 
-    background-color: #f0f8f3;
+    background-color: rgba(207, 237, 219, 0.5);
     color: #28372e;
     padding: 0 0 0 0.5rem;
 //    border: 1px solid #b0cbbb;

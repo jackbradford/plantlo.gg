@@ -52,6 +52,8 @@ nav {
 
     position: absolute;
     width: 100%;
+    backdrop-filter: blur(3px);
+
     /*
      * This transform aligns the bottom of the menu flush with the top
      * of the viewport, allowing it to hide completely while instantly
@@ -59,13 +61,15 @@ nav {
      */
     transform: translateY(calc(-100% - calc(10vw + 1rem)));
     transition: transform 0.68s cubic-bezier(0.23, 1, 0.32, 1);
-    @include gradient-bottom-edge(#fcfcfc, $bottom-color, $accent-color, 35px);
+    @include gradient-bottom-edge(rgba(255,255,255,0.45), $bottom-color, $accent-color, 35px);
     padding: 0.5rem 1rem;
     z-index: -62;
 
     &.expanded {
 
         transform: translateY(0px);
+//        box-shadow: 0 2px 2px 1px rgba(0,0,0,0.2);
+        box-shadow: 0 0px 1px 1px rgba(0,0,0,.1), 0 0 5px 3px rgba(0,0,0,0.3)
     }
 
     .login {
@@ -116,6 +120,7 @@ nav {
             line-height: 2.5rem;
             font-size: 18px;
         }
+
         .button {
 
             line-height: 1rem;
@@ -125,7 +130,6 @@ nav {
             font-size: 12px;
             font-weight: bold;
         }
-
     }
 }
 
