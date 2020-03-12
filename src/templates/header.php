@@ -1,3 +1,8 @@
+<?php
+/**
+ *  This file provides the header and <head> for server-rendered pages.
+ */
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
