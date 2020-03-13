@@ -1,0 +1,120 @@
+/*
+ * _registration.scss
+ * These rules apply to the site's Registration page.
+ *
+ */
+$input-validation-padding: 0.25rem;
+
+.registration-form {
+
+    .validated-input {
+
+        display: inline-block;
+        margin: 0.5rem 0 0 0;
+
+        &.not-invalid {}
+
+        &.invalid {
+
+            border: 1px solid #ed4c2a;
+//            background-color: #efc1b3; // even lighter orange
+            background-color: #efd0c6; // even liighter orange
+        }
+    }
+
+    input {
+
+        width: 80%;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-right: 0 !important;
+    }
+
+    .input-validation {
+
+        width: 20%;
+        border-radius: 3px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+	    border: 1px solid #328655; // #184b94
+        border-left: 0 !important;
+        height: 2.5rem;
+        background-color: rgba(207, 237, 219, 0.5);
+        position: relative;
+        padding: $input-validation-padding;
+    }
+
+    .submit {
+
+        width: 100%;
+        margin: 1rem 0 0 0;
+        border-radius: 3px;
+//        padding: 0.5rem 0;
+        height: 2.5rem;
+        position: relative;
+
+        span {
+
+            position: absolute;
+            top: calc(50% - 0.75rem);
+            left: 0%;
+            width: 100%;
+            color: #fff;
+            font-family: $font-stack;
+            max-height: 1.5rem;
+            line-height: 1.5rem;
+//            font-size: 1em;
+
+            svg {
+
+                max-height: inherit
+            }
+        }
+    }
+
+    h1 {
+
+        display: block;
+        margin: 0 0 0.25rem 0;
+    }
+
+    .submit-validation {
+
+        margin: 2rem 0 0 0;
+    }
+}
+
+.validation-status {
+
+    max-width: 100%;
+    height: calc(100% - (2 * #{$input-validation-padding}));
+    position: absolute;
+    right: 0.5rem;
+}
+
+.validation-message {
+
+    margin: 0.25rem 0 0.75rem;
+    font-size: 1rem;
+
+    &.valid {
+
+        color: #328655;
+    }
+
+    &.invalid {
+
+        color: #ed4c2a;
+    }
+}
+
+.rel-abs-container {
+
+    position: relative;
+}
+
+.rel-abs-inner {
+
+    position: absolute;
+}
+

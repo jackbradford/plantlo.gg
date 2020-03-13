@@ -253,7 +253,7 @@ export default class Register extends Component {
             <React.Fragment>
             <HeaderContainer />
             <main className="registration-form">
-                <h1>Create a New Account</h1>
+                <h1>Create an Account</h1>
                 <div className="registration-inputs">
                     <input 
                         type="text"

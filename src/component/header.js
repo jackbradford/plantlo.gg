@@ -144,7 +144,7 @@ class Header extends Component {
                         <input
                             className="primary-button button"
                             type="submit"
-                            value="Login"
+                            value="Log in"
                             onClick={this.attemptLogin.bind(this)}
                         />
                     </div>

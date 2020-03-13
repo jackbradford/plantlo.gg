@@ -75,24 +75,32 @@
 	}
 }
 
-input {
+input,
+select{
 
     display: inline-block;
+    width: 100%;
 }
 
+select,
+textarea,
 input[type="submit"],
 input[type="text"],
+input[type="file"],
 input[type="password"] {
 
     height: 2.5rem;
     font-size: 12px;
     font-family: $font-stack;
-    border-radius: 5px;
+    border-radius: 3px;
     line-height: 1rem;
     padding: 0;
 }
 
+select,
+textarea,
 input[type="text"],
+input[type="file"],
 input[type="password"] {
 
     background-color: rgba(207, 237, 219, 0.5);
@@ -102,8 +110,110 @@ input[type="password"] {
 	border: 1px solid #328655; // #184b94
 }
 
+label {
+
+    &.file-input {
+
+        width: 100%;
+        height: 10rem;
+        border: 1px dashed #ccc;
+        border-radius: 3px;
+        
+        img {
+
+            width: 20%;
+            opacity: 70%;
+            filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.3));
+            margin: 0 auto;
+            height: 10rem;
+            display: block;
+            top: 50%;
+        }
+    }
+}
+
 .error {
 
     color: #ed4c2a;
+}
+
+.modal {
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: 0 20%;
+//    background-color: rgba(62,168,106,0.85); // hex #3ea86a
+    z-index: 70;
+
+    .rel-abs-container {
+
+        width: 100%;
+        height: 100vh;
+    }
+
+    .rel-abs-inner {
+
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    img {
+
+        margin: 0 auto;
+        display: block;
+        min-width: 75%;
+    }
+
+    h1 {
+
+        text-align: center;
+    }
+
+    p {
+
+        margin-top: 1rem;
+    }
+
+    .button {
+
+        margin-top: 2rem;
+        padding: 0.5rem;
+    }
+}
+
+.success-modal {
+
+    background: radial-gradient(ellipse closest-side, rgba(62,168,106,0.85) 50%, rgba(84,165,117,0.85) 100%);
+
+    h1 {
+
+        color: #cfeddb;
+    }
+    p {
+
+        color: #cfeddb;
+    }
+}
+
+.error-modal {
+
+    background: radial-gradient(ellipse closest-side, rgba(239,107,66,0.85) 50%, rgba(237,76,42,0.85) 100%);
+
+    h1 {
+
+        color: #fff;
+    }
+
+    p {
+
+        color: #fff;
+    }
+
+    .button {
+
+    }
 }
 

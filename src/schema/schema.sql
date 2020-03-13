@@ -159,7 +159,7 @@ CREATE TABLE families (
 CREATE TABLE genera (
     user_id INT(10) UNSIGNED NOT NULL,
     serial INT(10) UNSIGNED NOT NULL,
-    family INT(10) UNSIGNED NOT NULL,
+    family INT(10) UNSIGNED,
     genus VARCHAR(30) NOT NULL,
     description VARCHAR(200),
     active BOOLEAN NOT NULL DEFAULT 1,
@@ -257,8 +257,9 @@ CREATE TABLE common_names (
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
 
 CREATE TABLE individuals (
+    id INT(10) UNSIGNED NOT NULL,
     user_id INT(10) UNSIGNED NOT NULL,
-    serial VARCHAR(10) NOT NULL,
+    serial VARCHAR(10),
     variety INT(10) UNSIGNED NOT NULL,
     nickname VARCHAR(100),
     height INT(10) UNSIGNED,
@@ -268,11 +269,11 @@ CREATE TABLE individuals (
     humidity INT(10) UNSIGNED,
     soil INT(10) UNSIGNED,
     fertilizer INT(10) UNSIGNED,
-    description VARCHAR(200),
+    description VARCHAR(500),
     active BOOLEAN NOT NULL DEFAULT 1,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY pk_individuals (user_id, serial),
+    PRIMARY KEY pk_individuals (user_id, id),
     FOREIGN KEY fk_individuals_users (user_id) REFERENCES users (id),
     FOREIGN KEY fk_individuals_varieties (variety) REFERENCES varieties (id),
     FOREIGN KEY fk_individuals_heights (user_id, height) REFERENCES heights (user_id, serial),
@@ -289,7 +290,7 @@ CREATE TABLE images (
     serial INT(10) UNSIGNED NOT NULL,
     image_path VARCHAR(255) NOT NULL,
     title VARCHAR(100) NOT NULL,
-    caption VARCHAR(255),
+    caption VARCHAR(200),
     active BOOLEAN NOT NULL DEFAULT 1,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -313,13 +314,13 @@ CREATE TABLE images_varieties (
 CREATE TABLE images_individuals (
     user_id INT(10) UNSIGNED NOT NULL,
     image INT(10) UNSIGNED NOT NULL,
-    individual VARCHAR(10) NOT NULL,
+    individual INT(10) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT 1, -- can be used to disable the MAPPING, as opposed to the user's IMAGE.
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY pk_images_individuals (individual, image),
+    PRIMARY KEY pk_images_individuals (user_id, individual, image),
     FOREIGN KEY fk_images_individuals_users (user_id) REFERENCES users (id),
-    FOREIGN KEY fk_images_individuals_individuals (user_id, individual) REFERENCES individuals (user_id, serial),
+    FOREIGN KEY fk_images_individuals_individuals (user_id, individual) REFERENCES individuals (user_id, id),
     FOREIGN KEY fk_images_individulas_images (user_id, image) REFERENCES images (user_id, serial)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
 
@@ -332,7 +333,7 @@ CREATE TABLE notes (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY pk_notes (user_id, serial),
-    FOREIGN KEY fk_notes_individuals (user_id, individual) REFERENCES individuals (user_id, serial),
+    FOREIGN KEY fk_notes_individuals (user_id, individual) REFERENCES individuals (user_id, id),
     FOREIGN KEY fk_notes_users (user_id) REFERENCES users (id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
 
