@@ -199,7 +199,7 @@ CREATE TABLE subspecies (
     FOREIGN KEY fk_subspecies_species (user_id, species) REFERENCES species (user_id, serial)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE varieties (
+CREATE TABLE taxa (
     id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id INT(10) UNSIGNED NOT NULL,
     species INT(10) UNSIGNED NOT NULL,
@@ -218,49 +218,49 @@ CREATE TABLE varieties (
     active BOOLEAN NOT NULL DEFAULT 1,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY pk_varieties (id),
-    FOREIGN KEY fk_varieties_users (user_id) REFERENCES users (id),
-    FOREIGN KEY fk_varieties_heights (user_id, mature_height) REFERENCES heights (user_id, serial),
-    FOREIGN KEY fk_varieties_light_types (user_id, light) REFERENCES light_types (user_id, serial),
-    FOREIGN KEY fk_varieties_water_types (user_id, water) REFERENCES water_types (user_id, serial),
-    FOREIGN KEY fk_varieties_temperature_ranges (user_id, temperature) REFERENCES temperature_ranges (user_id, serial),
-    FOREIGN KEY fk_varieties_humidity_types (user_id, humidity) REFERENCES humidity_types (user_id, serial),
-    FOREIGN KEY fk_varieties_soil_types (user_id, soil) REFERENCES soil_types (user_id, serial),
-    FOREIGN KEY fk_varieties_fertilizer_types (user_id, fertilizer) REFERENCES fertilizer_types (user_id, serial),
-    FOREIGN KEY fk_varieties_propagation_methods (user_id, propagation) REFERENCES propagation_methods (user_id, serial),
-    FOREIGN KEY fk_varieties_species (user_id, species) REFERENCES species (user_id, serial),
-    FOREIGN KEY fk_varieties_subspecies (user_id, subspecies) REFERENCES subspecies (user_id, serial),
-    FOREIGN KEY fk_varieties_users_species_subspecies (user_id, species, subspecies) REFERENCES subspecies (user_id, species, serial)
+    PRIMARY KEY pk_taxa (id),
+    FOREIGN KEY fk_taxa_users (user_id) REFERENCES users (id),
+    FOREIGN KEY fk_taxa_heights (user_id, mature_height) REFERENCES heights (user_id, serial),
+    FOREIGN KEY fk_taxa_light_types (user_id, light) REFERENCES light_types (user_id, serial),
+    FOREIGN KEY fk_taxa_water_types (user_id, water) REFERENCES water_types (user_id, serial),
+    FOREIGN KEY fk_taxa_temperature_ranges (user_id, temperature) REFERENCES temperature_ranges (user_id, serial),
+    FOREIGN KEY fk_taxa_humidity_types (user_id, humidity) REFERENCES humidity_types (user_id, serial),
+    FOREIGN KEY fk_taxa_soil_types (user_id, soil) REFERENCES soil_types (user_id, serial),
+    FOREIGN KEY fk_taxa_fertilizer_types (user_id, fertilizer) REFERENCES fertilizer_types (user_id, serial),
+    FOREIGN KEY fk_taxa_propagation_methods (user_id, propagation) REFERENCES propagation_methods (user_id, serial),
+    FOREIGN KEY fk_taxa_species (user_id, species) REFERENCES species (user_id, serial),
+    FOREIGN KEY fk_taxa_subspecies (user_id, subspecies) REFERENCES subspecies (user_id, serial),
+    FOREIGN KEY fk_taxa_users_species_subspecies (user_id, species, subspecies) REFERENCES subspecies (user_id, species, serial)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE pests_varieties (
+CREATE TABLE pests_taxa (
     pest INT(10) UNSIGNED NOT NULL,
-    variety INT(10) UNSIGNED NOT NULL,
+    taxon INT(10) UNSIGNED NOT NULL,
     user_id INT(10) UNSIGNED NOT NULL,
     active BOOLEAN NOT NULL DEFAULT 1,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY pk_pests_varieties (pest, variety),
-    FOREIGN KEY fk_pests_varieties_pests (user_id, pest) REFERENCES pests (user_id, serial),
-    FOREIGN KEY fk_pests_varieties_varieties (variety) REFERENCES varieties (id)
+    PRIMARY KEY pk_pests_taxa (pest, taxon),
+    FOREIGN KEY fk_pests_taxa_pests (user_id, pest) REFERENCES pests (user_id, serial),
+    FOREIGN KEY fk_pests_taxa_taxa (taxon) REFERENCES taxa (id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
 
 CREATE TABLE common_names (
     id SMALLINT(5) UNSIGNED NOT NULL,
-    variety INT(10) UNSIGNED NOT NULL,
+    taxon INT(10) UNSIGNED NOT NULL,
     name VARCHAR(255) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT 1,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY pk_common_names (id),
-    FOREIGN KEY fk_common_names_varieties (variety) REFERENCES varieties (id)
+    FOREIGN KEY fk_common_names_taxa (taxon) REFERENCES taxa (id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
 
 CREATE TABLE individuals (
     id INT(10) UNSIGNED NOT NULL,
     user_id INT(10) UNSIGNED NOT NULL,
     serial VARCHAR(10),
-    variety INT(10) UNSIGNED NOT NULL,
+    taxon INT(10) UNSIGNED NOT NULL,
     nickname VARCHAR(100),
     height INT(10) UNSIGNED,
     light INT(10) UNSIGNED,
@@ -275,7 +275,7 @@ CREATE TABLE individuals (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY pk_individuals (user_id, id),
     FOREIGN KEY fk_individuals_users (user_id) REFERENCES users (id),
-    FOREIGN KEY fk_individuals_varieties (variety) REFERENCES varieties (id),
+    FOREIGN KEY fk_individuals_taxa (taxon) REFERENCES taxa (id),
     FOREIGN KEY fk_individuals_heights (user_id, height) REFERENCES heights (user_id, serial),
     FOREIGN KEY fk_individuals_light_types (user_id, light) REFERENCES light_types (user_id, serial),
     FOREIGN KEY fk_individuals_water_types (user_id, water) REFERENCES water_types (user_id, serial),
@@ -298,17 +298,17 @@ CREATE TABLE images (
     FOREIGN KEY fk_images_users (user_id) REFERENCES users (id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE images_varieties (
+CREATE TABLE images_taxa (
     user_id INT(10) UNSIGNED NOT NULL,
     image INT(10) UNSIGNED NOT NULL,
-    variety INT(10) UNSIGNED NOT NULL,
+    taxon INT(10) UNSIGNED NOT NULL,
     active BOOLEAN NOT NULL DEFAULT 1, -- can be used to disable the MAPPING, as opposed to the user's IMAGE.
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY pk_images_varieties (variety, image),
-    FOREIGN KEY fk_images_varieties_users (user_id) REFERENCES users (id),
-    FOREIGN KEY fk_images_varieties_varieties (variety) REFERENCES varieties (id),
-    FOREIGN KEY fk_images_varieties_images (user_id, image) REFERENCES images (user_id, serial)
+    PRIMARY KEY pk_images_taxa (taxon, image),
+    FOREIGN KEY fk_images_taxa_users (user_id) REFERENCES users (id),
+    FOREIGN KEY fk_images_taxa_taxa (taxon) REFERENCES taxa (id),
+    FOREIGN KEY fk_images_taxa_images (user_id, image) REFERENCES images (user_id, serial)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
 
 CREATE TABLE images_individuals (
