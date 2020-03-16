@@ -219,6 +219,7 @@ CREATE TABLE taxa (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY pk_taxa (id),
+    CONSTRAINT uc_taxa_variety UNIQUE (user_id, species, subspecies, variety),
     FOREIGN KEY fk_taxa_users (user_id) REFERENCES users (id),
     FOREIGN KEY fk_taxa_heights (user_id, mature_height) REFERENCES heights (user_id, serial),
     FOREIGN KEY fk_taxa_light_types (user_id, light) REFERENCES light_types (user_id, serial),
