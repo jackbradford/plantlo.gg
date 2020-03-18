@@ -15,4 +15,5 @@ htdocs/css/style.css.map
 src/schema/users.sql
 *.swp
 tags
+htdocs/img/wallpaper*
 

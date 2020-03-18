@@ -261,7 +261,7 @@ CREATE TABLE individuals (
     id INT(10) UNSIGNED NOT NULL,
     user_id INT(10) UNSIGNED NOT NULL,
     serial VARCHAR(10),
-    taxon INT(10) UNSIGNED NOT NULL,
+    taxon INT(10) UNSIGNED,
     nickname VARCHAR(100),
     height INT(10) UNSIGNED,
     light INT(10) UNSIGNED,
