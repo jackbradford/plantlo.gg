@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import RegisterContainer from '../container/register-container';
 import ActivateContainer from '../container/activate-container';
-import AddIndividualContainer from '../container/add-individual-container';
+import NewIndividualContainer from '../container/new-individual-container';
 import Home from './pages/home';
 
 /**
@@ -34,7 +34,7 @@ export default class Root extends Component {
                 />
                 <Route exact path='/activate' component={ActivateContainer} />
                 <Route path='/activate/:userId/:code' component={ActivateContainer} />
-                <Route path='/plants/individuals/add' component={AddIndividualContainer} />
+                <Route path='/plants/individuals/add' component={NewIndividualContainer} />
             </React.Fragment>
         );
     }

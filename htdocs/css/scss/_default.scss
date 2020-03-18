@@ -27,7 +27,7 @@ time, mark, audio, video, button {
 	padding: 0;
 	border: 0px solid #000;
 	font-family: $font-stack;
-//	font-size: 16px;
+	font-size: 100%;
 	vertical-align: top;
 	box-sizing: border-box;
 	background-color: transparent;
@@ -96,7 +96,32 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
 
-    font-size: 24px;
+    font-size: 150%;
+}
+
+h2 {
+
+    font-size: 135%;
+}
+
+h3 {
+
+    font-size: 120%;
+}
+
+h4 {
+
+    font-size: 110%;
+}
+
+h5 {
+
+    font-size: 105%;
+}
+
+h6 {
+
+    font-size: 100%;
 }
 
 main {

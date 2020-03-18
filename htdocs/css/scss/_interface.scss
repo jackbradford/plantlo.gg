@@ -4,6 +4,13 @@
  * interface. 
  *
  */
+
+body {
+
+//    background-image: url("/img/wallpaper04.png");
+//    background-size: 1rem;
+}
+
 .button {
 
     text-align: center;
@@ -90,7 +97,7 @@ input[type="file"],
 input[type="password"] {
 
     height: 2.5rem;
-    font-size: 12px;
+    font-size: 75%;
     font-family: $font-stack;
     border-radius: 3px;
     line-height: 1rem;

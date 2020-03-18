@@ -5,6 +5,10 @@
  * here at a time.
  *
  */
+
+$placeholder-color: #aaa;
+$placeholder-font-style: italic;
+
 .add-individual {
 
     padding: 1.5rem 0.5rem 1rem;
@@ -19,7 +23,7 @@
         font-style: italic;
         color: #444;
         margin-top: 0.25rem;
-        font-size: 12px;
+        font-size: 75%;
     }
 
     button {
@@ -34,18 +38,8 @@
 
 .add-individual-form {
 
-    .form-section {
-
-        margin-top: 1rem;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        font-size: 12px;
-        border: 0px solid #2a6e46;
-        box-shadow: inset 0 0 1rem 0.25rem rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.2), 0 1px 5px rgba(0,0,0,0.1), inset 0 1px 1px rgba(0,0,0,0.1);
-        border-radius: 3px;
-        padding: 1.25rem 0.75rem;
-    }
+    padding: 0 0.5rem;
+    margin: 1rem 0 0 0;
 
     h2 {
 
@@ -58,11 +52,22 @@
         margin: 0.25rem 0 0 0;
     }
 
+    input {
+
+        padding-left: 0;
+        height: initial;
+        line-height: initial;
+
+    }
+
     input,
     select {
 
         width: 100%;
         margin: 0.1rem 0 0 0;
+        border: 0;
+        background: 0;
+        margin: 0;
     }
 
     input[type="file"] {
@@ -72,9 +77,19 @@
     label {
 
         flex: 0 1 auto;
-        margin-top: 1rem;
+        display: flex;
         align-self: flex-end;
         width: 100%;
+
+        span {
+
+            flex: 0 1 auto;
+        }
+
+        input {
+
+            flex: 0 1 auto;
+        }
 
         &.split {
 
@@ -95,11 +110,47 @@
     }
 }
 
+.form-section {
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border: 0px solid #2a6e46;
+//        box-shadow: inset 0 0 1rem 0.25rem rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.2), 0 1px 5px rgba(0,0,0,0.1), inset 0 1px 1px rgba(0,0,0,0.1);
+    border-radius: 3px;
+    padding: 0.5rem 0;
+
+    &:first-child {
+
+        padding-top: 0;
+    }
+
+    input {
+
+    }
+}
+
 .label-section {
     
+    border-bottom: 1px dashed #bbb;
+    padding-top: 0;
+
     label {
 
-        width: 49%;
+        width: 100%;
+    }
+
+    input {
+
+        &.nickname {
+
+            font-size: 150%;
+            font-family: $header-font-stack;
+        }
+
+        &.serial {
+
+        }
     }
 }
 
@@ -129,19 +180,68 @@
 
 .identify-section {
 
-    label {
-
-        width: 100%;
-
-        &.varieties {
-
-            width: 62%;
-        }
-    }
-
     select {
 
         flex: 0 1 auto;
+    }
+
+    label {
+
+        font-size: 75%;
+        line-height: 1rem;
+        padding: 0.15rem 0 0;
+        
+        span {
+
+            margin-right: 0.5rem;
+        }
+
+        &.subspecies {
+
+            padding-top: 0.5rem;
+        }
+    }
+
+    input {
+
+        &.botanical-name {
+
+            font-size: 90%;
+            font-style: italic;
+        }
+
+        &.family {
+
+            font-size: 135%;
+            font-style: normal;
+            font-family: $header-font-stack;
+        }
+
+        &.genus,
+        &.species {
+
+            width: 50%;
+        }
+
+        &.genus {
+
+//            margin-right: 5px;
+        }
+
+        &.subspecies-name,
+        &.variety-name,
+        &.origin {
+
+            font-size: 100%;
+            font-style: italic;
+            line-height: 1rem;
+        }
+    }
+
+    .botanical-name-container {
+
+        display: flex;
+        justify-content: flex-start;
     }
 }
 
@@ -172,5 +272,16 @@
 
         height: 2rem;
     }
+}
+
+@include placeholder(input, $placeholder-color, $placeholder-font-style);
+@include placeholder('input.required', #e2615b, $placeholder-font-style);
+
+.offscreen-genus {
+
+    position: absolute;
+    top: -200%;
+    font-size: 90%;
+    opacity: 0;
 }
 

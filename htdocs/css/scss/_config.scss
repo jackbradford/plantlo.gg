@@ -44,7 +44,38 @@ $menu-text-shadow:		1px 1px 1px rgba(0,0,0,0.10);
 	@media (min-width: 1800px) { @content; }
 }
 
+@mixin placeholder($selector, $color, $style) {
 
+    #{$selector}::placeholder {
+
+        color: $color;
+        font-style: $style;
+    }
+
+    #{$selector}::-webkit-input-placeholder {
+
+        color: $color;
+        font-style: $style;
+    }
+
+    #{$selector}::-moz-placeholder {
+
+        color: $color;
+        font-style: $style;
+    }
+
+    #{$selector}:-ms-input-placeholder {
+
+        color: $color;
+        font-style: $style;
+    }
+
+    #{$selector}:-moz-placeholder {
+
+        color: $color;
+        font-style: $style;
+    }
+}
 
 @mixin box-shadow($shadows...) {
 	-moz-box-shadow: 	$shadows;
