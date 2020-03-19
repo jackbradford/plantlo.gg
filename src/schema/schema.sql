@@ -45,7 +45,7 @@ CREATE TABLE heights (
     FOREIGN KEY fk_mature_heights_users (user_id) REFERENCES users (id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE light_types (
+CREATE TABLE light_conditions (
     user_id INT(10) UNSIGNED NOT NULL,
     serial INT(10) UNSIGNED NOT NULL,
     label VARCHAR(30) NOT NULL,
@@ -53,11 +53,11 @@ CREATE TABLE light_types (
     active BOOLEAN NOT NULL DEFAULT 1,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY pk_light_types (user_id, serial),
-    FOREIGN KEY fk_light_types_users (user_id) REFERENCES users (id)
+    PRIMARY KEY pk_light_conditions (user_id, serial),
+    FOREIGN KEY fk_light_conditions_users (user_id) REFERENCES users (id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE water_types (
+CREATE TABLE water_conditions (
     user_id INT(10) UNSIGNED NOT NULL,
     serial INT(10) UNSIGNED NOT NULL,
     label VARCHAR(30) NOT NULL,
@@ -65,8 +65,8 @@ CREATE TABLE water_types (
     active BOOLEAN NOT NULL DEFAULT 1,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY pk_water_types (user_id, serial),
-    FOREIGN KEY fk_water_types_users (user_id) REFERENCES users (id)
+    PRIMARY KEY pk_water_conditions (user_id, serial),
+    FOREIGN KEY fk_water_conditions_users (user_id) REFERENCES users (id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
 
 CREATE TABLE temperature_ranges (
@@ -84,7 +84,7 @@ CREATE TABLE temperature_ranges (
     FOREIGN KEY fk_temperature_ranges_users (user_id) REFERENCES users (id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE humidity_types (
+CREATE TABLE humidity_conditions (
     user_id INT(10) UNSIGNED NOT NULL,
     serial INT(10) UNSIGNED NOT NULL,
     label VARCHAR(30) NOT NULL,
@@ -92,8 +92,8 @@ CREATE TABLE humidity_types (
     active BOOLEAN NOT NULL DEFAULT 1,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY pk_humidity_types (user_id, serial),
-    FOREIGN KEY fk_humidity_types_users (user_id) REFERENCES users (id)
+    PRIMARY KEY pk_humidity_conditions (user_id, serial),
+    FOREIGN KEY fk_humidity_conditions_users (user_id) REFERENCES users (id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
 
 CREATE TABLE soil_types (
@@ -202,7 +202,7 @@ CREATE TABLE subspecies (
 CREATE TABLE taxa (
     id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id INT(10) UNSIGNED NOT NULL,
-    species INT(10) UNSIGNED NOT NULL,
+    species INT(10) UNSIGNED,
     subspecies INT(10) UNSIGNED,
     variety VARCHAR(50),
     origin VARCHAR(30),
@@ -222,10 +222,10 @@ CREATE TABLE taxa (
     CONSTRAINT uc_taxa_variety UNIQUE (user_id, species, subspecies, variety),
     FOREIGN KEY fk_taxa_users (user_id) REFERENCES users (id),
     FOREIGN KEY fk_taxa_heights (user_id, mature_height) REFERENCES heights (user_id, serial),
-    FOREIGN KEY fk_taxa_light_types (user_id, light) REFERENCES light_types (user_id, serial),
-    FOREIGN KEY fk_taxa_water_types (user_id, water) REFERENCES water_types (user_id, serial),
+    FOREIGN KEY fk_taxa_light_conditions (user_id, light) REFERENCES light_conditions (user_id, serial),
+    FOREIGN KEY fk_taxa_water_conditions (user_id, water) REFERENCES water_conditions (user_id, serial),
     FOREIGN KEY fk_taxa_temperature_ranges (user_id, temperature) REFERENCES temperature_ranges (user_id, serial),
-    FOREIGN KEY fk_taxa_humidity_types (user_id, humidity) REFERENCES humidity_types (user_id, serial),
+    FOREIGN KEY fk_taxa_humidity_conditions (user_id, humidity) REFERENCES humidity_conditions (user_id, serial),
     FOREIGN KEY fk_taxa_soil_types (user_id, soil) REFERENCES soil_types (user_id, serial),
     FOREIGN KEY fk_taxa_fertilizer_types (user_id, fertilizer) REFERENCES fertilizer_types (user_id, serial),
     FOREIGN KEY fk_taxa_propagation_methods (user_id, propagation) REFERENCES propagation_methods (user_id, serial),
@@ -278,10 +278,10 @@ CREATE TABLE individuals (
     FOREIGN KEY fk_individuals_users (user_id) REFERENCES users (id),
     FOREIGN KEY fk_individuals_taxa (taxon) REFERENCES taxa (id),
     FOREIGN KEY fk_individuals_heights (user_id, height) REFERENCES heights (user_id, serial),
-    FOREIGN KEY fk_individuals_light_types (user_id, light) REFERENCES light_types (user_id, serial),
-    FOREIGN KEY fk_individuals_water_types (user_id, water) REFERENCES water_types (user_id, serial),
+    FOREIGN KEY fk_individuals_light_conditions (user_id, light) REFERENCES light_conditions (user_id, serial),
+    FOREIGN KEY fk_individuals_water_conditions (user_id, water) REFERENCES water_conditions (user_id, serial),
     FOREIGN KEY fk_individuals_temperature_ranges (user_id, temperature) REFERENCES temperature_ranges (user_id, serial),
-    FOREIGN KEY fk_individuals_humidity_types (user_id, humidity) REFERENCES humidity_types (user_id, serial),
+    FOREIGN KEY fk_individuals_humidity_conditions (user_id, humidity) REFERENCES humidity_conditions (user_id, serial),
     FOREIGN KEY fk_individuals_soil_types (user_id, soil) REFERENCES soil_types (user_id, serial),
     FOREIGN KEY fk_individuals_fertilizer_types (user_id, fertilizer) REFERENCES fertilizer_types (user_id, serial)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
@@ -347,4 +347,8 @@ CREATE TABLE usernames (
     PRIMARY KEY pk_usernames (id),
     FOREIGN KEY fk_usernames_users (user_id) REFERENCES users (id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
+CREATE TABLE foo (
+  FieldA INT,
+  FieldB INT
+);
 

@@ -23,10 +23,20 @@ function getVarieties(payload) {
     return varieties;
 }
 
+var conditions = {
+    'light': {},
+    'water': {},
+    'temperature': {},
+    'humidity': {},
+    'soil': {},
+    'fertilizer': {},
+}
+
 export default function user(
 
     state = {
         data: {
+            conditions: conditions,
             error: null,
             individuals: [],
             loading: false,

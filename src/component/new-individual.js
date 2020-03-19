@@ -9,6 +9,7 @@ import HeaderContainer from '../container/header-container';
 import ValidationStatusIcon from './validation-status-icon';
 import ValidationMessage from './validation-message';
 import ModalBox from './modal-box';
+import NewCondition from './new-condition';
 import ReactDOM from "react-dom";
 import { TailSpin } from "svg-loaders-react"
 import {
@@ -24,7 +25,17 @@ export default class NewIndividual extends Component {
     constructor() {
 
         super();
+        this.getConditionType = this.getConditionType.bind(this);
+        this.getDisabledConditionOption = this.getDisabledConditionOption.bind(this);
+        this.getGenusInputClassNames = this.getGenusInputClassNames.bind(this);
+        this.getSpeciesInputClassNames = this.getSpeciesInputClassNames.bind(this);
         this.updateGenusInputWidth = this.updateGenusInputWidth.bind(this);
+        this.handleGenusBlur = this.handleGenusBlur.bind(this);
+        this.handleTaxonBlur = this.handleTaxonBlur.bind(this);
+        this.taxonFieldsAreEmpty = this.taxonFieldsAreEmpty.bind(this);
+        this.toggleAddNewPlantCondition = this.toggleAddNewPlantCondition.bind(this);
+        this.updateRequiredFields = this.updateRequiredFields.bind(this);
+        this.getNewConditionClass = this.getNewConditionClass.bind(this);
     }
 
     componentDidMount() {
@@ -35,14 +46,176 @@ export default class NewIndividual extends Component {
         */
     }
 
+    getConditionType(fieldName) {
+
+        switch (fieldName) {
+
+            case 'light': return "condition";
+            case 'water': return "condition";
+            case 'temperature': return "range";
+            case 'humidity': return "";
+            case 'soil': return "condition";
+            case 'fertilizer': return "type";
+            default: return "condition";
+        }
+    }
+
+    getDisabledConditionOption(fieldName) {
+
+        var html, optionText;
+        var selected = false || null;
+        var conditions = this.props.userData.conditions[fieldName];
+        var attributes = (selected) ? {} : {'selected': 'selected'};
+        var conditionType = this.getConditionType(fieldName);
+
+        console.log("CHECK");
+        console.log(this.props.fields[fieldName]);
+        if (this.props.fields[fieldName].newEntry === true) {
+
+            html = (
+                <React.Fragment>
+                    <option {...attributes} disabled value="">New {fieldName} {conditionType}...</option>
+                </React.Fragment>
+            );
+        } else {
+
+            html = (
+                <React.Fragment>
+                    <option {...attributes} disabled value="">Select a {fieldName} {conditionType}...</option>
+                </React.Fragment>
+            );
+        }
+        for (const condition in conditions) {
+            attributes = (selected == condition.id) ? {'selected':'selected'} : {};
+            optionText = "Text";
+            html += (
+                <React.Fragment>
+                    <option {...attributes} value="">{optionText}</option>
+                </React.Fragment>
+            );
+        }
+        return html;
+    }
+
+    getNewConditionClass(field) {
+
+        var classNames = "new-condition";
+        if (this.props.fields[field].newEntry === true) {
+
+            classNames += " display";
+        }
+        return classNames;
+    }
+
+    getGenusInputClassNames() {
+
+        console.log("CLASSES");
+        console.log(this.props.fields);
+        var classNames = "botanical-name genus";
+        if (this.props.fields.genus.isRequired === true) {
+            classNames += " required";
+        }
+        console.log(classNames);
+        return classNames;
+    }
+
+    getSpeciesInputClassNames() {
+
+        var classNames = "botanical-name species";
+        if (this.props.fields.species.isRequired === true) {
+            classNames += " required";
+        }
+        return classNames;
+    }
+
     getUserPlantVarietyOptions() {
 
         return '';
     }
 
-    updateGenusInputWidth() {
+    handleTaxonBlur(e) {
 
-        const input = document.getElementById('new-individual-genus');
+        const input = e.target;
+        if (input.value) {
+
+            this.updateRequiredFields('add', ['genus', 'species']);
+        }
+        else if (this.taxonFieldsAreEmpty()) {
+
+            this.updateRequiredFields('remove', [
+                'genus', 'species'
+            ]);
+        }
+    }
+
+    handleGenusBlur() {
+
+        var input = document.getElementById('new-individual-genus');
+        this.updateGenusInputWidth(input);
+        if (input.value) {
+
+            this.updateRequiredFields('add', ['genus', 'species']);
+        }
+        /**
+         * If any of the checked values are not empty, genus is required.
+         */
+        else if (this.taxonFieldsAreEmpty()) {
+
+            this.updateRequiredFields('remove', [
+                'genus', 'species'
+            ]);
+        }
+    }
+
+    taxonFieldsAreEmpty() {
+
+        const values = {
+            family: document.getElementById('new-individual-family').value,
+            genus: document.getElementById('new-individual-genus').value,
+            species: document.getElementById('new-individual-species').value,
+            subspecies: document.getElementById('new-individual-subspecies').value,
+            variety: document.getElementById('new-individual-variety').value,
+            origin: document.getElementById('new-individual-origin').value,
+            commonName: document.getElementById('new-individual-common-name').value,
+        };
+        for (const index in values) {
+
+            if (values[index]) return false;
+        }
+        return true;
+    }
+
+    toggleAddNewPlantCondition(e) {
+
+        const conditionButton = e.target;
+        console.log("TARGET");
+        console.log(conditionButton);
+        switch (conditionButton.id) {
+
+            case 'add-new-light-condition':
+                this.props.toggleAddNewPlantCondition('light');
+                break;
+            case 'add-new-water-condition':
+                this.props.toggleAddNewPlantCondition('water');
+                break;
+            case 'add-new-temperature-condition':
+                this.props.toggleAddNewPlantCondition('temperature');
+                break;
+            case 'add-new-humidity-condition':
+                this.props.toggleAddNewPlantCondition('humidity');
+                break;
+            case 'add-new-soil-condition':
+                this.props.toggleAddNewPlantCondition('soil');
+                break;
+            case 'add-new-fertilizer-condition':
+                this.props.toggleAddNewPlantCondition('fertilizer');
+                break;
+            default:
+                return;
+        }
+    }
+
+    updateGenusInputWidth(input) {
 
         /*
          * This adds a number of pixels to the width of the genus input. This
@@ -52,7 +225,6 @@ export default class NewIndividual extends Component {
          * the need for margin/padding or an actual space character.
          */
         const padding = 5;
-
         const speciesInput = document.getElementById('new-individual-species');
         if (!input.value) {
 
@@ -73,9 +245,22 @@ export default class NewIndividual extends Component {
         const remainingWidth = totalWidth - width - padding;
         input.style.width = width + 'px';
         speciesInput.style.width = remainingWidth + 'px';
+    }
 
-        console.log(input);
-        console.log(width);
+    updateRequiredFields(operation, array) {
+
+        if (operation == 'add') {
+
+            this.props.makeFieldsRequired(array);
+        }
+        else if (operation == 'remove') {
+
+            this.props.makeFieldsNotRequired(array);
+        }
+        else {
+
+            throw new Error('Operation must either be `add` or `remove`.');
+        }
     }
 
     render() {
@@ -92,7 +277,7 @@ export default class NewIndividual extends Component {
                      */}
                     <div className="form-section image-section">
                         <label className="file-input">
-                            <img src="/img/add.svg" alt="add photo button" />
+                            <img src="/img/icons/add-photo.svg" alt="add photo button" />
                             <input
                                 type="file"
                                 className=""
@@ -127,8 +312,9 @@ export default class NewIndividual extends Component {
                         <input
                             type="text"
                             placeholder="Botanical Family"
-                            id="add-variety-family"
+                            id="new-individual-family"
                             className="botanical-name family"
+                            onBlur={this.handleTaxonBlur}
                         />
                         <div
                             className="botanical-name-container"
@@ -138,38 +324,51 @@ export default class NewIndividual extends Component {
                                 type="text"
                                 placeholder="Genus"
                                 id="new-individual-genus"
-                                className="botanical-name genus required"
-                                onBlur={this.updateGenusInputWidth}
+                                className={this.getGenusInputClassNames()}
+                                onBlur={this.handleGenusBlur}
                             />
                             <input
                                 type="text"
                                 placeholder="Species"
                                 id="new-individual-species"
-                                className="botanical-name species required"
+                                className={this.getSpeciesInputClassNames()}
+                                onBlur={this.handleTaxonBlur}
                             />
                         </div>
                         <label className="subspecies"><span>Subspecies:</span>
                             <input
                                 type="text"
                                 placeholder="Subspecies"
-                                id="add-variety-subspecies"
+                                id="new-individual-subspecies"
                                 className="subspecies-name"
+                                onBlur={this.handleTaxonBlur}
                             />
                         </label>
                         <label><span>Variety:</span>
                             <input
                                 type="text"
                                 placeholder="Variety:"
-                                id="add-variety-variety"
+                                id="new-individual-variety"
                                 className="variety-name"
+                                onBlur={this.handleTaxonBlur}
+                            />
+                        </label>
+                        <label><span>Common&nbsp;Name:</span>
+                            <input
+                                type="text"
+                                placeholder="e.g. 'African Violet'"
+                                id="new-individual-common-name"
+                                className="origin"
+                                onBlur={this.handleTaxonBlur}
                             />
                         </label>
                         <label><span>Origin:</span>
                             <input
                                 type="text"
-                                placeholder="e.g. 'North America'"
-                                id="add-variety-origin"
+                                placeholder="e.g. 'Eastern tropical Africa'"
+                                id="new-individual-origin"
                                 className="origin"
+                                onBlur={this.handleTaxonBlur}
                             />
                         </label>
                     </div>
@@ -177,91 +376,137 @@ export default class NewIndividual extends Component {
                       Description Section
                      */}
                     <div className="form-section description-section">
-                        <h2>Describe your plant</h2>
-                        <p className="subtitle">
-                            Record the specifics of your specimen.
-                        </p>
-                        <label><span>Description:</span>
-                            <textarea
-                                placeholder="500 character limit."
-                                className=""
-                            />
-                        </label>
+                        <h2>Description</h2>
+                        <textarea
+                            placeholder="Record the details of your individual plant (500 character limit)."
+                            className=""
+                        />
                     </div>{/* form-section */}
                     {/*
                       Conditions Section
                      */}
                     <div className="form-section conditions-section">
-                        <h2>Your plant's ideal conditions</h2>
-                        <p className="subtitle">
-                            Make note of the conditions in which your plant thrives.
-                        </p>
-                        <label className="varieties"><span>Light:</span>
-                            <select defaultValue="">
-                                <option value="" disabled>Select...</option>
-                            </select>
-                        </label>
-                        <button
-                            onClick=""
-                            className="button primary-button new-requirement"
-                        >
-                            Add new
-                        </button>
-                        <label className="varieties"><span>Water:</span>
-                            <select defaultValue="">
-                                <option value="" disabled>Select...</option>
-                            </select>
-                        </label>
-                        <button
-                            onClick=""
-                            className="button primary-button new-requirement"
-                        >
-                            Add new
-                        </button>
-                        <label className="varieties"><span>Soil:</span>
-                            <select defaultValue="">
-                                <option value="" disabled>Select...</option>
-                            </select>
-                        </label>
-                        <button
-                            onClick=""
-                            className="button primary-button new-requirement"
-                        >
-                            Add new
-                        </button>
-                        <label className="varieties"><span>Fertilizer:</span>
-                            <select defaultValue="">
-                                <option value="" disabled>Select...</option>
-                            </select>
-                        </label>
-                        <button
-                            onClick=""
-                            className="button primary-button new-requirement"
-                        >
-                            Add new
-                        </button>
-                        <label className="varieties"><span>Temperature:</span>
-                            <select defaultValue="">
-                                <option value="" disabled>Select...</option>
-                            </select>
-                        </label>
-                        <button
-                            onClick=""
-                            className="button primary-button new-requirement"
-                        >
-                            Add new
-                        </button>
-                        <label className="varieties"><span>Humidity:</span>
-                            <select defaultValue="">
-                                <option value="" disabled>Select...</option>
-                            </select>
-                        </label>
-                        <button
-                            onClick=""
-                            className="button primary-button new-requirement"
-                        >
-                            Add new
-                        </button>
+                        <h2>Conditions &amp; Care</h2>
+                        <div className="condition">
+                            <label className="varieties"><img src="/img/icons/sun.svg" alt="The sun as a light condition icon." />
+                                <select defaultValue="">
+                                    {this.getDisabledConditionOption('light')}
+                                </select>
+                            </label>
+                            <button
+                                onClick={this.toggleAddNewPlantCondition}
+                                className="button primary-button"
+                                id="add-new-light-condition"
+                            >
+                                New
+                            </button>
+                            <NewCondition
+                                className={(this.props.fields.light.newEntry === true) ? "display" : ""}
+                                condition="light"
+                                labelPlaceholder="Label ('Low Light')"
+                                descriptionPlaceholder="Description ('Within 2-3m of a window.')"
+                            />
+                        </div>
+                        <div className="condition">
+                            <label className="varieties"><img src="/img/icons/water.svg" alt="A water droplet as a Water condition icon." />
+                                <select defaultValue="">
+                                    {this.getDisabledConditionOption('water')}
+                                </select>
+                            </label>
+                            <button
+                                onClick={this.toggleAddNewPlantCondition}
+                                className="button primary-button"
+                                id="add-new-water-condition"
+                            >
+                                New
+                            </button>
+                            <NewCondition
+                                className={(this.props.fields.water.newEntry === true) ? "display" : ""}
+                                condition="water"
+                                labelPlaceholder="Label ('Evenly Moist')"
+                                descriptionPlaceholder="Description ('The soil should not be allowed to dry out.')"
+                            />
+                        </div>
+                        <div className="condition">
+                            <label className="varieties"><img src="/img/icons/temperature.svg" alt="A thermometer as a temperature range icon." />
+                                <select defaultValue="">
+                                    {this.getDisabledConditionOption('temperature')}
+                                </select>
+                            </label>
+                            <button
+                                onClick={this.toggleAddNewPlantCondition}
+                                className="button primary-button"
+                                id="add-new-temperature-condition"
+                            >
+                                New
+                            </button>
+                            <NewCondition
+                                className={(this.props.fields.temperature.newEntry === true) ? "display" : ""}
+                                condition="temperature"
+                                labelPlaceholder="Label ('Very Warm')"
+                                descriptionPlaceholder="Change this input to upper/lower/minimum"
+                            />
+                        </div>
+                        <div className="condition">
+                            <label className="varieties"><img src="/img/icons/humidity.svg" alt="A cloud as a humidity condition icon." />
+                                <select defaultValue="">
+                                    {this.getDisabledConditionOption('humidity')}
+                                </select>
+                            </label>
+                            <button
+                                onClick={this.toggleAddNewPlantCondition}
+                                className="button primary-button"
+                                id="add-new-humidity-condition"
+                            >
+                                New
+                            </button>
+                            <NewCondition
+                                className={(this.props.fields.humidity.newEntry === true) ? "display" : ""}
+                                condition="humidity"
+                                labelPlaceholder="Label ('Moderate Humidity')"
+                                descriptionPlaceholder="Desctiption ('Relative humidity of 50-60% is ideal for this plant.')"
+                            />
+                        </div>
+                        <div className="condition">
+                            <label className="varieties"><img src="/img/icons/shovel.svg" alt="A shovel as a soil condition icon." />
+                                <select defaultValue="">
+                                    {this.getDisabledConditionOption('soil')}
+                                </select>
+                            </label>
+                            <button
+                                onClick={this.toggleAddNewPlantCondition}
+                                className="button primary-button"
+                                id="add-new-soil-condition"
+                            >
+                                New
+                            </button>
+                            <NewCondition
+                                className={(this.props.fields.soil.newEntry === true) ? "display" : ""}
+                                condition="soil"
+                                labelPlaceholder="Label ('')"
+                                descriptionPlaceholder="Desctiption ('')"
+                            />
+                        </div>
+                        <div className="condition">
+                            <label className="varieties"><img src="/img/icons/fork-knife.svg" alt="A fork and knife set as a fertilizer type icon." />
+                                <select defaultValue="">
+                                    {this.getDisabledConditionOption('fertilizer')}
+                                </select>
+                            </label>
+                            <button
+                                onClick={this.toggleAddNewPlantCondition}
+                                className="button primary-button"
+                                id="add-new-fertilizer-condition"
+                            >
+                                New
+                            </button>
+                            <NewCondition
+                                className={(this.props.fields.fertilizer.newEntry === true) ? "display" : ""}
+                                condition="fertilizer"
+                                labelPlaceholder="Label ('')"
+                                descriptionPlaceholder="Desctiption ('')"
+                            />
+                        </div>
                     </div>
                     <button className="button primary-button">Add plant</button>
                 </div>{/* add-individual-form */}

@@ -6,6 +6,30 @@ import { auth } from './auth';
 import { async } from './async';
 import { validator } from './validator';
 
+export const NEW_INDIVIDUAL_UPDATE_REQUIRED_FIELDS = 'NEW_INDIVIDUAL_UPDATE_REQUIRED_FIELDS';
+export const TOGGLE_ADD_NEW_PLANT_CONDITION = 'TOGGLE_ADD_NEW_PLANT_CONDITION';
+
+export const toggleAddNewPlantCondition = (fieldName) => {
+
+    return {
+        type: TOGGLE_ADD_NEW_PLANT_CONDITION,
+        payload: {
+            fieldName: fieldName,
+        }
+    }
+}
+
+export const updateRequiredFieldsForNewIndividual = (operation, array) => {
+
+    return {
+        type: NEW_INDIVIDUAL_UPDATE_REQUIRED_FIELDS,
+        payload: {
+            operation: operation,
+            requiredFields: array,
+        }
+    }
+};
+
 export const RESET_MENU_EXPAND = 'RESET_MENU_EXPAND';
 
 export const resetMenuExpand = () => {

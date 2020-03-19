@@ -1,6 +1,8 @@
 /**
- * This file provides the container component for the Register page.
- * plantlo.gg/register
+ * This file provides the container component for the New Individual
+ * page.
+ *
+ * plantlo.gg/plants/individuals/add
  *
  */
 import React, { Component } from 'react';
@@ -8,27 +10,16 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import NewIndividual from '../component/new-individual';
 import {
-    attemptRegisterUser,
-    attemptValidateFormField,
-    registerUserEnd,
-    resetForm,
-    resetFormStatus,
-    resetMenuExpand,
-    resetRegisterName,
-    validateFormFieldEnd,
+    toggleAddNewPlantCondition,
+    updateRequiredFieldsForNewIndividual,
 } from '../actions';
 
 const mapStateToProps = function(state) {
 
     return {
 
-        email: state.register.fields.emailAddress,
-        firstName: state.register.fields.firstName,
-        formStatus: state.register.form,
-        lastName: state.register.fields.lastName,
-        password: state.register.fields.password,
-        passwordMatch: state.register.fields.passwordMatch,
-        username: state.register.fields.username,
+        fields: state.newIndividual.fields,
+        userData: state.user.data,
     }
 };
 
@@ -36,8 +27,14 @@ const mapDispatchToProps = function(dispatch) {
 
     return {
 
-        attemptRegisterUser: (formData) => {
-            dispatch(attemptRegisterUser(formData))
+        makeFieldsRequired: (array) => {
+            dispatch(updateRequiredFieldsForNewIndividual('add', array))
+        },
+        makeFieldsNotRequired: (array) => {
+            dispatch(updateRequiredFieldsForNewIndividual('remove', array))
+        },
+        toggleAddNewPlantCondition: (fieldName) => {
+            dispatch(toggleAddNewPlantCondition(fieldName))
         },
     };
 };
