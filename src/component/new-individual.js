@@ -183,29 +183,10 @@ export default class NewIndividual extends Component {
     toggleAddNewPlantCondition(e) {
 
         const conditionButton = e.target;
-        switch (conditionButton.id) {
-
-            case 'add-new-light-condition':
-                this.props.toggleAddNewPlantCondition('light');
-                break;
-            case 'add-new-water-condition':
-                this.props.toggleAddNewPlantCondition('water');
-                break;
-            case 'add-new-temperature-condition':
-                this.props.toggleAddNewPlantCondition('temperature');
-                break;
-            case 'add-new-humidity-condition':
-                this.props.toggleAddNewPlantCondition('humidity');
-                break;
-            case 'add-new-soil-condition':
-                this.props.toggleAddNewPlantCondition('soil');
-                break;
-            case 'add-new-fertilizer-condition':
-                this.props.toggleAddNewPlantCondition('fertilizer');
-                break;
-            default:
-                return;
-        }
+        var regex = new RegExp(/^(?:[^-]*-){2}([^-]*)/, 'i');
+        var match = conditionButton.id.match(regex);
+        this.props.toggleAddNewPlantCondition(match[1]);
+        return;
     }
 
     updateGenusInputWidth(input) {
