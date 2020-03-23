@@ -36,9 +36,6 @@ export default function appData(
             };
 
         case LOAD_USER_AND_APP_DATA_END:
-            console.log("STATE/ACTION");
-            console.log(state);
-            console.log(action);
             const units = getUnits(action.payload);
             return {
                 ...state,

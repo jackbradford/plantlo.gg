@@ -13,8 +13,6 @@ import {
 
 const mapStateToProps = function(state) {
 
-    console.log("STATE");
-    console.log(state);
     return {
 
         user: state.user,

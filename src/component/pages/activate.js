@@ -17,7 +17,6 @@ class Activate extends Component {
         // set isActivating to true.
         var userId = this.props.match.params.userId;
         var code = this.props.match.params.code;
-        console.log(this.props);
         this.props.attemptActivateUser(userId, code);
         this.props.resetMenuExpand();
     }
@@ -41,7 +40,6 @@ class Activate extends Component {
     render() {
 
         var content, linkModal;
-        console.log(this.props.isActivating);
         if (this.props.isActivating === true) {
 
             content = (
@@ -101,7 +99,6 @@ class Activate extends Component {
             );
         }
         else if (this.props.newLink.success === false) {
-            console.log("ERROR");
             var message = "We couldn't generate a new account activation link. Please try again later."
             if (this.props.newLink.serverMessage != '') {
                 message += " (" + this.props.newLink.serverMessage + ")";

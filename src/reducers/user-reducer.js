@@ -80,8 +80,6 @@ export default function user(
 
         case CHECK_LOGIN_END:
             var response = action.payload.response;
-            console.log("STATE");
-            console.log(state);
             return {
                 ...state,
                 details: {
@@ -123,8 +121,6 @@ export default function user(
             };
 
         case LOAD_USER_AND_APP_DATA_END:
-            console.log("STATE");
-            console.log(state);
             const varieties = getVarieties(action.payload);
             return {
                 ...state,
@@ -158,8 +154,6 @@ export default function user(
 
         case LOGIN_REQUEST_END:
             var res = action.payload.serverResponse;
-            console.log("RESPONSE");
-            console.log(res);
             return {
                 ...state,
                 details: {

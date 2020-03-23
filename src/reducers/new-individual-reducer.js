@@ -53,7 +53,6 @@ export default function newIndividual(
 
         case TOGGLE_ADD_NEW_PLANT_CONDITION:
             var fieldName = action.payload.fieldName
-            console.log(fieldName);
             return {
                 ...state,
                 fields: {
@@ -80,8 +79,6 @@ export default function newIndividual(
                     isRequired: (operation === 'add') ? true : false,
                 }
             }
-            console.log("NEWFIELDS");
-            console.log(newFields);
             return {
                 ...state,
                 fields: {

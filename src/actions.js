@@ -54,14 +54,11 @@ export const tryLoadUserAndAppData = (userId) => {
         }).then(
             (serverResponse) => {
                 var response = JSON.parse(serverResponse);
-                console.log("GET_USER_AND_APP_DATA_RESPONSE");
-                console.log(response);
                 dispatch(loadUserAndAppDataEnd(response));
             }
         )
         .catch (
             (error) => {
-                console.log(error);
                 dispatch(loadUserAndAppDataError(error));
             }
         )
@@ -108,13 +105,11 @@ export const checkUserIsLoggedIn = () => {
         }).then(
             (serverResponse) => {
                 var response = JSON.parse(serverResponse);
-                console.log(response); //TODO REMOVE
                 dispatch(checkLoginEnd(response));
             }
         )
         .catch (
             (error) => {
-                console.log(error); // TODO: REMOVE
                 dispatch(checkLoginError(error));
             }
         )
@@ -175,7 +170,6 @@ export const attemptGenerateNewActivationLink = (userId) => {
         }).then(
             (serverResponse) => {
                 var response = JSON.parse(serverResponse);
-                console.log(response); // TODO REMOVE
                 dispatch(generateNewActivationLinkEnd(
                     response.data.success,
                     response.data.message,
@@ -184,7 +178,6 @@ export const attemptGenerateNewActivationLink = (userId) => {
         )
         .catch (
             (error) => {
-                console.log(error);
                 dispatch(generateNewActivationLinkError(error));
             }
         )
@@ -235,7 +228,6 @@ export const attemptActivateUser = (userId, activationCode) => {
         }).then(
             (serverResponse) => {
                 var response = JSON.parse(serverResponse);
-                console.log(response); // TODO REMOVE
                 dispatch(activateUserEnd(
                     response.data.success,
                     response.data.userId,
@@ -466,7 +458,6 @@ export const attemptLoginRequest = (history) => {
                     response = JSON.parse(response);
                     dispatch(loginRequestEnd(response));
                     if (response.success === true) {
-                        console.log("Logged in, going home.");
                         history.push('/');
                         dispatch(toggleMenu());
                         dispatch(tryLoadUserAndAppData());

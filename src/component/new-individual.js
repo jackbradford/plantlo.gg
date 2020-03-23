@@ -68,8 +68,6 @@ export default class NewIndividual extends Component {
         var attributes = (selected) ? {} : {'selected': 'selected'};
         var conditionType = this.getConditionType(fieldName);
 
-        console.log("CHECK");
-        console.log(this.props.fields[fieldName]);
         if (this.props.fields[fieldName].newEntry === true) {
 
             html = (
@@ -109,13 +107,10 @@ export default class NewIndividual extends Component {
 
     getGenusInputClassNames() {
 
-        console.log("CLASSES");
-        console.log(this.props.fields);
         var classNames = "botanical-name genus";
         if (this.props.fields.genus.isRequired === true) {
             classNames += " required";
         }
-        console.log(classNames);
         return classNames;
     }
 
@@ -188,8 +183,6 @@ export default class NewIndividual extends Component {
     toggleAddNewPlantCondition(e) {
 
         const conditionButton = e.target;
-        console.log("TARGET");
-        console.log(conditionButton);
         switch (conditionButton.id) {
 
             case 'add-new-light-condition':
