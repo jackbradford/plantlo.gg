@@ -3,6 +3,7 @@ import { auth } from '../auth';
 import {
     NEW_INDIVIDUAL_UPDATE_REQUIRED_FIELDS,
     TOGGLE_ADD_NEW_PLANT_CONDITION,
+    UPDATE_NEW_INDIVIDUAL_FIELD,
 } from '../actions';
 
 const field = {
@@ -50,6 +51,20 @@ export default function newIndividual(
 ) {
 
     switch (action.type) {
+
+        case UPDATE_NEW_INDIVIDUAL_FIELD:
+            var fieldName = action.payload.fieldName;
+            var value = action.payload.value;
+            return {
+                ...state,
+                fields: {
+                    ...state.fields,
+                    [fieldName]: {
+                        ...state.fields[fieldName],
+                        value: value,
+                    }
+                }
+            };
 
         case TOGGLE_ADD_NEW_PLANT_CONDITION:
             var fieldName = action.payload.fieldName

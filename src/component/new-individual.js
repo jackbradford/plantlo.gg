@@ -28,10 +28,12 @@ export default class NewIndividual extends Component {
     constructor() {
 
         super();
+        this.getFieldNameFromId = this.getFieldNameFromId.bind(this);
         this.getGenusInputClassNames = this.getGenusInputClassNames.bind(this);
         this.getSpeciesInputClassNames = this.getSpeciesInputClassNames.bind(this);
         this.updateGenusInputWidth = this.updateGenusInputWidth.bind(this);
         this.handleGenusBlur = this.handleGenusBlur.bind(this);
+        this.handleInputBlur = this.handleInputBlur.bind(this);
         this.handleTaxonBlur = this.handleTaxonBlur.bind(this);
         this.renderConditionInputs = this.renderConditionInputs.bind(this);
         this.renderTaxonInputs = this.renderTaxonInputs.bind(this);
@@ -40,21 +42,28 @@ export default class NewIndividual extends Component {
         this.getNewConditionClass = this.getNewConditionClass.bind(this);
     }
 
+    getGenusInputClassNames() {
+
+        var classNames = "botanical-name genus";
+        if (this.props.fields.genus.isRequired === true) {
+            classNames += " required";
+        }
+        return classNames;
+    }
+
+    getFieldNameFromId(id) {
+
+        var regex = new RegExp(/^(?:[^-]*-){2}([^-]*)/, 'i');
+        var match = id.match(regex);
+        return match[1];
+    }
+
     getNewConditionClass(field) {
 
         var classNames = "new-condition";
         if (this.props.fields[field].newEntry === true) {
 
             classNames += " display";
-        }
-        return classNames;
-    }
-
-    getGenusInputClassNames() {
-
-        var classNames = "botanical-name genus";
-        if (this.props.fields.genus.isRequired === true) {
-            classNames += " required";
         }
         return classNames;
     }
@@ -68,12 +77,16 @@ export default class NewIndividual extends Component {
         return classNames;
     }
 
+    handleConditionBlur(e) {
+
+        var input = e.target;
+    }
+
     handleInputBlur(e) {
 
         console.log('input-blur');
-        var regex = new RegExp(/^(?:[^-]*-){2}([^-]*)/, 'i');
-        var match = e.target.id.match(regex);
-        var field = match[1];
+        var field = this.getFieldNameFromId(e.target.id);
+        this.props.updateField(field, e.target.value);
     }
 
     /**
@@ -83,6 +96,7 @@ export default class NewIndividual extends Component {
     handleTaxonBlur(e) {
 
         const input = e.target;
+        this.handleInputBlur(e);
         if (input.value) {
 
             this.updateRequiredFields('add', ['genus', 'species']);
@@ -195,6 +209,7 @@ export default class NewIndividual extends Component {
                     userConditions={this.props.userData.conditions}
                     toggleAddNewPlantCondition={this.props.toggleAddNewPlantCondition}
                     blurHandler={this.handleConditionBlur}
+                    units={this.props.appData.units}
                 />
             );
         }

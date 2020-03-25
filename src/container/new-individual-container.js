@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux';
 import NewIndividual from '../component/new-individual';
 import {
     toggleAddNewPlantCondition,
+    updateNewIndividualField,
     updateRequiredFieldsForNewIndividual,
 } from '../actions';
 
@@ -20,6 +21,7 @@ const mapStateToProps = function(state) {
 
         fields: state.newIndividual.fields,
         userData: state.user.data,
+        appData: state.appData,
     }
 };
 
@@ -35,6 +37,9 @@ const mapDispatchToProps = function(dispatch) {
         },
         toggleAddNewPlantCondition: (fieldName) => {
             dispatch(toggleAddNewPlantCondition(fieldName))
+        },
+        updateField: (fieldName, value) => {
+            dispatch(updateNewIndividualField(fieldName, value))
         },
     };
 };

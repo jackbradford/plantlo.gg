@@ -110,6 +110,7 @@ export default class Condition extends Component {
                         condition={this.props.condition}
                         labelPlaceholder={this.props.newCondition.labelPlaceholder}
                         descriptionPlaceholder={this.props.newCondition.descriptionPlaceholder}
+                        units={this.props.units}
                     />
                 </div>
             </React.Fragment>

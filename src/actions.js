@@ -6,6 +6,19 @@ import { auth } from './auth';
 import { async } from './async';
 import { validator } from './validator';
 
+export const UPDATE_NEW_INDIVIDUAL_FIELD = 'UPDATE_NEW_INDIVIDUAL_FIELD';
+
+export const updateNewIndividualField = (fieldName, value) => {
+
+    return {
+        type: UPDATE_NEW_INDIVIDUAL_FIELD,
+        payload: {
+            fieldName: fieldName,
+            value: value,
+        }
+    }
+}
+
 export const NEW_INDIVIDUAL_UPDATE_REQUIRED_FIELDS = 'NEW_INDIVIDUAL_UPDATE_REQUIRED_FIELDS';
 export const TOGGLE_ADD_NEW_PLANT_CONDITION = 'TOGGLE_ADD_NEW_PLANT_CONDITION';
 
