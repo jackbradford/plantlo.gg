@@ -13,7 +13,7 @@ import {
 } from "react-router-dom";
 
 
-export default class NewCondition extends Component {
+export default class NewIndividualTaxonField extends Component {
 
     componentDidMount() {
 
@@ -31,20 +31,15 @@ export default class NewCondition extends Component {
 
         return (
             <React.Fragment>
-            <div
-                className={this.props.className + " new-condition"}
-                id={"new-" + this.props.condition + "-condition"}
-            >
+            <label className={this.props.name}><span>{this.props.label}:</span>
                 <input
                     type="text"
-                    placeholder={this.props.labelPlaceholder}
-                    id={"new-"+this.props.condition+"-condition-label"}
+                    placeholder={this.props.placeholder}
+                    id={"new-individual-" + this.props.name}
+                    className={this.props.className}
+                    onBlur={this.props.onBlur}
                 />
-                <textarea
-                    placeholder={this.props.descriptionPlaceholder}
-                    id={"new-"+this.props.condition+"-condition-description"}
-                />
-            </div>
+            </label>
             </React.Fragment>
         );
     }

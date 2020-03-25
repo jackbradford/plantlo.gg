@@ -11,6 +11,9 @@ import ValidationMessage from './validation-message';
 import ModalBox from './modal-box';
 import ReactDOM from "react-dom";
 import Condition from './condition';
+import NewIndividualTaxonField from './new-individual-taxon-field';
+import { newIndividualConditions } from '../config/new-individual-conditions';
+import { newIndividualTaxonFields } from '../config/new-individual-taxon-fields';
 import { TailSpin } from "svg-loaders-react"
 import {
     BrowserRouter as Router,
@@ -30,6 +33,8 @@ export default class NewIndividual extends Component {
         this.updateGenusInputWidth = this.updateGenusInputWidth.bind(this);
         this.handleGenusBlur = this.handleGenusBlur.bind(this);
         this.handleTaxonBlur = this.handleTaxonBlur.bind(this);
+        this.renderConditionInputs = this.renderConditionInputs.bind(this);
+        this.renderTaxonInputs = this.renderTaxonInputs.bind(this);
         this.taxonFieldsAreEmpty = this.taxonFieldsAreEmpty.bind(this);
         this.updateRequiredFields = this.updateRequiredFields.bind(this);
         this.getNewConditionClass = this.getNewConditionClass.bind(this);
@@ -61,6 +66,14 @@ export default class NewIndividual extends Component {
             classNames += " required";
         }
         return classNames;
+    }
+
+    handleInputBlur(e) {
+
+        console.log('input-blur');
+        var regex = new RegExp(/^(?:[^-]*-){2}([^-]*)/, 'i');
+        var match = e.target.id.match(regex);
+        var field = match[1];
     }
 
     /**
@@ -168,6 +181,44 @@ export default class NewIndividual extends Component {
         else throw new Error('Operation must either be `add` or `remove`.');
     }
 
+    renderConditionInputs() {
+
+        let inputs = [];
+        for (let [key, condition] of Object.entries(newIndividualConditions)) {
+            inputs.push(
+                <Condition
+                    condition={key}
+                    field={this.props.fields[key]}
+                    key={condition.key}
+                    image={condition.image}
+                    newCondition={condition.newCondition}
+                    userConditions={this.props.userData.conditions}
+                    toggleAddNewPlantCondition={this.props.toggleAddNewPlantCondition}
+                    blurHandler={this.handleConditionBlur}
+                />
+            );
+        }
+        return inputs;
+    }
+
+    renderTaxonInputs() {
+
+        let inputs = [];
+        for (let [key, input] of Object.entries(newIndividualTaxonFields)) {
+            inputs.push(
+                <NewIndividualTaxonField
+                    className={input.className}
+                    name={key}
+                    key={input.key}
+                    label={input.label}
+                    onBlur={this.handleTaxonBlur}
+                    placeholder={input.placeholder}
+                />
+            );
+        }
+        return inputs;
+    }
+
     render() {
 
         return (
@@ -186,6 +237,8 @@ export default class NewIndividual extends Component {
                             <input
                                 type="file"
                                 className=""
+                                id="new-individual-image"
+                                onBlur={this.handleInputBlur}
                             />
                         </label>
                     </div>
@@ -197,7 +250,8 @@ export default class NewIndividual extends Component {
                             <input
                                 type="text"
                                 placeholder="Nickname"
-                                id="add-individual-nickname"
+                                id="new-individual-nickname"
+                                onBlur={this.handleInputBlur}
                                 className="nickname"
                             />
                         </label>
@@ -205,7 +259,8 @@ export default class NewIndividual extends Component {
                             <input
                                 type="text"
                                 placeholder="A custom ID or tracking number."
-                                id="add-individual-serial"
+                                id="new-individual-serial"
+                                onBlur={this.handleInputBlur}
                                 className="serial required"
                             />
                         </label>
@@ -240,42 +295,7 @@ export default class NewIndividual extends Component {
                                 onBlur={this.handleTaxonBlur}
                             />
                         </div>
-                        <label className="subspecies"><span>Subspecies:</span>
-                            <input
-                                type="text"
-                                placeholder="Subspecies"
-                                id="new-individual-subspecies"
-                                className="subspecies-name"
-                                onBlur={this.handleTaxonBlur}
-                            />
-                        </label>
-                        <label><span>Variety:</span>
-                            <input
-                                type="text"
-                                placeholder="Variety:"
-                                id="new-individual-variety"
-                                className="variety-name"
-                                onBlur={this.handleTaxonBlur}
-                            />
-                        </label>
-                        <label><span>Common&nbsp;Name:</span>
-                            <input
-                                type="text"
-                                placeholder="e.g. 'African Violet'"
-                                id="new-individual-common-name"
-                                className="origin"
-                                onBlur={this.handleTaxonBlur}
-                            />
-                        </label>
-                        <label><span>Origin:</span>
-                            <input
-                                type="text"
-                                placeholder="e.g. 'Eastern tropical Africa'"
-                                id="new-individual-origin"
-                                className="origin"
-                                onBlur={this.handleTaxonBlur}
-                            />
-                        </label>
+                        {this.renderTaxonInputs()}
                     </div>
                     {/*
                       Description Section
@@ -285,6 +305,8 @@ export default class NewIndividual extends Component {
                         <textarea
                             placeholder="Record the details of your individual plant (500 character limit)."
                             className=""
+                            id="new-individual-description"
+                            onBlur={this.handleInputBlur}
                         />
                     </div>{/* form-section */}
                     {/*
@@ -292,72 +314,7 @@ export default class NewIndividual extends Component {
                      */}
                     <div className="form-section conditions-section">
                         <h2>Conditions &amp; Care</h2>
-                        <Condition
-                            condition="light"
-                            field={this.props.fields.light}
-                            image={{src:"/img/icons/sun.svg", alt:"The sun as a light condition icon."}}
-                            newCondition={{
-                                labelPlaceholder: "Label ('Low Light')",
-                                descriptionPlaceholder: "Description ('Within 2-3m of a window.')"
-                            }}
-                            userConditions={this.props.userData.conditions}
-                            toggleAddNewPlantCondition={this.props.toggleAddNewPlantCondition}
-                        />
-                        <Condition
-                            condition="water"
-                            field={this.props.fields.water}
-                            image={{src:"/img/icons/water.svg", alt:"A water droplet as a Water condition icon."}}
-                            newCondition={{
-                                labelPlaceholder: "Label ('Evenly Moist')",
-                                descriptionPlaceholder: "Description ('The soil should not be allowed to dry out.')"
-                            }}
-                            userConditions={this.props.userData.conditions}
-                            toggleAddNewPlantCondition={this.props.toggleAddNewPlantCondition}
-                        />
-                        <Condition
-                            condition="temperature"
-                            field={this.props.fields.temperature}
-                            image={{src:"/img/icons/temperature.svg", alt:"A thermometer used as a temperature range icon."}}
-                            newCondition={{
-                                labelPlaceholder: "Label ('Very Warm')",
-                                descriptionPlaceholder: "Description ('CHANGE THIS INPUT')"
-                            }}
-                            userConditions={this.props.userData.conditions}
-                            toggleAddNewPlantCondition={this.props.toggleAddNewPlantCondition}
-                        />
-                        <Condition
-                            condition="humidity"
-                            field={this.props.fields.humidity}
-                            image={{src:"/img/icons/humidity.svg", alt:"A cloud as a humidity icon."}}
-                            newCondition={{
-                                labelPlaceholder: "Label ('Moderate Humidity')",
-                                descriptionPlaceholder: "Description ('Relative humidity of 50-60% is ideal for this plant.')"
-                            }}
-                            userConditions={this.props.userData.conditions}
-                            toggleAddNewPlantCondition={this.props.toggleAddNewPlantCondition}
-                        />
-                        <Condition
-                            condition="soil"
-                            field={this.props.fields.soil}
-                            image={{src:"/img/icons/shovel.svg", alt:"A shovel as a soil condition icon."}}
-                            newCondition={{
-                                labelPlaceholder: "Label ('')",
-                                descriptionPlaceholder: "Description ('')"
-                            }}
-                            userConditions={this.props.userData.conditions}
-                            toggleAddNewPlantCondition={this.props.toggleAddNewPlantCondition}
-                        />
-                        <Condition
-                            condition="fertilizer"
-                            field={this.props.fields.fertilizer}
-                            image={{src:"/img/icons/fork-knife.svg", alt:"A fork and knife set as a fertilizer type icon."}}
-                            newCondition={{
-                                labelPlaceholder: "Label ('')",
-                                descriptionPlaceholder: "Description ('')"
-                            }}
-                            userConditions={this.props.userData.conditions}
-                            toggleAddNewPlantCondition={this.props.toggleAddNewPlantCondition}
-                        />
+                        {this.renderConditionInputs()}
                     </div>
                     <button className="button primary-button">Add plant</button>
                 </div>{/* add-individual-form */}
