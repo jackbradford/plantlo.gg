@@ -315,20 +315,20 @@ CREATE TABLE images_taxa (
 CREATE TABLE images_individuals (
     user_id INT(10) UNSIGNED NOT NULL,
     image INT(10) UNSIGNED NOT NULL,
-    individual INT(10) NOT NULL,
+    individual INT(10) UNSIGNED NOT NULL,
     active BOOLEAN NOT NULL DEFAULT 1, -- can be used to disable the MAPPING, as opposed to the user's IMAGE.
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY pk_images_individuals (user_id, individual, image),
     FOREIGN KEY fk_images_individuals_users (user_id) REFERENCES users (id),
     FOREIGN KEY fk_images_individuals_individuals (user_id, individual) REFERENCES individuals (user_id, id),
-    FOREIGN KEY fk_images_individulas_images (user_id, image) REFERENCES images (user_id, serial)
+    FOREIGN KEY fk_images_individuals_images (user_id, image) REFERENCES images (user_id, serial)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
 
 CREATE TABLE notes (
     user_id INT(10) UNSIGNED NOT NULL,
     serial INT(10) UNSIGNED NOT NULL,
-    individual VARCHAR(10) NOT NULL,
+    individual INT(10) UNSIGNED NOT NULL,
     note_content VARCHAR(500) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT 1,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -347,8 +347,4 @@ CREATE TABLE usernames (
     PRIMARY KEY pk_usernames (id),
     FOREIGN KEY fk_usernames_users (user_id) REFERENCES users (id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
-CREATE TABLE foo (
-  FieldA INT,
-  FieldB INT
-);
 

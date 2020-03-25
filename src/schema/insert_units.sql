@@ -12,20 +12,19 @@ INSERT INTO unit_types
 INSERT INTO units
     (unit_type, name, name_plural, abbreviation, symbol)
     VALUES
-    (5, 'foot',             'feet',                 'ft.',      ''''        ),
-    (5, 'inch',             'inches',               'in.',      '"'         ),
-    (5, 'meter',            'meters',               'm',        'm'         ),
-    (5, 'centimeter',       'centimeters',          'cm',       'cm'        ),
-    (5, 'millimeter',       'millimeters',          'mm',       'mm'        ),
-    (6, 'pound',            'pounds',               'lbs.',     'lbs.'      ),
-    (6, 'ounce',            'ounces',               'oz.',      'oz.'       ),
-    (6, 'kilogram',         'kilograms',            'kg',       'kg'        ),
-    (6, 'gram',             'grams',                'g',        'g'         ),
-    (6, 'milligram',        'milligrams',           'mg',       'mg'        ),
-    (7, 'degree Fahrenheit','degrees Fahrenheit',   '°F',       '°F'        ),
-    (7, 'degree Celcius',   'degrees Celcius',      '°C',       '°C'        ),
-    (8, 'U.S. gallon',      'U.S. gallons',         'gal',      'gal'       ),
-    (8, 'U.S. fluid ounce', 'U.S. fluid ounces',    'fl. oz.',  'fl. oz.'   ),
-    (8, 'liter',            'liters',               'L',        'L'         ),
-    (8, 'milliliter',       'milliliters',          'mL',       'mL'        );
-
+    (1, 'foot',             'feet',                 'ft.',      ''''        ),
+    (1, 'inch',             'inches',               'in.',      '"'         ),
+    (1, 'meter',            'meters',               'm',        'm'         ),
+    (1, 'centimeter',       'centimeters',          'cm',       'cm'        ),
+    (1, 'millimeter',       'millimeters',          'mm',       'mm'        ),
+    (2, 'pound',            'pounds',               'lbs.',     'lbs.'      ),
+    (2, 'ounce',            'ounces',               'oz.',      'oz.'       ),
+    (2, 'kilogram',         'kilograms',            'kg',       'kg'        ),
+    (2, 'gram',             'grams',                'g',        'g'         ),
+    (2, 'milligram',        'milligrams',           'mg',       'mg'        ),
+    (3, 'degree Fahrenheit','degrees Fahrenheit',   '°F',       '°F'        ),
+    (3, 'degree Celcius',   'degrees Celcius',      '°C',       '°C'        ),
+    (4, 'U.S. gallon',      'U.S. gallons',         'gal',      'gal'       ),
+    (4, 'U.S. fluid ounce', 'U.S. fluid ounces',    'fl. oz.',  'fl. oz.'   ),
+    (4, 'liter',            'liters',               'L',        'L'         ),
+    (4, 'milliliter',       'milliliters',          'mL',       'mL'        );
