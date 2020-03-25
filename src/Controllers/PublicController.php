@@ -6,6 +6,7 @@ use JackBradford\Disphatch\Controllers\IRequestController;
 use JackBradford\Disphatch\Controllers\ControllerResponse;
 use JackBradford\Disphatch\Etc\Activation;
 use JackBradford\Disphatch\Etc\User as DisphatchUser;
+use Illuminate\Support\Facades\DB;
 
 class PublicController extends Controller implements IRequestController {
 
@@ -262,7 +263,9 @@ class PublicController extends Controller implements IRequestController {
     protected function getUnits() {
 
 //        return Unit::all();
-        return Unit::where('id', '!=', 999)->get();
+        return Unit::join('unit_types', 'units.unit_type', '=', 'unit_types.id')
+            ->select('units.*', 'unit_types.unit_type')
+            ->get();
     }
 
     /**
