@@ -6,6 +6,19 @@ import { auth } from './auth';
 import { async } from './async';
 import { validator } from './validator';
 
+export const UPDATE_NEW_INDIVIDUAL_NEW_CONDITION = 'UPDATE_NEW_INDIVIDUAL_NEW_CONDITION';
+export const updateNewIndividualNewCondition = (condition, field, value) => {
+
+    return {
+        type: UPDATE_NEW_INDIVIDUAL_NEW_CONDITION,
+        payload: {
+            condition: condition,
+            field: field,
+            value: value,
+        }
+    }
+}
+
 export const UPDATE_NEW_INDIVIDUAL_FIELD = 'UPDATE_NEW_INDIVIDUAL_FIELD';
 
 export const updateNewIndividualField = (fieldName, value) => {

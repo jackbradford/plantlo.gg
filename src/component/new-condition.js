@@ -20,6 +20,21 @@ export default class NewCondition extends Component {
         super();
         this.getDescriptionInput = this.getDescriptionInput.bind(this);
         this.getTemperatureUnitOptions = this.getTemperatureUnitOptions.bind(this);
+        this.handleNewConditionBlur = this.handleNewConditionBlur.bind(this);
+    }
+
+    /*
+     * The regex in this method finds the field name by extracting it from the
+     * element's id, which should conform to this format:
+     * new-conditionName-condition-fieldName
+     */
+    handleNewConditionBlur(e) {
+
+        var input = e.target;
+        var regex = new RegExp(/^(?:[^-]*-){3}([^-]*)/, 'i');
+        var match = input.id.match(regex);
+        var field = match[1];
+        this.props.handleNewCondition(this.props.condition, field, input.value);
     }
 
     getDescriptionInput() {
@@ -28,26 +43,27 @@ export default class NewCondition extends Component {
             <React.Fragment>
             <input
                 type="text"
-                id="new-temperature-condition-min"
-                onBlur={this.props.blurHandler}
+                id="new-temperature-condition-lowerTemp"
+                onBlur={this.handleNewConditionBlur}
                 placeholder="Min."
             />
             <input
                 type="text"
-                id="new-temperature-condition-max"
-                onBlur={this.props.blurHandler}
+                id="new-temperature-condition-upperTemp"
+                onBlur={this.handleNewConditionBlur}
                 placeholder="Max."
             />
             <select
-                id="new-temperature-condition-unit"
-                value="28"
+                id="new-temperature-condition-unitId"
+                value={this.props.field.unitId}
+                onChange={this.handleNewConditionBlur}
             >
                 {this.getTemperatureUnitOptions()}
             </select>
             <input
                 type="text"
-                id="new-temperatre-condition-never-below"
-                onBlur={this.props.blurHandler}
+                id="new-temperatre-condition-notLowerThan"
+                onBlur={this.handleNewConditionBlur}
                 placeholder="Never Below"
             />
             </React.Fragment>
@@ -57,7 +73,7 @@ export default class NewCondition extends Component {
             <textarea
                 placeholder={this.props.descriptionPlaceholder}
                 id={"new-"+this.props.condition+"-condition-description"}
-                onBlur={this.props.blurHandler}
+                onBlur={this.handleNewConditionBlur}
             />
             </React.Fragment>
         );
@@ -69,7 +85,7 @@ export default class NewCondition extends Component {
         for (let [key, unit] of Object.entries(this.props.units)) {
             if (unit.unit_type === 'temperature') {
             options.push(
-                <option value={unit.id}>{unit.symbol}</option>
+                <option key={unit.id} value={unit.id}>{unit.symbol}</option>
             );
             }
         }
@@ -89,7 +105,7 @@ export default class NewCondition extends Component {
                     type="text"
                     placeholder={this.props.labelPlaceholder}
                     id={"new-"+this.props.condition+"-condition-label"}
-                    onBlur={this.props.blurHandler}
+                    onBlur={this.handleNewConditionBlur}
                 />
                 {descriptionInput}
             </div>

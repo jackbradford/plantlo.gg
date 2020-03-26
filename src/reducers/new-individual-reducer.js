@@ -4,7 +4,13 @@ import {
     NEW_INDIVIDUAL_UPDATE_REQUIRED_FIELDS,
     TOGGLE_ADD_NEW_PLANT_CONDITION,
     UPDATE_NEW_INDIVIDUAL_FIELD,
+    UPDATE_NEW_INDIVIDUAL_NEW_CONDITION,
 } from '../actions';
+
+/*
+ * The id of the `unit` record to set as the default temperature unit.
+ */
+const celciusUnitId = 28;
 
 const field = {
     error: null,
@@ -14,6 +20,21 @@ const field = {
     message: '',
     serverData: {},
     value: null,
+}
+
+const conditionField = {
+    ...field,
+    newEntry: false,
+    label: null,
+    description: null
+}
+
+const temperatureField = {
+    ...conditionField,
+    lowerTemp: null,
+    upperTemp: null,
+    unitId: celciusUnitId,
+    notLowerThan: null,
 }
 
 export default function newIndividual(
@@ -39,12 +60,12 @@ export default function newIndividual(
             commonName: field,
             origin: field,
             description: field,
-            light: {...field, newEntry: false},
-            water: {...field, newEntry: false},
-            temperature: {...field, newEntry: false},
-            humidity: {...field, newEntry: false},
-            soil: {...field, newEntry: false},
-            fertilizer: {...field, newEntry: false},
+            light: {...conditionField},
+            water: {...conditionField},
+            temperature: {...temperatureField},
+            humidity: {...conditionField},
+            soil: {...conditionField},
+            fertilizer: {...conditionField},
         }
     },
     action
@@ -65,6 +86,21 @@ export default function newIndividual(
                     }
                 }
             };
+
+        case UPDATE_NEW_INDIVIDUAL_NEW_CONDITION:
+            var condition = action.payload.condition;
+            var field = action.payload.field;
+            var value = action.payload.value;
+            return {
+                ...state,
+                fields: {
+                    ...state.fields,
+                    [condition]: {
+                        ...state.fields[condition],
+                        [field]: value
+                    }
+                }
+            }
 
         case TOGGLE_ADD_NEW_PLANT_CONDITION:
             var fieldName = action.payload.fieldName

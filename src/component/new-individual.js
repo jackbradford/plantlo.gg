@@ -209,6 +209,7 @@ export default class NewIndividual extends Component {
                     userConditions={this.props.userData.conditions}
                     toggleAddNewPlantCondition={this.props.toggleAddNewPlantCondition}
                     blurHandler={this.handleConditionBlur}
+                    handleNewCondition={this.props.handleNewCondition}
                     units={this.props.appData.units}
                 />
             );

@@ -81,7 +81,8 @@ CREATE TABLE temperature_ranges (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY pk_temperature_ranges (user_id, serial),
-    FOREIGN KEY fk_temperature_ranges_users (user_id) REFERENCES users (id)
+    FOREIGN KEY fk_temperature_ranges_users (user_id) REFERENCES users (id),
+    FOREIGN KEY fk_temperature_ranges_units (unit) REFERENCES units (id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET=utf8;
 
 CREATE TABLE humidity_conditions (

@@ -21,6 +21,7 @@ export default class Condition extends Component {
         super();
         this.getConditionType = this.getConditionType.bind(this);
         this.getDisabledConditionOption = this.getDisabledConditionOption.bind(this);
+        this.getUserConditionOptions = this.getUserConditionOptions.bind(this);
         this.toggleAddNewPlantCondition = this.toggleAddNewPlantCondition.bind(this);
     }
 
@@ -43,21 +44,20 @@ export default class Condition extends Component {
         var html, optionText;
         var selected = false || null;
         var conditions = this.props.userConditions[fieldName];
-        var attributes = (selected) ? {} : {'selected': 'selected'};
         var conditionType = this.getConditionType(fieldName);
 
         if (this.props.field.newEntry === true) {
 
             html = (
                 <React.Fragment>
-                    <option {...attributes} disabled value="">New {fieldName} {conditionType}...</option>
+                    <option disabled value="">New {fieldName} {conditionType}...</option>
                 </React.Fragment>
             );
         } else {
 
             html = (
                 <React.Fragment>
-                    <option {...attributes} disabled value="">Select a {fieldName} {conditionType}...</option>
+                    <option disabled value="">Select a {fieldName} {conditionType}...</option>
                 </React.Fragment>
             );
         }
@@ -66,11 +66,17 @@ export default class Condition extends Component {
             optionText = "Text";
             html += (
                 <React.Fragment>
-                    <option {...attributes} value="">{optionText}</option>
+                    <option value="">{optionText}</option>
                 </React.Fragment>
             );
         }
         return html;
+    }
+
+    getUserConditionOptions() {
+
+        //TODO
+        return;
     }
 
     /**
@@ -94,8 +100,13 @@ export default class Condition extends Component {
             <React.Fragment>
                 <div className="condition">
                     <label className="varieties"><img src={this.props.image.src} alt={this.props.image.alt} />
-                        <select defaultValue="">
+                        <select
+                            defaultValue=""
+                            id=""
+                            onBlur={this.props.blurHandler}
+                        >
                             {this.getDisabledConditionOption(this.props.condition)}
+                            {this.getUserConditionOptions()}
                         </select>
                     </label>
                     <button
@@ -107,9 +118,11 @@ export default class Condition extends Component {
                     </button>
                     <NewCondition
                         className={(this.props.field.newEntry === true) ? "display" : ""}
+                        field={this.props.field}
                         condition={this.props.condition}
                         labelPlaceholder={this.props.newCondition.labelPlaceholder}
                         descriptionPlaceholder={this.props.newCondition.descriptionPlaceholder}
+                        handleNewCondition={this.props.handleNewCondition}
                         units={this.props.units}
                     />
                 </div>
