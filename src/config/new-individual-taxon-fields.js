@@ -11,7 +11,7 @@ export const newIndividualTaxonFields = {
         label: "Variety",
         placeholder: "Variety",
     },
-    "common-name": {
+    "commonName": {
         className: "origin",
         key: 3,
         label: "Common Name",

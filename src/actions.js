@@ -6,9 +6,9 @@ import { auth } from './auth';
 import { async } from './async';
 import { validator } from './validator';
 
-export const SUBMIT_NEW_INDIVIDUAL_BEGIN = 'LOAD_USER_AND_APP_DATA_BEGIN';
-export const SUBMIT_NEW_INDIVIDUAL_END = 'LOAD_USER_AND_APP_DATA_END';
-export const SUBMIT_NEW_INDIVIDUAL_ERROR = 'LOAD_USER_AND_APP_DATA_ERROR';
+export const SUBMIT_NEW_INDIVIDUAL_BEGIN = 'SUBMIT_NEW_INDIVIDUAL_BEGIN';
+export const SUBMIT_NEW_INDIVIDUAL_END = 'SUBMIT_NEW_INDIVIDUAL_END';
+export const SUBMIT_NEW_INDIVIDUAL_ERROR = 'SUBMIT_NEW_INDIVIDUAL_ERROR';
 
 export const trySubmitNewIndividual = (values) => {
 

@@ -116,9 +116,10 @@ export default class NewIndividual extends Component {
      * Occurs when focus leaves the "Genus" input.
      *
      */
-    handleGenusBlur() {
+    handleGenusBlur(e) {
 
         var input = document.getElementById('new-individual-genus');
+        this.handleInputBlur(e);
         this.updateGenusInputWidth(input);
         if (input.value) {
 
