@@ -6,6 +6,56 @@ import { auth } from './auth';
 import { async } from './async';
 import { validator } from './validator';
 
+export const SUBMIT_NEW_INDIVIDUAL_BEGIN = 'LOAD_USER_AND_APP_DATA_BEGIN';
+export const SUBMIT_NEW_INDIVIDUAL_END = 'LOAD_USER_AND_APP_DATA_END';
+export const SUBMIT_NEW_INDIVIDUAL_ERROR = 'LOAD_USER_AND_APP_DATA_ERROR';
+
+export const trySubmitNewIndividual = (values) => {
+
+    return (dispatch) => {
+
+        dispatch(submitNewIndividualBegin());
+        return async.request({
+            url: '/index.php?ctrl=public&actn=addNewIndividual',
+            data: values,
+        }).then(
+            (serverResponse) => {
+                var response = JSON.parse(serverResponse);
+                dispatch(submitNewIndividualEnd(response));
+            }
+        )
+        .catch (
+            (error) => {
+                dispatch(submitNewIndividualError(error));
+            }
+        )
+    }
+}
+
+export const submitNewIndividualBegin = () => {
+
+    return {
+        type: SUBMIT_NEW_INDIVIDUAL_BEGIN,
+    };
+}
+
+export const submitNewIndividualEnd = (response) => {
+
+    return {
+        type: SUBMIT_NEW_INDIVIDUAL_END,
+        payload: response.data
+    };
+}
+
+export const submitNewIndividualError = (error) => {
+
+    return {
+        type: SUBMIT_NEW_INDIVIDUAL_ERROR,
+        payload: {
+            error: error
+        }
+    }
+}
 export const UPDATE_NEW_INDIVIDUAL_NEW_CONDITION = 'UPDATE_NEW_INDIVIDUAL_NEW_CONDITION';
 export const updateNewIndividualNewCondition = (condition, field, value) => {
 

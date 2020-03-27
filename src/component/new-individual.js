@@ -28,6 +28,8 @@ export default class NewIndividual extends Component {
     constructor() {
 
         super();
+        this.fieldContainsSubfields = this.fieldContainsSubfields.bind(this);
+        this.getSubfieldValues = this.getSubfieldValues.bind(this);
         this.getFieldNameFromId = this.getFieldNameFromId.bind(this);
         this.getGenusInputClassNames = this.getGenusInputClassNames.bind(this);
         this.getSpeciesInputClassNames = this.getSpeciesInputClassNames.bind(this);
@@ -37,6 +39,7 @@ export default class NewIndividual extends Component {
         this.handleTaxonBlur = this.handleTaxonBlur.bind(this);
         this.renderConditionInputs = this.renderConditionInputs.bind(this);
         this.renderTaxonInputs = this.renderTaxonInputs.bind(this);
+        this.submit = this.submit.bind(this);
         this.taxonFieldsAreEmpty = this.taxonFieldsAreEmpty.bind(this);
         this.updateRequiredFields = this.updateRequiredFields.bind(this);
         this.getNewConditionClass = this.getNewConditionClass.bind(this);
@@ -130,6 +133,44 @@ export default class NewIndividual extends Component {
                 'genus', 'species'
             ]);
         }
+    }
+
+    submit() {
+
+        var fields = this.props.fields;
+        var values = {};
+        for (let [fieldName, field] of Object.entries(fields)) {
+
+            if (field.hasOwnProperty('newEntry') && field.newEntry === true) {
+                values[fieldName] = this.getSubfieldValues(field);
+            }
+            else values[fieldName] = field.value;
+        }
+        this.props.submitToServer(values);
+    }
+
+    getSubfieldValues(field) {
+
+        var subfieldValues = {};
+        var subfields = [
+            'label',
+            'description',
+            'lowerTemp',
+            'upperTemp',
+            'unitId',
+            'notLowerThan',
+        ];
+        for (var i=0 ; i<subfields.length ; i++) {
+            if (field.hasOwnProperty(subfields[i])) {
+                subfieldValues[subfields[i]] = field[subfields[i]];
+            }
+        }
+        return subfieldValues;
+    }
+
+    fieldContainsSubfields(field) {
+
+        return (field.hasOwnProperty('newEntry') && field.newEntry === true) ? true : false;
     }
 
     /**
@@ -332,7 +373,10 @@ export default class NewIndividual extends Component {
                         <h2>Conditions &amp; Care</h2>
                         {this.renderConditionInputs()}
                     </div>
-                    <button className="button primary-button">Add plant</button>
+                    <button
+                        className="button primary-button"
+                        onClick={this.submit}
+                    >Add plant</button>
                 </div>{/* add-individual-form */}
             </main>
             </React.Fragment>

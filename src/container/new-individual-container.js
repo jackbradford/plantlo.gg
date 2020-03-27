@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux';
 import NewIndividual from '../component/new-individual';
 import {
     toggleAddNewPlantCondition,
+    trySubmitNewIndividual,
     updateNewIndividualField,
     updateNewIndividualNewCondition,
     updateRequiredFieldsForNewIndividual,
@@ -38,6 +39,9 @@ const mapDispatchToProps = function(dispatch) {
         },
         makeFieldsNotRequired: (array) => {
             dispatch(updateRequiredFieldsForNewIndividual('remove', array))
+        },
+        submitToServer: (values) => {
+            dispatch(trySubmitNewIndividual(values));
         },
         toggleAddNewPlantCondition: (fieldName) => {
             dispatch(toggleAddNewPlantCondition(fieldName))

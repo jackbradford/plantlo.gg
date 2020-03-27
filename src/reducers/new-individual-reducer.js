@@ -2,6 +2,9 @@ import { combineReducers } from 'redux';
 import { auth } from '../auth';
 import {
     NEW_INDIVIDUAL_UPDATE_REQUIRED_FIELDS,
+    SUBMIT_NEW_INDIVIDUAL_BEGIN,
+    SUBMIT_NEW_INDIVIDUAL_END,
+    SUBMIT_NEW_INDIVIDUAL_ERROR,
     TOGGLE_ADD_NEW_PLANT_CONDITION,
     UPDATE_NEW_INDIVIDUAL_FIELD,
     UPDATE_NEW_INDIVIDUAL_NEW_CONDITION,
@@ -100,7 +103,44 @@ export default function newIndividual(
                         [field]: value
                     }
                 }
-            }
+            };
+
+        case SUBMIT_NEW_INDIVIDUAL_BEGIN:
+            return {
+                ...state,
+                form: {
+                    ...state.form,
+                    isBeingSubmitted: true,
+                    submittedSuccessfully: null,
+                    hasErrors: false,
+                    error: null,
+                    message: '',
+                },
+            };
+
+        case SUBMIT_NEW_INDIVIDUAL_END:
+            return {
+                ...state,
+                form: {
+                    ...state.form,
+                    isBeingSubmitted: false,
+                    submittedSuccessfully: action.payload.response.data.success,
+                    message: '',
+                },
+            };
+
+        case SUBMIT_NEW_INDIVIDUAL_ERROR:
+            return {
+                ...state,
+                form: {
+                    ...state.form,
+                    isBeingSubmitted: false,
+                    submittedSuccessfully: false,
+                    message: action.payload.error.message,
+                    error: action.payload.error,
+                    hasErrors: true,
+                },
+            };
 
         case TOGGLE_ADD_NEW_PLANT_CONDITION:
             var fieldName = action.payload.fieldName
