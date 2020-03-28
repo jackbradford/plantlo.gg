@@ -34,12 +34,12 @@ export default class NewCondition extends Component {
         var regex = new RegExp(/^(?:[^-]*-){3}([^-]*)/, 'i');
         var match = input.id.match(regex);
         var field = match[1];
-        this.props.handleNewCondition(this.props.condition, field, input.value);
+        this.props.handleNewCondition(this.props.conditionName, field, input.value);
     }
 
     getDescriptionInput() {
 
-        if (this.props.condition === 'temperature') return (
+        if (this.props.conditionName === 'temperature') return (
             <React.Fragment>
             <input
                 type="text"
@@ -72,7 +72,7 @@ export default class NewCondition extends Component {
             <React.Fragment>
             <textarea
                 placeholder={this.props.descriptionPlaceholder}
-                id={"new-"+this.props.condition+"-condition-description"}
+                id={"new-"+this.props.conditionName+"-condition-description"}
                 onBlur={this.handleNewConditionBlur}
             />
             </React.Fragment>
@@ -82,7 +82,7 @@ export default class NewCondition extends Component {
     getTemperatureUnitOptions() {
 
         let options = [];
-        for (let [key, unit] of Object.entries(this.props.units)) {
+        for (let [key, unit] of Object.entries(this.props.appData.units)) {
             if (unit.unit_type === 'temperature') {
             options.push(
                 <option key={unit.id} value={unit.id}>{unit.symbol}</option>
@@ -99,12 +99,12 @@ export default class NewCondition extends Component {
             <React.Fragment>
             <div
                 className={this.props.className + " new-condition"}
-                id={"new-" + this.props.condition + "-condition"}
+                id={"new-" + this.props.conditionName + "-condition"}
             >
                 <input
                     type="text"
                     placeholder={this.props.labelPlaceholder}
-                    id={"new-"+this.props.condition+"-condition-label"}
+                    id={"new-"+this.props.conditionName+"-condition-label"}
                     onBlur={this.handleNewConditionBlur}
                 />
                 {descriptionInput}

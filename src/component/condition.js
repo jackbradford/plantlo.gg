@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import ReactDOM from "react-dom";
 import { Redirect } from 'react-router-dom';
-import NewCondition from './new-condition';
+import NewConditionContainer from '../container/new-condition-container';
 import {
     BrowserRouter as Router,
     Switch,
@@ -22,6 +22,7 @@ export default class Condition extends Component {
         this.getConditionType = this.getConditionType.bind(this);
         this.getDisabledConditionOption = this.getDisabledConditionOption.bind(this);
         this.getUserConditionOptions = this.getUserConditionOptions.bind(this);
+        this.handleConditionSelectBlur = this.handleConditionSelectBlur.bind(this);
         this.toggleAddNewPlantCondition = this.toggleAddNewPlantCondition.bind(this);
     }
 
@@ -43,7 +44,7 @@ export default class Condition extends Component {
 
         var html, optionText;
         var selected = false || null;
-        var conditions = this.props.userConditions[fieldName];
+        var conditions = this.props.userData.conditions[fieldName];
         var conditionType = this.getConditionType(fieldName);
 
         if (this.props.field.newEntry === true) {
@@ -79,6 +80,11 @@ export default class Condition extends Component {
         return;
     }
 
+    handleConditionSelectBlur(e) {
+
+        var input = e.target;
+    }
+
     /**
      * This method assumes the id of the toggle button conforms to this format:
      * add-new-x-condition
@@ -95,7 +101,7 @@ export default class Condition extends Component {
 
     render() {
 
-        var toggleButtonId = "add-new-" + this.props.condition + "-condition";
+        var toggleButtonId = "add-new-" + this.props.name + "-condition";
         return (
             <React.Fragment>
                 <div className="condition">
@@ -103,9 +109,9 @@ export default class Condition extends Component {
                         <select
                             defaultValue=""
                             id=""
-                            onBlur={this.props.blurHandler}
+                            onBlur={this.handleConditionSelectBlur}
                         >
-                            {this.getDisabledConditionOption(this.props.condition)}
+                            {this.getDisabledConditionOption(this.props.name)}
                             {this.getUserConditionOptions()}
                         </select>
                     </label>
@@ -116,14 +122,12 @@ export default class Condition extends Component {
                     >
                         New
                     </button>
-                    <NewCondition
+                    <NewConditionContainer
                         className={(this.props.field.newEntry === true) ? "display" : ""}
                         field={this.props.field}
-                        condition={this.props.condition}
+                        conditionName={this.props.name}
                         labelPlaceholder={this.props.newCondition.labelPlaceholder}
                         descriptionPlaceholder={this.props.newCondition.descriptionPlaceholder}
-                        handleNewCondition={this.props.handleNewCondition}
-                        units={this.props.units}
                     />
                 </div>
             </React.Fragment>

@@ -10,10 +10,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import NewIndividual from '../component/new-individual';
 import {
-    toggleAddNewPlantCondition,
     trySubmitNewIndividual,
     updateNewIndividualField,
-    updateNewIndividualNewCondition,
     updateRequiredFieldsForNewIndividual,
 } from '../actions';
 
@@ -31,9 +29,6 @@ const mapDispatchToProps = function(dispatch) {
 
     return {
 
-        handleNewCondition: (condition, field, value) => {
-            dispatch(updateNewIndividualNewCondition(condition, field, value))
-        },
         makeFieldsRequired: (array) => {
             dispatch(updateRequiredFieldsForNewIndividual('add', array))
         },
@@ -42,9 +37,6 @@ const mapDispatchToProps = function(dispatch) {
         },
         submitToServer: (values) => {
             dispatch(trySubmitNewIndividual(values));
-        },
-        toggleAddNewPlantCondition: (fieldName) => {
-            dispatch(toggleAddNewPlantCondition(fieldName))
         },
         updateField: (fieldName, value) => {
             dispatch(updateNewIndividualField(fieldName, value))

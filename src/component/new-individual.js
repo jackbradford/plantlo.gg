@@ -10,7 +10,7 @@ import ValidationStatusIcon from './validation-status-icon';
 import ValidationMessage from './validation-message';
 import ModalBox from './modal-box';
 import ReactDOM from "react-dom";
-import Condition from './condition';
+import ConditionContainer from '../container/condition-container';
 import NewIndividualTaxonField from './new-individual-taxon-field';
 import { newIndividualConditions } from '../config/new-individual-conditions';
 import { newIndividualTaxonFields } from '../config/new-individual-taxon-fields';
@@ -78,11 +78,6 @@ export default class NewIndividual extends Component {
             classNames += " required";
         }
         return classNames;
-    }
-
-    handleConditionBlur(e) {
-
-        var input = e.target;
     }
 
     handleInputBlur(e) {
@@ -242,17 +237,10 @@ export default class NewIndividual extends Component {
         let inputs = [];
         for (let [key, condition] of Object.entries(newIndividualConditions)) {
             inputs.push(
-                <Condition
-                    condition={key}
-                    field={this.props.fields[key]}
+                <ConditionContainer
+                    condition={condition}
+                    name={key}
                     key={condition.key}
-                    image={condition.image}
-                    newCondition={condition.newCondition}
-                    userConditions={this.props.userData.conditions}
-                    toggleAddNewPlantCondition={this.props.toggleAddNewPlantCondition}
-                    blurHandler={this.handleConditionBlur}
-                    handleNewCondition={this.props.handleNewCondition}
-                    units={this.props.appData.units}
                 />
             );
         }
