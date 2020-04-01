@@ -8,6 +8,10 @@ require_once '/var/www/vhosts/plantlo.gg.dev/vendor/autoload.php';
 require_once '/var/www/vhosts/plantlo.gg.dev/src/Controllers/PublicController.php';
 require_once '/var/www/vhosts/plantlo.gg.dev/src/Models/Variety.php';
 require_once '/var/www/vhosts/plantlo.gg.dev/src/Models/Unit.php';
+require_once '/var/www/vhosts/plantlo.gg.dev/src/lib/DataExtractor.php';
+require_once '/var/www/vhosts/plantlo.gg.dev/src/lib/RecordProperty.php';
+require_once '/var/www/vhosts/plantlo.gg.dev/src/lib/Records.php';
+
 use JackBradford\Disphatch\Router\Router;
 use Illuminate\Database\Capsule\Manager as Capsule;
 

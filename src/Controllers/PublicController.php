@@ -69,6 +69,132 @@ class PublicController extends Controller implements IRequestController {
         return new ControllerResponse($success, $message, $returnData);
     }
 
+    private function inDevMode() {
+
+        return ($this->config->getDirective('dev') === 1) ? true : false;
+    }
+
+    private function loadSchemaFile() {
+
+        $path = ($this->inDevMode())
+            ? '/var/www/vhosts/plantlo.gg.dev/src/schema/schema.sql'
+            : '/var/www/vhosts/plantlo.gg/src/schema/schema.sql';
+        return file_get_contents($path);
+    }
+
+    private function getSchemaTablesByInsertOrder() {
+
+        $schema = $this->loadSchemaFile();
+        if ($schema !== false) {
+
+            $matches = [];
+            preg_match_all('/^CREATE TABLE (\S*)/msu', $schema, $matches);
+            // Now $matches[1] contains a numeric array of all tables in order.
+            if ($this->inDevMode()) {
+
+                file_put_contents('/var/www/vhosts/plantlo.gg.dev/array-test.txt', print_r($matches, true));
+            }
+        }
+        else {
+
+            throw new \Exception('Could not load schema.');
+        }
+        return $matches[1];
+    }
+
+    /**
+     * @method PublicController::mapNewIndividualDataToRecords()
+     * Take an array of data and map each field to a record. Any record which
+     * cannot be created due to insufficient data will not be included in the
+     * returned records.
+     *
+     * @param array $data
+     * The keys of this array should match the `$properties` keys in the
+     * various data extractor functions in the DataExtractor class.
+     *
+     * @return array
+     * Returns a numeric array of arrays with `data` and `table` keys. This
+     * array is ordered to avoid constraint errors when adding the records
+     * consecutively.
+     *
+     * `data` contains an associative array where the keys match the table
+     * properties as defined in the schema.
+     *
+     * `table` contains a string which matches the name of the table.
+     */
+    private function mapNewIndividualDataToRecords($data) {
+
+        $records = [];
+        $schemaTablesByInsertOrder = $this->getSchemaTablesByInsertOrder();
+        $schema = $this->loadSchemaFile();
+        foreach ($schemaTablesByInsertOrder as $table) {
+
+            $extractorMethod = 'extract_' . $table . '_data';
+            $data = DataExtractor::$extractorMethod($data, $schema);
+            if ($data !== false) $records[] = [
+
+                'data' => $data,
+                'table' => $table,
+            ];
+        }
+        return $records;
+    }
+
+    /**
+     * @method PublicController::addNewIndividual()
+     * Add a new Individual to a user's collection.
+     *
+     * @param string $_POST['data']
+     * A JSON-encoded string containing keys which map to the properties of the
+     * Individual record and related records.
+     *
+     * @return ControllerResponse
+     * Returns a ControllerResponse. The `data` property will contain the
+     * following keys:
+     *  `success`           Indicates whether the user was activated.
+     */
+    public function addNewIndividual() {
+
+        $data = json_decode($this->fromPOST['data']);
+        $records = $this->mapNewIndividualDataToRecords($data);
+
+        $success = true;
+        $message = 'MSG';
+        return new ControllerResponse($success, $message, (object)[
+            'success' => $success
+        ]);
+
+        // TODO BEGIN TRANSACTION??
+        for ($i=0 ; $i<count($records) ; $i++) {
+
+            $record = $records[$i];
+            $recordAddFunction = 'add_' . $record['table'] . '_record';
+            Records::$recordAddFunction($record['data']);
+        }
+        // TODO END TRANSACTION??
+
+
+
+
+
+        $imageRecord = [];
+        $individualImageRecord = [];
+        $taxaImageRecord = [];
+
+        $taxaRecord = [];
+        $individualRecord = [];
+
+        $familyRecord = [];
+        $genusRecord = [];
+        $speciesRecord = [];
+        $subspeciesRecord = [];
+        $commonNameRecord = [];
+
+        for ($i=0 ; $i<count($data) ; $i++) {
+
+        }
+    }
+
     /**
      * @method PublicController::auth()
      * Attempt a user login.
