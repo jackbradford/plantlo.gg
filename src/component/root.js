@@ -35,6 +35,12 @@ export default class Root extends Component {
                 <Route exact path='/activate' component={ActivateContainer} />
                 <Route path='/activate/:userId/:code' component={ActivateContainer} />
                 <Route path='/plants/individuals/add' component={NewIndividualContainer} />
+                <Route exact path='/plants' component={PlantsList} />
+                <Route exact path='/plants/individuals' component={PlantsList} />
+                <Route exact path='/plants/varieties' component={PlantsList} />
+                <Route exact path='/plants/individuals/:individualId' component={PlantsList} />
+                <Route exact path='/plants/varieties/:varietyId' component={PlantsList} />
+                <Route exact path='/profile' component={EditUserProfile} />
             </React.Fragment>
         );
     }
