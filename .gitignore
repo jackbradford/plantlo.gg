@@ -16,4 +16,5 @@ src/schema/users.sql
 *.swp
 tags
 htdocs/img/wallpaper*
+array-test.txt
 

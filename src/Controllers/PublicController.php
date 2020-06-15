@@ -92,7 +92,10 @@ class PublicController extends Controller implements IRequestController {
             // Now $matches[1] contains a numeric array of all tables in order.
             if ($this->inDevMode()) {
 
-                file_put_contents('/var/www/vhosts/plantlo.gg.dev/array-test.txt', print_r($matches, true));
+                $testFile = '/var/www/vhosts/plantlo.gg.dev/array-test.txt';
+                $description = 'Matches for `CREATE TABLE` in schema file.';
+                file_put_contents($testFile, print_r($matches, true));
+                file_put_contents($testFile, $description, FILE_APPEND);
             }
         }
         else {
