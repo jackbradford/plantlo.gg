@@ -4,7 +4,7 @@
   "description": "Keep your plants alive. Track their progress. Remember the small details.",
   "main": "htdocs/js/index.js",
   "dependencies": {
-    "minimist": ">=1.2.2",
+    "minimist": ">=1.2.6",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-redux": "^7.2.0",
